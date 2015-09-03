@@ -1,0 +1,85 @@
+[15:05:50] [main/INFO]: Setting user: Escapee_
+[15:06:03] [Client thread/INFO]: LWJGL Version: 2.9.1
+[15:06:32] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Essence Armory, FMLFileResourcePack:Baubles, FMLFileResourcePack:Damage Indicators, FMLFileResourcePack:AppleCore, FMLFileResourcePack:NEI Addons, FMLFileResourcePack:NEI Addons: Applied Energistics 2, FMLFileResourcePack:NEI Addons: Botany, FMLFileResourcePack:NEI Addons: Forestry, FMLFileResourcePack:NEI Addons: Crafting Tables, FMLFileResourcePack:NEI Addons: Ex Nihilo, FMLFileResourcePack:NEI Integration, FMLFileResourcePack:NEI Plugins Unofficial, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:What Are We Looking At
+[15:06:44] [Sound Library Loader/INFO]: Sound engine started
+[15:06:55] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[15:06:56] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[15:07:06] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Essence Armory, FMLFileResourcePack:Baubles, FMLFileResourcePack:Damage Indicators, FMLFileResourcePack:AppleCore, FMLFileResourcePack:NEI Addons, FMLFileResourcePack:NEI Addons: Applied Energistics 2, FMLFileResourcePack:NEI Addons: Botany, FMLFileResourcePack:NEI Addons: Forestry, FMLFileResourcePack:NEI Addons: Crafting Tables, FMLFileResourcePack:NEI Addons: Ex Nihilo, FMLFileResourcePack:NEI Integration, FMLFileResourcePack:NEI Plugins Unofficial, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:What Are We Looking At
+[15:07:08] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[15:07:08] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[15:07:09] [Sound Library Loader/INFO]: Sound engine started
+[15:56:22] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[15:56:22] [Server thread/INFO]: Generating keypair
+[15:56:23] [Server thread/INFO]: Preparing start region for level 0
+[15:56:24] [Server thread/INFO]: Preparing spawn area: 59%
+[15:56:26] [Server thread/INFO]: Changing view distance to 8, from 10
+[15:56:27] [Server thread/INFO]: Escapee_[local:E:352a9a57] logged in with entity id 22 at (-631.9997042582437, 56.0, 1033.5703914771852)
+[15:56:27] [Server thread/INFO]: Escapee_ joined the game
+[15:56:29] [pool-2-thread-1/WARN]: Couldn't look up profile properties for com.mojang.authlib.GameProfile@32e99827[id=46ed5c21-9fa3-3071-9e87-f362e5457a4d,name=Escapee_,properties={},legacy=false]
+com.mojang.authlib.exceptions.AuthenticationUnavailableException: Cannot contact authentication server
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:71) ~[YggdrasilAuthenticationService.class:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.fillGameProfile(YggdrasilMinecraftSessionService.java:158) [YggdrasilMinecraftSessionService.class:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService$1.load(YggdrasilMinecraftSessionService.java:53) [YggdrasilMinecraftSessionService$1.class:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService$1.load(YggdrasilMinecraftSessionService.java:50) [YggdrasilMinecraftSessionService$1.class:?]
+	at com.google.common.cache.LocalCache$LoadingValueReference.loadFuture(LocalCache.java:3524) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache$Segment.loadSync(LocalCache.java:2317) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache$Segment.lockedGetOrLoad(LocalCache.java:2280) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2195) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3934) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3938) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4821) [guava-17.0.jar:?]
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4827) [guava-17.0.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.fillProfileProperties(YggdrasilMinecraftSessionService.java:148) [YggdrasilMinecraftSessionService.class:?]
+	at net.minecraft.client.resources.SkinManager$3.run(SkinManager.java:133) [SkinManager$3.class:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) [?:1.8.0_40]
+	at java.util.concurrent.FutureTask.run(Unknown Source) [?:1.8.0_40]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_40]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_40]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_40]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.TwoStacksPlainSocketImpl.socketConnect(Native Method) ~[?:1.8.0_40]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[?:1.8.0_40]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[?:1.8.0_40]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[?:1.8.0_40]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[?:1.8.0_40]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[?:1.8.0_40]
+	at java.net.Socket.connect(Unknown Source) ~[?:1.8.0_40]
+	at sun.security.ssl.SSLSocketImpl.connect(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.NetworkClient.doConnect(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.http.HttpClient.openServer(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.http.HttpClient.openServer(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.https.HttpsClient.<init>(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.https.HttpsClient.New(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection$6.run(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection$6.run(Unknown Source) ~[?:1.8.0_40]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_40]
+	at java.security.AccessController.doPrivileged(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection.access$200(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection$9.run(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection$9.run(Unknown Source) ~[?:1.8.0_40]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_40]
+	at java.security.AccessController.doPrivileged(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source) ~[?:1.8.0_40]
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source) ~[?:1.8.0_40]
+	at com.mojang.authlib.HttpAuthenticationService.performGetRequest(HttpAuthenticationService.java:126) ~[HttpAuthenticationService.class:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:54) ~[YggdrasilAuthenticationService.class:?]
+	... 18 more
+[15:56:35] [Client thread/INFO]: [CHAT] Damage Indicators was unable to check for updates!
+[15:56:55] [Server thread/INFO]: [Escapee_: Object successfully summoned]
+[15:56:55] [Client thread/INFO]: [CHAT] Object successfully summoned
+[15:57:08] [Server thread/INFO]: Saving and pausing game...
+[15:57:08] [Server thread/INFO]: Saving chunks for level 'Flatlands'/Overworld
+[15:57:09] [Server thread/INFO]: Saving chunks for level 'Flatlands'/Nether
+[15:57:09] [Server thread/INFO]: Saving chunks for level 'Flatlands'/The End
+[15:57:10] [Server thread/INFO]: Stopping server
+[15:57:10] [Server thread/INFO]: Saving players
+[15:57:10] [Server thread/INFO]: Saving worlds
+[15:57:10] [Server thread/INFO]: Saving chunks for level 'Flatlands'/Overworld
+[15:57:10] [Server thread/INFO]: Saving chunks for level 'Flatlands'/Nether
+[15:57:10] [Server thread/INFO]: Saving chunks for level 'Flatlands'/The End
+[15:57:12] [Client thread/INFO]: Stopping!

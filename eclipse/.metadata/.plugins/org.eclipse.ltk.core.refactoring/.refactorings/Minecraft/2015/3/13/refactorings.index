@@ -1,0 +1,35 @@
+1427485761739	Delete elements
+1427489135097	Rename type 'ItemMianite'
+1427489142889	Rename type 'ItemMianiteArmor'
+1427489154862	Rename type 'ItemMianiteAxe'
+1427489162841	Rename type 'ItemMianitePickaxe'
+1427492144289	Rename type 'ItemMianiteShovel'
+1427492151655	Rename type 'ItemMianiteSword'
+1427495817572	Rename resource 'miatic_layer1.png'
+1427495829510	Rename resource 'miatic_layer2.png'
+1427495834428	Delete elements
+1427496109613	Rename package 'mianiteMod'
+1427496241756	Rename type 'MianiteTab'
+1427496386196	Delete element
+1427500923024	Rename package 'assets.mianite'
+1427501079640	Rename resource 'miaticBlock.png'
+1427501083040	Delete element
+1427501087346	Delete element
+1427501112165	Rename resource 'diaticBoots.png'
+1427501117021	Rename resource 'diaticCrystal.png'
+1427501121356	Rename resource 'diaticHelm.png'
+1427501126128	Rename resource 'diaticIngot.png'
+1427501143729	Rename resource 'diaticPants.png'
+1427501151751	Rename resource 'diaticPlate.png'
+1427501162285	Rename resource 'diaticShard.png'
+1427501168041	Delete elements
+1427501173959	Delete elements
+1427501591393	Rename package 'assets.mianite'
+1427501766534	Rename resource 'diamond_axe.png'
+1427501771933	Rename resource 'diamond_hoe.png'
+1427501777649	Rename resource 'diamond_pickaxe.png'
+1427501783385	Rename resource 'diamond_shovel.png'
+1427501788701	Rename resource 'diamond_sword.png'
+1427501794906	Rename resource 'infusedPickaxe.png'
+1427501964094	Rename type 'TestBlock'
+1427559069190	Rename type 'MianiteMod'

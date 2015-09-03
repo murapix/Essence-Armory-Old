@@ -1,0 +1,18 @@
+[
+{
+  "modid": "essence",
+  "name": "Essence Armory",
+  "description": "Use shards of mob essence to create powerful evolving weapons and jewelry",
+  "version": "0.1",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Escapee"],
+  "credits": "Authored by Escapee, thanks to Azanor for Baubles",
+  "logoFile": "",
+  "screenshots": [],
+  "requiredMods": ["Forge", "Baubles"],
+  "dependencies": ["Forge", "Baubles"],
+  "useDependencyInformation": "true"
+}
+]

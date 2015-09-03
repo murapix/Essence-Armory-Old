@@ -1,0 +1,60 @@
+item.infusedShard.name=§6Shard of Essence
+item.gemInfused.name=§6Essence Infused Crystal
+item.nuggetInfused.name=§6Essence Infused Nugget
+item.infusedStar.name=§6Essence Infused Star
+item.infusedDiamond.name=§6Crystallized Essence Diamond
+item.gemStar.name=§6Crystallized Essence Star
+item.ingotInfused.name=§6Essence Infused Ingot
+item.platedDiamond.name=§6Essence Plated Diamond
+item.platedStar.name=§6Essence Plated Star
+
+item.infusedRod.name=§6Essence Infused Stick
+item.infusedString.name=§6Essence Infused String
+
+item.infusedSword.name=§6Essence Infused Sword
+
+item.infusedBow.name=§6Essence Infused Bow
+
+item.infusedHelm.name=§6Essence Infused Helm
+item.infusedPlate.name=§6Essence Infused Chestplate
+item.infusedPants.name=§6Essence Infused Leggings
+item.infusedBoots.name=§6Essence Infused Boots
+
+item.infusedPotionRing.name=§6Blank Potion Ring
+item.infusedStepBelt.name=§6Infused Traveler's Belt
+item.infusedLootAmulet.name=§6Essence Shard Accumulator
+item.infusedFlightAmulet.name=§6Angelic Amulet
+
+item.infusedRing1-1.name=§6Ring of Lesser Swiftness
+item.infusedRing2-1.name=§6Ring of Swiftness
+item.infusedRing3-1.name=§6Ring of Greater Swiftness
+item.infusedRing1-3.name=§6Ring of Lesser Haste
+item.infusedRing2-3.name=§6Ring of Haste
+item.infusedRing3-3.name=§6Ring of Greater Haste
+item.infusedRing1-5.name=§6Ring of Lesser Strength
+item.infusedRing2-5.name=§6Ring of Strength
+item.infusedRing3-5.name=§6Ring of Greater Strength
+item.infusedRing1-8.name=§6Ring of Lesser Jump Boost
+item.infusedRing2-8.name=§6Ring of Jump Boost
+item.infusedRing3-8.name=§6Ring of Greater Jump Boost
+item.infusedRing1-10.name=§6Ring of Lesser Regeneration
+item.infusedRing2-10.name=§6Ring of Regeneration
+item.infusedRing3-10.name=§6Ring of Greater Regeneration
+item.infusedRing1-12.name=§6Ring of Fire Resistance
+item.infusedRing1-13.name=§6Ring of Water Breathing
+item.infusedRing1-16.name=§6Ring of Night Vision
+
+item.infusedLootAmulet1.name=§6Essence Shard Magnet
+item.infusedLootAmulet2.name=§6Essence Shard Gatherer
+item.infusedLootAmulet3.name=§6Essence Shard Collector
+item.infusedLootAmulet4.name=§6Essence Shard Accumulator
+item.infusedLootAmulet5.name=§6Essence Shard Amasser
+
+item.infusedApple.name=§6Essence Infused Apple
+
+tile.infusedBlock.name=§6Block of Infused Metal
+tile.essenceInfuser.name=§6Essence Infuser
+tile.essencePylon.name=§6Essence Pylon
+tile.infusedStarmetal.name=§6Infused Starmetal
+
+itemGroup.tabEssence=§6Essence Armory

@@ -1,0 +1,144 @@
+---- Minecraft Crash Report ----
+// I let you down. Sorry :(
+
+Time: 7/31/15 8:35 AM
+Description: Updating screen events
+
+java.lang.NullPointerException: Updating screen events
+	at essenceMod.items.baubles.ItemModAmulet.onEquipped(ItemModAmulet.java:105)
+	at baubles.common.container.InventoryBaubles.setInventorySlotContents(InventoryBaubles.java:145)
+	at net.minecraft.inventory.Slot.putStack(Slot.java:104)
+	at net.minecraft.inventory.Container.mergeItemStack(Container.java:672)
+	at baubles.common.container.ContainerPlayerExpanded.transferStackInSlot(ContainerPlayerExpanded.java:183)
+	at net.minecraft.inventory.Container.slotClick(Container.java:279)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.windowClick(PlayerControllerMP.java:478)
+	at codechicken.nei.guihook.GuiContainerManager.handleSlotClick(GuiContainerManager.java:503)
+	at net.minecraft.client.gui.inventory.GuiContainer.handleMouseClick(GuiContainer.java:673)
+	at net.minecraft.client.gui.inventory.GuiContainer.public_func_146984_a(GuiContainer.java)
+	at codechicken.nei.guihook.DefaultSlotClickHandler.callHandleMouseClick(DefaultSlotClickHandler.java)
+	at codechicken.nei.guihook.DefaultSlotClickHandler.handleSlotClick(DefaultSlotClickHandler.java:17)
+	at codechicken.nei.guihook.GuiContainerManager.handleMouseClick(GuiContainerManager.java:452)
+	at net.minecraft.client.gui.inventory.GuiContainer.managerHandleMouseClick(GuiContainer.java)
+	at net.minecraft.client.gui.inventory.GuiContainer.mouseClicked(GuiContainer.java:418)
+	at net.minecraft.client.gui.GuiScreen.handleMouseInput(GuiScreen.java:344)
+	at net.minecraft.client.gui.inventory.GuiContainer.handleMouseInput(GuiContainer.java)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:313)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1720)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1028)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:951)
+	at net.minecraft.client.main.Main.main(Main.java:164)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at essenceMod.items.baubles.ItemModAmulet.onEquipped(ItemModAmulet.java:105)
+	at baubles.common.container.InventoryBaubles.setInventorySlotContents(InventoryBaubles.java:145)
+	at net.minecraft.inventory.Slot.putStack(Slot.java:104)
+	at net.minecraft.inventory.Container.mergeItemStack(Container.java:672)
+	at baubles.common.container.ContainerPlayerExpanded.transferStackInSlot(ContainerPlayerExpanded.java:183)
+	at net.minecraft.inventory.Container.slotClick(Container.java:279)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.windowClick(PlayerControllerMP.java:478)
+	at codechicken.nei.guihook.GuiContainerManager.handleSlotClick(GuiContainerManager.java:503)
+	at net.minecraft.client.gui.inventory.GuiContainer.handleMouseClick(GuiContainer.java:673)
+	at net.minecraft.client.gui.inventory.GuiContainer.public_func_146984_a(GuiContainer.java)
+	at codechicken.nei.guihook.DefaultSlotClickHandler.callHandleMouseClick(DefaultSlotClickHandler.java)
+	at codechicken.nei.guihook.DefaultSlotClickHandler.handleSlotClick(DefaultSlotClickHandler.java:17)
+	at codechicken.nei.guihook.GuiContainerManager.handleMouseClick(GuiContainerManager.java:452)
+	at net.minecraft.client.gui.inventory.GuiContainer.managerHandleMouseClick(GuiContainer.java)
+	at net.minecraft.client.gui.inventory.GuiContainer.mouseClicked(GuiContainer.java:418)
+	at net.minecraft.client.gui.GuiScreen.handleMouseInput(GuiScreen.java:344)
+	at net.minecraft.client.gui.inventory.GuiContainer.handleMouseInput(GuiContainer.java)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:313)
+
+-- Affected screen --
+Details:
+	Screen name: baubles.client.gui.GuiPlayerExpanded
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityClientPlayerMP['Escapee_'/105, l='MpServer', x=-633.38, y=59.77, z=1051.78]]
+	Chunk stats: MultiplayerChunkCache: 289, 289
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (-681,4,1124), Chunk: (at 7,0,4 in -43,70; contains blocks -688,0,1120 to -673,255,1135), Region: (-2,2; contains chunks -64,64 to -33,95, blocks -1024,0,1024 to -513,255,1535)
+	Level time: 305778 game time, 18000 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 41 total; [EntitySpider['Spider'/67457, l='MpServer', x=-707.78, y=56.00, z=1078.66], EntitySkeleton['Skeleton'/57605, l='MpServer', x=-604.50, y=56.00, z=1107.50], EntitySpider['Spider'/67460, l='MpServer', x=-711.13, y=56.00, z=1078.88], EntitySkeleton['Skeleton'/57606, l='MpServer', x=-608.50, y=56.00, z=1111.50], EntityClientPlayerMP['Escapee_'/105, l='MpServer', x=-633.38, y=59.77, z=1051.78], EntitySkeleton['Skeleton'/67478, l='MpServer', x=-646.50, y=56.00, z=1100.50], EntitySpider['Spider'/67482, l='MpServer', x=-653.59, y=56.00, z=1091.66], EntityZombie['Zombie'/29, l='MpServer', x=-709.31, y=56.00, z=1086.84], EntitySpider['Spider'/67484, l='MpServer', x=-660.50, y=56.00, z=1099.44], EntitySkeleton['Skeleton'/30, l='MpServer', x=-709.16, y=56.00, z=1089.25], EntityZombie['Zombie'/43295, l='MpServer', x=-699.09, y=56.00, z=1004.50], EntitySkeleton['Skeleton'/32, l='MpServer', x=-705.56, y=56.00, z=1079.88], EntitySpider['Spider'/43298, l='MpServer', x=-700.97, y=56.00, z=1004.50], EntitySkeleton['Skeleton'/36, l='MpServer', x=-705.06, y=56.00, z=1128.59], EntityCreeper['Creeper'/43302, l='MpServer', x=-695.50, y=56.00, z=1003.50], EntityZombie['Zombie'/38, l='MpServer', x=-709.78, y=56.00, z=1130.16], EntityCreeper['Creeper'/43303, l='MpServer', x=-694.50, y=56.00, z=1000.50], EntityCreeper['Creeper'/39, l='MpServer', x=-711.94, y=56.00, z=1129.50], EntitySpider['Spider'/40, l='MpServer', x=-706.34, y=56.00, z=1130.97], EntitySpider['Spider'/41, l='MpServer', x=-695.00, y=56.00, z=989.72], EntityZombie['Zombie'/67501, l='MpServer', x=-686.91, y=56.00, z=1026.50], EntityZombie['Zombie'/67503, l='MpServer', x=-683.50, y=56.00, z=1033.50], EntitySpider['Spider'/50, l='MpServer', x=-674.66, y=56.00, z=1001.75], EntitySpider['Spider'/67506, l='MpServer', x=-685.03, y=56.00, z=1026.50], EntityCreeper['Creeper'/37943, l='MpServer', x=-709.50, y=56.00, z=980.50], EntityCreeper['Creeper'/37945, l='MpServer', x=-705.50, y=56.00, z=977.50], EntityZombie['Zombie'/59, l='MpServer', x=-664.53, y=56.00, z=1097.09], EntityCreeper['Creeper'/60, l='MpServer', x=-662.78, y=56.00, z=1118.88], EntitySkeleton['Skeleton'/64, l='MpServer', x=-637.84, y=56.00, z=1089.72], EntitySkeleton['Skeleton'/66, l='MpServer', x=-644.25, y=56.00, z=1016.69], EntityCreeper['Creeper'/67, l='MpServer', x=-622.14, y=56.00, z=1068.95], EntitySpider['Spider'/70, l='MpServer', x=-634.84, y=56.00, z=1020.44], EntityBat['Bat'/71, l='MpServer', x=-568.31, y=57.55, z=1078.58], EntitySpider['Spider'/80, l='MpServer', x=-564.91, y=56.00, z=1092.84], EntityCreeper['Creeper'/29028, l='MpServer', x=-658.72, y=56.00, z=1025.09], EntitySpider['Spider'/29031, l='MpServer', x=-660.50, y=56.00, z=1017.50], EntityClientPlayerMP['Escapee_'/105, l='MpServer', x=-637.57, y=57.62, z=1050.66], EntitySkeleton['Skeleton'/63725, l='MpServer', x=-609.50, y=56.00, z=1105.50], EntityZombie['Zombie'/63728, l='MpServer', x=-607.50, y=56.00, z=1110.50], EntityCreeper['Creeper'/67445, l='MpServer', x=-618.50, y=56.00, z=993.50], EntityZombie['Zombie'/63733, l='MpServer', x=-609.78, y=56.00, z=1099.97]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:415)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2555)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:973)
+	at net.minecraft.client.main.Main.main(Main.java:164)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 8.1 (amd64) version 6.3
+	Java Version: 1.8.0_40, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 589174888 bytes (561 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1G -Xms1G
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP v9.05 FML v7.10.85.1291 Minecraft Forge 10.13.2.1291 19 mods loaded, 19 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	FML{7.10.85.1291} [Forge Mod Loader] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Forge{10.13.2.1291} [Minecraft Forge] (forgeSrc-1.7.10-10.13.2.1291.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	CodeChickenCore{1.0.4.29} [CodeChicken Core] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NotEnoughItems{1.0.4.80} [Not Enough Items] (NotEnoughItems-1.7.10-1.0.4.80-universal.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Baubles{1.0.1.10} [Baubles] (Baubles-deobf-1.7.10-1.0.1.10.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	essence{0.1.1} [Essence Armory] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	DamageIndicatorsMod{3.2.3} [Damage Indicators] ([1.7.10]DamageIndicatorsMod-3.2.3.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	AppleCore{1.1.0} [AppleCore] (AppleCore-mc1.7.10-1.1.0.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIAddons{1.12.3.11} [NEI Addons] (neiaddons-mc1710-1.12.3.11.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIAddons|Botany{1.12.3.11} [NEI Addons: Botany] (neiaddons-mc1710-1.12.3.11.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIAddons|Forestry{1.12.3.11} [NEI Addons: Forestry] (neiaddons-mc1710-1.12.3.11.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIAddons|CraftingTables{1.12.3.11} [NEI Addons: Crafting Tables] (neiaddons-mc1710-1.12.3.11.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIAddons|ExNihilo{1.12.3.11} [NEI Addons: Ex Nihilo] (neiaddons-mc1710-1.12.3.11.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	neiintegration{1.0.6} [NEI Integration] (NEIIntegration-MC1.7.10-1.0.6.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	NEIPlugins{1.1.0.8-unofficial} [NEI Plugins Unofficial] (NEIPlugins-MC1.7.10-1.1.0.8-unofficial.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Waila{1.5.8} [Waila] (Waila-1.5.8a_1.7.10.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	WailaHarvestability{1.1.2} [Waila Harvestability] (WailaHarvestability-mc1.7.x-1.1.2.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	wawla{1.1.1} [What Are We Looking At] (Wawla-1.1.1_1.7.10.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Launched Version: 1.7.10
+	LWJGL: 2.9.1
+	OpenGL: Intel(R) HD Graphics 4400 GL version 4.2.0 - Build 10.18.10.3345, Intel
+	GL Caps: Using GL 1.3 multitexturing.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Anisotropic filtering is supported and maximum anisotropy is 16.
+Shaders are available because OpenGL 2.1 is supported.
+
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: []
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	Anisotropic Filtering: Off (1)
