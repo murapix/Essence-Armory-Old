@@ -7,6 +7,9 @@ import essenceMod.help.RegisterHelper;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModBow;
 import essenceMod.items.ItemModSword;
+import essenceMod.items.baubles.ItemBaseAmulet;
+import essenceMod.items.baubles.ItemBaseBelt;
+import essenceMod.items.baubles.ItemBaseRing;
 import essenceMod.items.baubles.ItemCleaveBelt;
 import essenceMod.items.baubles.ItemFlightAmulet;
 import essenceMod.items.baubles.ItemLootAmulet;
@@ -27,11 +30,11 @@ public class ModArmory
 	public static Item infusedPants = new ItemModArmor(AINFUSED, 2, new String[]{}).setUnlocalizedName("infusedPants");
 	public static Item infusedBoots = new ItemModArmor(AINFUSED, 3, new String[]{}).setUnlocalizedName("infusedBoots");
 	
-	public static Item infusedPotionRing = new ItemPotionRing().setUnlocalizedName("infusedPotionRing");
-	public static Item infusedStepBelt = new ItemStepBelt().setUnlocalizedName("infusedStepBelt");
-	public static Item infusedLootAmulet = new ItemLootAmulet().setUnlocalizedName("infusedLootAmulet");
+	public static Item infusedBaseRing = new ItemBaseRing().setUnlocalizedName("infusedBaseRing");
+	public static Item infusedBaseBelt = new ItemBaseBelt().setUnlocalizedName("infusedBaseBelt");
+	public static Item infusedBaseAmulet = new ItemBaseAmulet().setUnlocalizedName("infusedBaseAmulet");
+	
 	public static Item infusedFlightAmulet = new ItemFlightAmulet().setUnlocalizedName("infusedFlightAmulet");
-	public static Item infusedCleaveBelt = new ItemCleaveBelt().setUnlocalizedName("infusedCleaveBelt");
 	
 	public static Item swiftnessIRing = new ItemPotionRing(1, 1).setUnlocalizedName("infusedRing1-1");
 	public static Item swiftnessIIRing = new ItemPotionRing(2, 1).setUnlocalizedName("infusedRing2-1");
@@ -75,11 +78,11 @@ public class ModArmory
 		RegisterHelper.registerItem(infusedPants);
 		RegisterHelper.registerItem(infusedBoots);
 		
-		RegisterHelper.registerItem(infusedLootAmulet);
-		RegisterHelper.registerItem(infusedStepBelt);
-		RegisterHelper.registerItem(infusedPotionRing);
+		RegisterHelper.registerItem(infusedBaseAmulet);
+		RegisterHelper.registerItem(infusedBaseBelt);
+		RegisterHelper.registerItem(infusedBaseRing);
+		
 		RegisterHelper.registerItem(infusedFlightAmulet);
-		RegisterHelper.registerItem(infusedCleaveBelt);
 		
 		RegisterHelper.registerItem(swiftnessIRing);
 		RegisterHelper.registerItem(swiftnessIIRing);

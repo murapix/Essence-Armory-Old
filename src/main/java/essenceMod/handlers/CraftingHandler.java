@@ -28,7 +28,7 @@ public class CraftingHandler
 	private CraftingHandler()
 	{
 		int[] potionID = new int[] {0};
-		item = new ItemStack(ModArmory.infusedPotionRing);
+		item = new ItemStack(ModArmory.infusedBaseRing);
 		addRecipe(new ItemStack(new ItemPotionRing(1, Potion.damageBoost.id)), new ItemStack(new ItemPotionRing()), new Object[] {"AAAA", "BCBCBCBC", 'A', ModItems.infusedDiamond, 'B', new ItemStack(Items.potionitem, 1, Potion.damageBoost.id), 'C', ModItems.infusedIngot});
 	}
 	
