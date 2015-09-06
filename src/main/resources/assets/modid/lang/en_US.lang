@@ -20,9 +20,10 @@ item.infusedPlate.name=§6Essence Infused Chestplate
 item.infusedPants.name=§6Essence Infused Leggings
 item.infusedBoots.name=§6Essence Infused Boots
 
-item.infusedPotionRing.name=§6Blank Potion Ring
-item.infusedStepBelt.name=§6Infused Traveler's Belt
-item.infusedLootAmulet.name=§6Essence Shard Accumulator
+item.infusedBaseRing.name=§6Infused Ring
+item.infusedBaseBelt.name=§6Infused Belt
+item.infusedBaseAmulet.name=§6Infused Amulet
+
 item.infusedFlightAmulet.name=§6Angelic Amulet
 
 item.infusedRing1-1.name=§6Ring of Lesser Swiftness
@@ -49,6 +50,12 @@ item.infusedLootAmulet2.name=§6Essence Shard Gatherer
 item.infusedLootAmulet3.name=§6Essence Shard Collector
 item.infusedLootAmulet4.name=§6Essence Shard Accumulator
 item.infusedLootAmulet5.name=§6Essence Shard Amasser
+
+item.infusedCleaveBelt1.name=§6Dervish's Sash
+item.infusedCleaveBelt2.name=§6Reaper's Waistband
+item.infusedCleaveBelt3.name=§6Belt of the Wyvern
+item.infusedCleaveBelt4.name=§6Girdle of the Hydra
+item.infusedCleaveBelt5.name=§6Draconic Harness
 
 item.infusedApple.name=§6Essence Infused Apple
 
