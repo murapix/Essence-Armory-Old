@@ -12,9 +12,9 @@ import essenceMod.items.baubles.ItemBaseBelt;
 import essenceMod.items.baubles.ItemBaseRing;
 import essenceMod.items.baubles.ItemCleaveBelt;
 import essenceMod.items.baubles.ItemFlightAmulet;
+import essenceMod.items.baubles.ItemKnockbackBelt;
 import essenceMod.items.baubles.ItemLootAmulet;
 import essenceMod.items.baubles.ItemPotionRing;
-import essenceMod.items.baubles.ItemStepBelt;
 
 public class ModArmory
 {
@@ -66,6 +66,12 @@ public class ModArmory
 	public static Item cleaveIIIBelt = new ItemCleaveBelt(3).setUnlocalizedName("infusedCleaveBelt3");
 	public static Item cleaveIVBelt = new ItemCleaveBelt(4).setUnlocalizedName("infusedCleaveBelt4");
 	public static Item cleaveVBelt = new ItemCleaveBelt(5).setUnlocalizedName("infusedCleaveBelt5");
+	
+	public static Item knockbackIBelt = new ItemKnockbackBelt(1).setUnlocalizedName("infusedKnockbackBelt1");
+	public static Item knockbackIIBelt = new ItemKnockbackBelt(2).setUnlocalizedName("infusedKnockbackBelt2");
+	public static Item knockbackIIIBelt = new ItemKnockbackBelt(3).setUnlocalizedName("infusedKnockbackBelt3");
+	public static Item knockbackIVBelt = new ItemKnockbackBelt(4).setUnlocalizedName("infusedKnockbackBelt4");
+	public static Item knockbackVBelt = new ItemKnockbackBelt(5).setUnlocalizedName("infusedKnockbackBelt5");
 
 	public static void init()
 	{
@@ -114,5 +120,11 @@ public class ModArmory
 		RegisterHelper.registerItem(cleaveIIIBelt);
 		RegisterHelper.registerItem(cleaveIVBelt);
 		RegisterHelper.registerItem(cleaveVBelt);
+		
+		RegisterHelper.registerItem(knockbackIBelt);
+		RegisterHelper.registerItem(knockbackIIBelt);
+		RegisterHelper.registerItem(knockbackIIIBelt);
+		RegisterHelper.registerItem(knockbackIVBelt);
+		RegisterHelper.registerItem(knockbackVBelt);
 	}
 }

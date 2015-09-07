@@ -1,35 +1,23 @@
 package essenceMod.handlers;
 
 import java.util.Random;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityWitch;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
-import essenceMod.items.ItemModSword;
+import essenceMod.items.baubles.ItemKnockbackBelt;
 import essenceMod.items.baubles.ItemLootAmulet;
 
 public class EssenceEventHandler
@@ -99,6 +87,25 @@ public class EssenceEventHandler
 			double protReduction = protValue * 0.01;
 			double resReduction = resValue * 0.04;
 			event.ammount *= (1 - protReduction) * (1 - resReduction);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onFlyableFall(PlayerFlyableFallEvent event)
+	{
+		EntityPlayer player = event.entityPlayer;
+		ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
+		if (belt != null && belt.getItem() instanceof ItemKnockbackBelt) ItemKnockbackBelt.knockback(belt, player, event.distance);
+	}
+
+	@SubscribeEvent
+	public void onPlayerFall(LivingFallEvent event)
+	{
+		if (event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer) event.entityLiving;
+			ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
+			if (belt != null && belt.getItem() instanceof ItemKnockbackBelt) ItemKnockbackBelt.knockback(belt, player, event.distance);
 		}
 	}
 }

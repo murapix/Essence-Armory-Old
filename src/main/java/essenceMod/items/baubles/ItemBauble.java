@@ -17,6 +17,7 @@ public abstract class ItemBauble extends ItemMod implements IBauble
 {
 	public ItemBauble()
 	{
+		super();
 		this.setMaxStackSize(1);
 	}
 	
