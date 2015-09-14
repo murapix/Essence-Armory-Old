@@ -14,14 +14,13 @@ public class ModBlock extends Block
 	public ModBlock()
 	{
 		super(Material.iron);
-		setBlockName("infusedBlock");
 		setBlockTextureName(Reference.MODID + ":" + getUnlocalizedName().substring(5));
 		setCreativeTab(ModTabs.tabEssence);
 		setStepSound(soundTypeMetal);
 		setHardness(5.0F);
 		setResistance(10.0F);
 		setLightLevel(1.0F);
-		setHarvestLevel("pickaxe", 4);
+		setHarvestLevel("pickaxe", 3);
 	}
 	
 	public boolean hasEffect(ItemStack par1ItemStack)

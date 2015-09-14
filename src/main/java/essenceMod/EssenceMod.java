@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Recipes;
 import essenceMod.handlers.EssenceEventHandler;
 import essenceMod.help.Reference;
@@ -32,6 +33,7 @@ public class EssenceMod
 	public void Init(FMLInitializationEvent event)
 	{
 		Recipes.init();
+		InfuserRecipes.init();
 	}
 
 	@Mod.EventHandler

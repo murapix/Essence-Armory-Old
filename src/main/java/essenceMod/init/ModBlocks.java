@@ -4,15 +4,14 @@ import net.minecraft.block.Block;
 import essenceMod.blocks.EssenceInfuser;
 import essenceMod.blocks.EssencePylon;
 import essenceMod.blocks.ModBlock;
-import essenceMod.blocks.ModBlock2;
 import essenceMod.help.RegisterHelper;
 
 public class ModBlocks
 {
-	public static Block infusedBlock = new ModBlock();
-	public static Block infusedStarmetal = new ModBlock2();
-	public static Block essenceInfuser = new EssenceInfuser();
-	public static Block essencePylon = new EssencePylon();
+	public static Block infusedBlock = new ModBlock().setBlockName("infusedBlock");
+	public static Block infusedStarmetal = new ModBlock().setBlockName("infusedStarmetal");
+	public static Block essenceInfuser = new EssenceInfuser().setBlockName("essenceInfuser");
+	public static Block essencePylon = new EssencePylon().setBlockName("essencePylon");
 	
 	public static void init()
 	{

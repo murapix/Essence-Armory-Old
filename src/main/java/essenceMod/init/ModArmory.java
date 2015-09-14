@@ -23,6 +23,8 @@ public class ModArmory
 	
 	public static Item infusedSword = new ItemModSword(INFUSED).setUnlocalizedName("infusedSword");
 	
+	public static Item testSword = new ItemModSword(INFUSED, new String[]{"Burn", "Burn", "Burn", "Burn", "Burn", "Poison", "Poison", "Poison", "Poison", "Poison", "Decay", "Decay", "Decay", "Decay", "Decay", "Lifesteal", "Lifesteal", "Lifesteal", "Lifesteal", "Lifesteal", "Knockback", "Knockback", "Knockback", "Knockback", "Knockback", "Blind", "Blind", "Blind", "Blind", "Blind", "Slow", "Slow", "Slow", "Slow", "Slow", "Pierce", "Pierce", "Pierce", "Pierce", "Pierce", "Damage", "Damage", "Damage", "Damage", "Damage", "Magic", "Magic", "Magic", "Magic", "Magic", "Fire", "Fire", "Fire", "Fire", "Fire", "Wither", "Wither", "Wither", "Wither", "Wither"}).setUnlocalizedName("testSword");
+	
 	public static Item infusedBow = new ItemModBow().setUnlocalizedName("infusedBow");
 	
 	public static Item infusedHelm = new ItemModArmor(AINFUSED, 0, new String[]{}).setUnlocalizedName("infusedHelm");
@@ -76,6 +78,8 @@ public class ModArmory
 	public static void init()
 	{
 		RegisterHelper.registerItem(infusedSword);
+		
+		RegisterHelper.registerItem(testSword);
 		
 		RegisterHelper.registerItem(infusedBow);
 		

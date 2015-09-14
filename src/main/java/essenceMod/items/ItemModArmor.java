@@ -31,7 +31,7 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	private final AttributeModifier health = new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "EssenceArmoryArmorHealth", 2D, 0);
 	
 	int level, resist, thorns, absorption, protection, fireProt, blastProt, projProt, witherProt, magicProt, healthBoost;
-	final int maxLevel = 15, maxResist = 5, maxThorns = 3, maxAbsorption = 5, maxProtection = 4, maxFireProt = 4, maxBlastProt = 4, maxProjProt = 4, maxWitherProt = 4, maxMagicProt = 4, maxHealthBoost = 5;
+	public final int maxLevel = 15, maxResist = 5, maxThorns = 3, maxAbsorption = 5, maxProtection = 4, maxFireProt = 4, maxBlastProt = 4, maxProjProt = 4, maxWitherProt = 4, maxMagicProt = 4, maxHealthBoost = 5;
 	boolean invisible;
 	
 	int armorType;

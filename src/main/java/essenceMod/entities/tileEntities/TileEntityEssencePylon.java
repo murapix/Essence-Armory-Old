@@ -14,7 +14,7 @@ public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack)
 	{
-		return (inv == null || inv.stackSize == 0) && (isResource(itemStack) || isFuel(itemStack));
+		return true;
 	}
 	
 	@Override
