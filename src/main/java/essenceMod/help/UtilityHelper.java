@@ -18,4 +18,12 @@ public class UtilityHelper
 		}
 		return roman;
 	}
+
+	public static float round(float number, int places)
+	{
+		if (places == 0) return (float) ((int) number);
+
+		int mult = (int) Math.pow(10, places);
+		return ((float) (number * mult)) / (float) mult;
+	}
 }

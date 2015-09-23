@@ -83,7 +83,7 @@ public class EssenceInfuser extends BlockContainer
 						boolean bool = tileEntity.checkMultiBlockForm();
 						player.addChatMessage(new ChatComponentText(bool ? "- Essence Infuser is correctly set up." : "! Essence Infuser is not correctly set up."));
 						tileEntity.multiblock = bool;
-						if (tileEntity.isReady(player))
+						if (tileEntity.isReady())
 						{
 							tileEntity.activate();
 							player.addChatMessage(new ChatComponentText("Beginng infusion"));

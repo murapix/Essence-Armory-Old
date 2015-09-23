@@ -1,9 +1,9 @@
 package essenceMod.entities.tileEntities;
 
+import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,9 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
+import essenceMod.crafting.InfuserRecipes;
 import essenceMod.help.Reference;
-import essenceMod.init.ModBlocks;
-import essenceMod.init.ModItems;
 import essenceMod.items.IModItem;
 import essenceMod.items.ItemModSword;
 
@@ -49,11 +48,41 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 				{
 					if (inv.getItem() instanceof ItemModSword)
 					{
+						String upgrade = InfuserRecipes.checkRecipe(inv, getInnerItems(), getOuterItems());
+						if (upgrade.endsWith(" I") || upgrade.endsWith(" V")) upgrade = upgrade.substring(0, upgrade.length() - 2);
+						if (upgrade.endsWith(" II") || upgrade.endsWith(" IV")) upgrade = upgrade.substring(0, upgrade.length() - 3);
+						if (upgrade.endsWith(" III")) upgrade = upgrade.substring(0, upgrade.length() - 4);
+						if (upgrade.endsWith(" ")) upgrade = upgrade.substring(0, upgrade.length() - 1);
+						ItemModSword.addLevel(inv, upgrade);
 						active = false;
 					}
 				}
 			}
 		}
+	}
+
+	private ArrayList<ItemStack> getInnerItems()
+	{
+		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 1)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord - 1, yCoord - 1, zCoord)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 1)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord + 1, yCoord - 1, zCoord)).inv);
+		return items;
+	}
+
+	private ArrayList<ItemStack> getOuterItems()
+	{
+		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 3)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord - 2)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 3, yCoord - 1, zCoord)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord + 2)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 3)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord + 2)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 3, yCoord - 1, zCoord)).inv);
+		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord - 2)).inv);
+		return items;
 	}
 
 	public void activate()
@@ -62,27 +91,9 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		active = true;
 	}
 
-	public boolean isReady(EntityPlayer player)
+	public boolean isReady()
 	{
-		return false;
-		// return hasFuel(getInnerPylonItems(), player) &&
-		// hasResource(getOuterPylonItems(), player) && hasUpgradeableItem(inv);
-	}
-
-	protected boolean isFuel(ItemStack item)
-	{
-		if (item == null || item.stackSize == 0) return false;
-		if (item.isItemEqual(new ItemStack(Items.coal))) return true;
-		if (item.isItemEqual(new ItemStack(Blocks.coal_block))) return true;
-		if (item.isItemEqual(new ItemStack(Items.blaze_powder))) return true;
-		if (item.isItemEqual(new ItemStack(Items.blaze_rod))) return true;
-		if (item.isItemEqual(new ItemStack(Items.diamond))) return true;
-		if (item.isItemEqual(new ItemStack(ModItems.infusedCrystal))) return true;
-		if (item.isItemEqual(new ItemStack(Items.nether_star))) return true;
-		if (item.isItemEqual(new ItemStack(Blocks.diamond_block))) return true;
-		if (item.isItemEqual(new ItemStack(ModItems.infusedIngot))) return true;
-		if (item.isItemEqual(new ItemStack(ModBlocks.infusedBlock))) return true;
-		return false;
+		return InfuserRecipes.checkRecipe(inv, getInnerItems(), getOuterItems()) != null;
 	}
 
 	private boolean isUpgradeableItem(ItemStack infuserItem)
@@ -116,7 +127,6 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		inv = stack;
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) stack.stackSize = getInventoryStackLimit();
 	}
-	
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amount)
@@ -133,7 +143,6 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		}
 		return stack;
 	}
-	
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int slot)
@@ -142,21 +151,18 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		if (stack != null) setInventorySlotContents(slot, null);
 		return stack;
 	}
-	
 
 	@Override
 	public int getInventoryStackLimit()
 	{
 		return 1;
 	}
-	
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player)
 	{
 		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
 	}
-	
 
 	@Override
 	public void writeToNBT(NBTTagCompound tagCompound)
@@ -173,7 +179,6 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		}
 		tagCompound.setTag("Inventory", itemList);
 	}
-	
 
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound)
@@ -187,14 +192,12 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 			if (slot == 0) inv = ItemStack.loadItemStackFromNBT(tag);
 		}
 	}
-	
 
 	@Override
 	public String getInventoryName()
 	{
 		return Reference.MODID + ".TileEntityEssenceInfuser";
 	}
-	
 
 	public boolean checkMultiBlockForm()
 	{
@@ -228,20 +231,16 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		if (!(worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord - 2) instanceof TileEntityEssencePylon)) return false;
 		return true;
 	}
-	
 
 	private boolean isBlockSame(int x, int y, int z)
 	{
 		return Block.isEqualTo(worldObj.getBlock(xCoord, yCoord - 2, zCoord), worldObj.getBlock(x, y, z)) && worldObj.getBlockMetadata(xCoord, yCoord - 2, zCoord) == worldObj.getBlockMetadata(x, y, z);
 	}
-	
-
 
 	public void reset()
 	{
 		multiblock = false;
 	}
-	
 
 	public void resetStructure()
 	{
@@ -251,30 +250,25 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 			((TileEntityEssenceInfuser) tile).reset();
 		}
 	}
-	
 
 	@Override
 	public boolean hasCustomInventoryName()
 	{
 		return true;
 	}
-	
 
 	@Override
 	public void openInventory()
 	{}
-	
 
 	@Override
 	public void closeInventory()
 	{}
-	
 
 	public boolean isActive()
 	{
 		return active;
 	}
-	
 
 	public int ticksRemaining()
 	{

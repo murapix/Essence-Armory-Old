@@ -1,5 +1,6 @@
 package essenceMod;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -7,6 +8,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Recipes;
 import essenceMod.handlers.EssenceEventHandler;
+import essenceMod.handlers.TConstructHandler;
 import essenceMod.help.Reference;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModBlocks;
@@ -34,6 +36,7 @@ public class EssenceMod
 	{
 		Recipes.init();
 		InfuserRecipes.init();
+		if (Loader.isModLoaded("TConstruct")) TConstructHandler.init();
 	}
 
 	@Mod.EventHandler

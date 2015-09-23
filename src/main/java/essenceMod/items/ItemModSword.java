@@ -1,6 +1,8 @@
 package essenceMod.items;
 
+import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +16,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -28,12 +31,18 @@ public class ItemModSword extends ItemSword implements IModItem
 	public final ToolMaterial toolMaterial;
 	protected float weaponDamage;
 
-	int level, burn, poison, decay, pierce, lifesteal, knockback, blind, slow, damage, wither, magic, fire;
+	int level, burn, poison, decay, pierce, lifesteal, knockback, blind, slow,
+			damage, wither, magic, fire;
 
 	@Override
-	public void onUpdate(ItemStack itemStack, World world, Entity entity, int i, boolean b)
+	public void onUpdate(ItemStack item, World world, Entity entity, int i, boolean b)
 	{
-		if (itemStack.stackTagCompound == null) onCreated(itemStack, world, (EntityPlayer) entity);
+		if (item.stackTagCompound == null) onCreated(item, world, (EntityPlayer) entity);
+		level = item.stackTagCompound.getInteger("Level");
+		damage = item.stackTagCompound.getInteger("Damage");
+		weaponDamage = 4.0F + toolMaterial.getDamageVsEntity() + level;
+		weaponDamage *= (1 + 0.2 * damage);
+		item.stackTagCompound.setFloat("weaponDamage", weaponDamage);
 	}
 
 	public ItemModSword(ToolMaterial material)
@@ -68,85 +77,85 @@ public class ItemModSword extends ItemSword implements IModItem
 	}
 
 	@Override
-	public Multimap getAttributeModifiers(ItemStack stack)
+	public Multimap getAttributeModifiers(ItemStack item)
 	{
 		Multimap multimap = HashMultimap.create();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", stack.stackTagCompound.getFloat("weaponDamage"), 0));
+		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", item.stackTagCompound.getFloat("weaponDamage"), 0));
 		return multimap;
 	}
 
 	@Override
-	public void onCreated(ItemStack itemStack, World world, EntityPlayer entityPlayer)
+	public void onCreated(ItemStack item, World world, EntityPlayer entityPlayer)
 	{
-		if (itemStack.stackTagCompound == null) itemStack.setTagCompound(new NBTTagCompound());
+		if (item.stackTagCompound == null) item.setTagCompound(new NBTTagCompound());
 		weaponDamage = 4.0F + toolMaterial.getDamageVsEntity() + level;
 		weaponDamage *= (1 + 0.2 * damage);
 
-		itemStack.stackTagCompound.setInteger("Level", level);
-		itemStack.stackTagCompound.setFloat("weaponDamage", weaponDamage);
-		itemStack.stackTagCompound.setInteger("Burn", burn);
-		itemStack.stackTagCompound.setInteger("Poison", poison);
-		itemStack.stackTagCompound.setInteger("Decay", decay);
-		itemStack.stackTagCompound.setInteger("Pierce", pierce);
-		itemStack.stackTagCompound.setInteger("Lifesteal", lifesteal);
-		itemStack.stackTagCompound.setInteger("Knockback", knockback);
-		itemStack.stackTagCompound.setInteger("Blind", blind);
-		itemStack.stackTagCompound.setInteger("Slow", slow);
-		itemStack.stackTagCompound.setInteger("Damage", damage);
-		itemStack.stackTagCompound.setInteger("Wither", wither);
-		itemStack.stackTagCompound.setInteger("Magic", magic);
-		itemStack.stackTagCompound.setInteger("Fire", fire);
+		item.stackTagCompound.setInteger("Level", level);
+		item.stackTagCompound.setFloat("weaponDamage", weaponDamage);
+		item.stackTagCompound.setInteger("Burn", burn);
+		item.stackTagCompound.setInteger("Poison", poison);
+		item.stackTagCompound.setInteger("Decay", decay);
+		item.stackTagCompound.setInteger("Pierce", pierce);
+		item.stackTagCompound.setInteger("Lifesteal", lifesteal);
+		item.stackTagCompound.setInteger("Knockback", knockback);
+		item.stackTagCompound.setInteger("Blind", blind);
+		item.stackTagCompound.setInteger("Slow", slow);
+		item.stackTagCompound.setInteger("Damage", damage);
+		item.stackTagCompound.setInteger("Wither", wither);
+		item.stackTagCompound.setInteger("Magic", magic);
+		item.stackTagCompound.setInteger("Fire", fire);
 	}
 
-	public boolean hitEntity(ItemStack stack, EntityLivingBase enemy, EntityLivingBase player)
+	public boolean hitEntity(ItemStack item, EntityLivingBase enemy, EntityLivingBase player)
 	{
 		DamageSource playerDamage = DamageSource.causePlayerDamage((EntityPlayer) player);
 		DamageSource fireDamage = DamageSource.onFire;
 		DamageSource witherDamage = DamageSource.wither;
 		DamageSource magicDamage = DamageSource.magic;
 
-		float weaponDamage = stack.stackTagCompound.getFloat("weaponDamage");
+		float weaponDamage = item.stackTagCompound.getFloat("weaponDamage");
 
-		int pierce = stack.stackTagCompound.getInteger("Pierce");
+		int pierce = item.stackTagCompound.getInteger("Pierce");
 		int enemyArmor = enemy.getTotalArmorValue();
 		if (enemyArmor >= 25)
 		{
 			playerDamage = new EntityDamageSource("player", player).setDamageBypassesArmor();
 		}
-		
+
 		float pierceMultiplier = ((1F / (1F - (enemy.getTotalArmorValue() * 0.04F)) - 1F) * pierce / 5F);
 		if (pierce != 0) enemy.attackEntityFrom(playerDamage, weaponDamage * pierceMultiplier);
-		
-		float fireMult = stack.stackTagCompound.getInteger("Fire") / 5F;
+
+		float fireMult = item.stackTagCompound.getInteger("Fire") / 5F;
 		if (fireMult != 0) enemy.attackEntityFrom(fireDamage, weaponDamage * fireMult);
-		
-		float witherMult = stack.stackTagCompound.getInteger("Wither") / 5F;
+
+		float witherMult = item.stackTagCompound.getInteger("Wither") / 5F;
 		if (witherMult != 0) enemy.attackEntityFrom(witherDamage, weaponDamage * witherMult);
-		
-		float magicMult = stack.stackTagCompound.getInteger("Magic") / 5F;
+
+		float magicMult = item.stackTagCompound.getInteger("Magic") / 5F;
 		if (magicMult != 0) enemy.attackEntityFrom(magicDamage, weaponDamage * magicMult);
-		
-		int poison = stack.stackTagCompound.getInteger("Poison");
+
+		int poison = item.stackTagCompound.getInteger("Poison");
 		if (poison != 0) enemy.addPotionEffect(new PotionEffect(Potion.poison.id, 25 * poison, poison - 1));
-		
-		int burn = stack.stackTagCompound.getInteger("Burn");
+
+		int burn = item.stackTagCompound.getInteger("Burn");
 		if (burn != 0) enemy.setFire(burn);
-		
-		int decay = stack.stackTagCompound.getInteger("Decay");
+
+		int decay = item.stackTagCompound.getInteger("Decay");
 		if (decay != 0) enemy.addPotionEffect(new PotionEffect(Potion.wither.id, 25 * decay, decay - 1));
-		
-		int lifesteal = stack.stackTagCompound.getInteger("Lifesteal");
+
+		int lifesteal = item.stackTagCompound.getInteger("Lifesteal");
 		if (lifesteal != 0) player.heal(lifesteal * weaponDamage * 0.05F);
-		
-		int slow = stack.stackTagCompound.getInteger("Slow");
+
+		int slow = item.stackTagCompound.getInteger("Slow");
 		if (slow != 0) enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25 * slow, slow - 1));
-		
-		int blind = stack.stackTagCompound.getInteger("Blind");
+
+		int blind = item.stackTagCompound.getInteger("Blind");
 		if (blind != 0) enemy.addPotionEffect(new PotionEffect(Potion.blindness.id, 25 * slow));
-		
-		int knockback = stack.stackTagCompound.getInteger("Knockback");
+
+		int knockback = item.stackTagCompound.getInteger("Knockback");
 		if (knockback != 0) enemy.knockBack(player, weaponDamage, (player.posX - enemy.posX) * knockback, (player.posZ - enemy.posZ) * knockback);
-		
+
 		return true;
 	}
 
@@ -158,7 +167,7 @@ public class ItemModSword extends ItemSword implements IModItem
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack itemStack)
+	public boolean hasEffect(ItemStack item)
 	{
 		return true;
 	}
@@ -169,22 +178,72 @@ public class ItemModSword extends ItemSword implements IModItem
 	}
 
 	@Override
-	public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean bool)
+	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
-		if (itemStack.stackTagCompound == null) onCreated(itemStack, entityPlayer.worldObj, entityPlayer);
+		if (item.stackTagCompound == null) onCreated(item, entityPlayer.worldObj, entityPlayer);
+		if (GuiScreen.isShiftKeyDown()) list.addAll(addShiftInfo(item));
+		else list.addAll(addNormalInfo(item));
+	}
 
-		if (itemStack.stackTagCompound.getInteger("Level") != 0) list.add("Level: " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Level")));
-		if (itemStack.stackTagCompound.getInteger("Burn") != 0) list.add("Burn " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Burn")));
-		if (itemStack.stackTagCompound.getInteger("Poison") != 0) list.add("Poison " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Poison")));
-		if (itemStack.stackTagCompound.getInteger("Decay") != 0) list.add("Decay " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Decay")));
-		if (itemStack.stackTagCompound.getInteger("Lifesteal") != 0) list.add("Leech " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Lifesteal")));
-		if (itemStack.stackTagCompound.getInteger("Knockback") != 0) list.add("Knockback " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Knockback")));
-		if (itemStack.stackTagCompound.getInteger("Blind") != 0) list.add("Blind " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Blind")));
-		if (itemStack.stackTagCompound.getInteger("Slow") != 0) list.add("Slow " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Slow")));
-		if (itemStack.stackTagCompound.getInteger("Pierce") != 0) list.add("Piercing " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Pierce")));
-		if (itemStack.stackTagCompound.getInteger("Damage") != 0) list.add("Sharpness " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Damage")));
-		if (itemStack.stackTagCompound.getInteger("Magic") != 0) list.add("Wrath " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Magic")));
-		if (itemStack.stackTagCompound.getInteger("Fire") != 0) list.add("Anger " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Fire")));
-		if (itemStack.stackTagCompound.getInteger("Wither") != 0) list.add("Hatred " + UtilityHelper.toRoman(itemStack.stackTagCompound.getInteger("Wither")));
+	private List addNormalInfo(ItemStack item)
+	{
+		List list = new ArrayList();
+		if (item.stackTagCompound.getInteger("Level") != 0)
+		{
+			list.add("Hold SHIFT for more information");
+			list.add("Level: " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Level")));
+		}
+		if (item.stackTagCompound.getInteger("Burn") != 0) list.add("Burn " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Burn")));
+		if (item.stackTagCompound.getInteger("Poison") != 0) list.add("Poison " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Poison")));
+		if (item.stackTagCompound.getInteger("Decay") != 0) list.add("Decay " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Decay")));
+		if (item.stackTagCompound.getInteger("Lifesteal") != 0) list.add("Leech " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Lifesteal")));
+		if (item.stackTagCompound.getInteger("Knockback") != 0) list.add("Knockback " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Knockback")));
+		if (item.stackTagCompound.getInteger("Blind") != 0) list.add("Blind " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Blind")));
+		if (item.stackTagCompound.getInteger("Slow") != 0) list.add("Slow " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Slow")));
+		if (item.stackTagCompound.getInteger("Pierce") != 0) list.add("Piercing " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Pierce")));
+		if (item.stackTagCompound.getInteger("Damage") != 0) list.add("Sharpness " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Damage")));
+		if (item.stackTagCompound.getInteger("Magic") != 0) list.add("Wrath " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Magic")));
+		if (item.stackTagCompound.getInteger("Fire") != 0) list.add("Anger " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Fire")));
+		if (item.stackTagCompound.getInteger("Wither") != 0) list.add("Hatred " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Wither")));
+
+		return list;
+	}
+
+	private List addShiftInfo(ItemStack item)
+	{
+		List list = new ArrayList();
+		if (item.stackTagCompound.getInteger("Level") != 0) list.add("Level: " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Level")));
+		if (item.stackTagCompound.getInteger("Burn") != 0) list.add("Burn: Attacks light enemies on fire for " + item.stackTagCompound.getInteger("Burn") + " seconds.");
+		if (item.stackTagCompound.getInteger("Poison") != 0) list.add("Poison: Attacks give Poison " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Poison")) + " for 5 seconds.");
+		if (item.stackTagCompound.getInteger("Decay") != 0) list.add("Decay: Attacks give Wither " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Decay")) + " for 5 seconds.");
+		if (item.stackTagCompound.getInteger("Lifesteal") != 0) list.add("Leech: Gain " + UtilityHelper.round(item.stackTagCompound.getInteger("Lifesteal") * item.stackTagCompound.getFloat("weaponDamage") * 0.05F, 2) + " hearts per attack.");
+		if (item.stackTagCompound.getInteger("Knockback") != 0) list.add("Knockback: Knock enemies away on hit.");
+		if (item.stackTagCompound.getInteger("Blind") != 0) list.add("Blind: Attacks blind enemies for " + item.stackTagCompound.getInteger("Blind") + " seconds.");
+		if (item.stackTagCompound.getInteger("Slow") != 0) list.add("Slow: Attacks slow enemies for " + item.stackTagCompound.getInteger("Slow") + " seconds.");
+		if (item.stackTagCompound.getInteger("Pierce") != 0) list.add("Piercing: Attacks ignore " + item.stackTagCompound.getInteger("Pierce") * 20 + "% of armor.");
+		if (item.stackTagCompound.getInteger("Damage") != 0) list.add("Sharpness: Attacks deal " + item.stackTagCompound.getInteger("Damage") * 20 + "% increased damage.");
+		if (item.stackTagCompound.getInteger("Magic") != 0) list.add("Wrath: Attacks deal " + item.stackTagCompound.getInteger("Magic") * 20 + "% more damage as magic damage.");
+		if (item.stackTagCompound.getInteger("Fire") != 0) list.add("Anger: Attacks deal " + item.stackTagCompound.getInteger("Fire") * 20 + "% more damage as fire damage.");
+		if (item.stackTagCompound.getInteger("Wither") != 0) list.add("Hatred: Attacks deal " + item.stackTagCompound.getInteger("Wither") * 20 + "% more damage as wither damage.");
+		return list;
+	}
+
+	public static ItemStack addLevel(ItemStack item, String upgrade)
+	{
+		if (upgrade == null || upgrade.length() == 0) return item;
+
+		int level = item.stackTagCompound.getInteger("Level");
+		int upgradeStat = item.stackTagCompound.getInteger(upgrade);
+
+		if (upgradeStat < 5)
+		{
+			level++;
+			upgradeStat++;
+		}
+
+		item.stackTagCompound.setInteger("Level", level);
+		item.stackTagCompound.setInteger(upgrade, upgradeStat);
+
+		return item;
 	}
 }

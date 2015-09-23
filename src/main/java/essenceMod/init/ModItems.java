@@ -1,5 +1,6 @@
 package essenceMod.init;
 
+import cpw.mods.fml.common.Loader;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import essenceMod.help.RegisterHelper;
@@ -22,6 +23,8 @@ public class ModItems
 	
 	public static Item infusedApple = new ItemModFood(0, false).addPotionEffect(Potion.damageBoost.id, 90, 1).addPotionEffect(Potion.resistance.id, 90, 2).addPotionEffect(Potion.field_76444_x.id, 90, 4).setUnlocalizedName("infusedApple");
 	
+	public static Item infusedBowstring = new ItemMod().setUnlocalizedName("infusedBowstring");
+	
 	public static void init()
 	{
 		RegisterHelper.registerItem(infusedIngot);
@@ -37,5 +40,7 @@ public class ModItems
 		RegisterHelper.registerItem(platedDiamond);
 		
 		RegisterHelper.registerItem(infusedApple);
+		
+		if (Loader.isModLoaded("TConstruct")) RegisterHelper.registerItem(infusedBowstring);
 	}
 }

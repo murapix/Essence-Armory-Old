@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import essenceMod.init.ModItems;
@@ -30,12 +31,19 @@ public class EssenceEventHandler
 		MinecraftForge.TERRAIN_GEN_BUS.register(new EssenceEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new EssenceEventHandler());
 		FMLCommonHandler.instance().bus().register(new EssenceEventHandler());
+		
+		MinecraftForge.EVENT_BUS.register(new TConstructHandler());
+		
 		Random rand = new Random();
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onLivingDropsEvent(LivingDropsEvent event)
 	{
+		if (Loader.isModLoaded("TConstruct"))
+		{
+			System.out.println("Tinkers Construct Loaded");
+		}
 		if (event.entityLiving instanceof EntityMob)
 		{
 			if (rand.nextInt(25) < 5 + event.lootingLevel)
