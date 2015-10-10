@@ -16,7 +16,10 @@ import essenceMod.init.ModEntities;
 import essenceMod.init.ModItems;
 import essenceMod.init.ModTileEntity;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
+dependencies = "required-after:Forge@[1.7.10-10.13.2.1291,);" +
+		"required-after:Baubles@[1.7.10-1.0.1.10,);" +
+		"after:TConstruct@[1.7.10-1.8.7,);")
 public class EssenceMod
 {
 	public static EssenceMod instance;
@@ -36,7 +39,14 @@ public class EssenceMod
 	{
 		Recipes.init();
 		InfuserRecipes.init();
-		if (Loader.isModLoaded("TConstruct")) TConstructHandler.init();
+		if (Loader.isModLoaded("TConstruct"))
+		{
+			try
+			{
+				TConstructHandler.init();
+			}
+			catch (Exception e){}
+		}
 	}
 
 	@Mod.EventHandler

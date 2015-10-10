@@ -3,7 +3,9 @@ package essenceMod.entities.tileEntities;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,9 +23,16 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	public boolean multiblock = false;
 	private boolean active = false;
 	private int ticksRemaining;
-	private static final int infuseDuration = 200;
+	public static final int infuseDuration = 200;
+
+	public enum slots
+	{
+		ITEM, INNER, OUTER
+	}
 
 	public ItemStack inv;
+	public ItemStack[] inner;
+	public ItemStack[] outer;
 
 	@Override
 	public void updateEntity()
@@ -74,14 +83,14 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	private ArrayList<ItemStack> getOuterItems()
 	{
 		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 3)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord - 2)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 3, yCoord - 1, zCoord)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord + 2)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 3)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord + 2)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 3, yCoord - 1, zCoord)).inv);
-		items.add(((TileEntityEssencePylon)worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord - 2)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 3)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord - 2)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord - 3, yCoord - 1, zCoord)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord + 2)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 3)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord + 2)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord + 3, yCoord - 1, zCoord)).inv);
+		items.add(((TileEntityEssencePylon) worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord - 2)).inv);
 		return items;
 	}
 
@@ -274,4 +283,5 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	{
 		return ticksRemaining;
 	}
+
 }
