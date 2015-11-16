@@ -41,7 +41,7 @@ public class ItemModSword extends ItemSword implements IModItem
 		level = item.stackTagCompound.getInteger("Level");
 		damage = item.stackTagCompound.getInteger("Damage");
 		weaponDamage = 4.0F + toolMaterial.getDamageVsEntity() + level;
-		weaponDamage *= (1 + 0.2 * damage);
+		weaponDamage *= (1 + 0.05 * damage);
 		item.stackTagCompound.setFloat("weaponDamage", weaponDamage);
 	}
 
@@ -126,13 +126,13 @@ public class ItemModSword extends ItemSword implements IModItem
 		float pierceMultiplier = ((1F / (1F - (enemy.getTotalArmorValue() * 0.04F)) - 1F) * pierce / 5F);
 		if (pierce != 0) enemy.attackEntityFrom(playerDamage, weaponDamage * pierceMultiplier);
 
-		float fireMult = item.stackTagCompound.getInteger("Fire") / 5F;
+		float fireMult = item.stackTagCompound.getInteger("Fire") * 0.05F;
 		if (fireMult != 0) enemy.attackEntityFrom(fireDamage, weaponDamage * fireMult);
 
-		float witherMult = item.stackTagCompound.getInteger("Wither") / 5F;
+		float witherMult = item.stackTagCompound.getInteger("Wither") * 0.05F;
 		if (witherMult != 0) enemy.attackEntityFrom(witherDamage, weaponDamage * witherMult);
 
-		float magicMult = item.stackTagCompound.getInteger("Magic") / 5F;
+		float magicMult = item.stackTagCompound.getInteger("Magic") * 0.05F;
 		if (magicMult != 0) enemy.attackEntityFrom(magicDamage, weaponDamage * magicMult);
 
 		int poison = item.stackTagCompound.getInteger("Poison");
@@ -221,10 +221,10 @@ public class ItemModSword extends ItemSword implements IModItem
 		if (item.stackTagCompound.getInteger("Blind") != 0) list.add("Blind: Attacks blind enemies for " + item.stackTagCompound.getInteger("Blind") + " seconds.");
 		if (item.stackTagCompound.getInteger("Slow") != 0) list.add("Slow: Attacks slow enemies for " + item.stackTagCompound.getInteger("Slow") + " seconds.");
 		if (item.stackTagCompound.getInteger("Pierce") != 0) list.add("Piercing: Attacks ignore " + item.stackTagCompound.getInteger("Pierce") * 20 + "% of armor.");
-		if (item.stackTagCompound.getInteger("Damage") != 0) list.add("Sharpness: Attacks deal " + item.stackTagCompound.getInteger("Damage") * 20 + "% increased damage.");
-		if (item.stackTagCompound.getInteger("Magic") != 0) list.add("Wrath: Attacks deal " + item.stackTagCompound.getInteger("Magic") * 20 + "% more damage as magic damage.");
-		if (item.stackTagCompound.getInteger("Fire") != 0) list.add("Anger: Attacks deal " + item.stackTagCompound.getInteger("Fire") * 20 + "% more damage as fire damage.");
-		if (item.stackTagCompound.getInteger("Wither") != 0) list.add("Hatred: Attacks deal " + item.stackTagCompound.getInteger("Wither") * 20 + "% more damage as wither damage.");
+		if (item.stackTagCompound.getInteger("Damage") != 0) list.add("Sharpness: Attacks deal " + item.stackTagCompound.getInteger("Damage") * 5 + "% increased damage.");
+		if (item.stackTagCompound.getInteger("Magic") != 0) list.add("Wrath: Attacks deal " + item.stackTagCompound.getInteger("Magic") * 5 + "% more damage as magic damage.");
+		if (item.stackTagCompound.getInteger("Fire") != 0) list.add("Anger: Attacks deal " + item.stackTagCompound.getInteger("Fire") * 5 + "% more damage as fire damage.");
+		if (item.stackTagCompound.getInteger("Wither") != 0) list.add("Hatred: Attacks deal " + item.stackTagCompound.getInteger("Wither") * 5 + "% more damage as wither damage.");
 		return list;
 	}
 

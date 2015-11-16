@@ -17,9 +17,10 @@ import essenceMod.init.ModItems;
 import essenceMod.init.ModTileEntity;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
-dependencies = "required-after:Forge@[1.7.10-10.13.2.1291,);" +
+dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
 		"required-after:Baubles@[1.7.10-1.0.1.10,);" +
-		"after:TConstruct@[1.7.10-1.8.7,);")
+		"after:TConstruct@[1.7.10-1.8.7,);" +
+		"after:Draconic-Evolution@[1.7.10-1.0.2-Snapshot_3,);")
 public class EssenceMod
 {
 	public static EssenceMod instance;

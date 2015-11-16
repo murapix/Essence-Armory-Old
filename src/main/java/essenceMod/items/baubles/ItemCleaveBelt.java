@@ -61,7 +61,7 @@ public class ItemCleaveBelt extends ItemBauble
 		if (item.stackTagCompound.hasKey("Level"))
 		{
 			int level = item.stackTagCompound.getInteger("Level");
-			list.add("Level: " + item.stackTagCompound.getInteger("Level"));
+			list.add("Level: " + level);
 			if (level != 0) list.add("Attacks deal damage to all enemies within " + level + ((level == 1) ? " block" : " blocks") + ", decreasing based on distance");
 		}
 	}
