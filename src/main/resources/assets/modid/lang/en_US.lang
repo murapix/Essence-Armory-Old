@@ -26,36 +26,36 @@ item.infusedBaseAmulet.name=§6Infused Amulet
 
 item.infusedFlightAmulet.name=§6Angelic Amulet
 
-item.infusedRing1-1.name=§6Ring of Lesser Swiftness
-item.infusedRing2-1.name=§6Ring of Swiftness
-item.infusedRing3-1.name=§6Ring of Greater Swiftness
-item.infusedRing1-3.name=§6Ring of Lesser Haste
-item.infusedRing2-3.name=§6Ring of Haste
-item.infusedRing3-3.name=§6Ring of Greater Haste
-item.infusedRing1-5.name=§6Ring of Lesser Strength
-item.infusedRing2-5.name=§6Ring of Strength
-item.infusedRing3-5.name=§6Ring of Greater Strength
-item.infusedRing1-8.name=§6Ring of Lesser Jump Boost
-item.infusedRing2-8.name=§6Ring of Jump Boost
-item.infusedRing3-8.name=§6Ring of Greater Jump Boost
-item.infusedRing1-10.name=§6Ring of Lesser Regeneration
-item.infusedRing2-10.name=§6Ring of Regeneration
-item.infusedRing3-10.name=§6Ring of Greater Regeneration
-item.infusedRing1-12.name=§6Ring of Fire Resistance
-item.infusedRing1-13.name=§6Ring of Water Breathing
-item.infusedRing1-16.name=§6Ring of Night Vision
+item.infusedRing:1.name=§6Ring of Lesser Swiftness
+item.infusedRing:2.name=§6Ring of Swiftness
+item.infusedRing:3.name=§6Ring of Greater Swiftness
+item.infusedRing:4.name=§6Ring of Lesser Haste
+item.infusedRing:5.name=§6Ring of Haste
+item.infusedRing:6.name=§6Ring of Greater Haste
+item.infusedRing:7.name=§6Ring of Lesser Strength
+item.infusedRing:8.name=§6Ring of Strength
+item.infusedRing:9.name=§6Ring of Greater Strength
+item.infusedRing:10.name=§6Ring of Lesser Jump Boost
+item.infusedRing:11.name=§6Ring of Jump Boost
+item.infusedRing:12.name=§6Ring of Greater Jump Boost
+item.infusedRing:13.name=§6Ring of Lesser Regeneration
+item.infusedRing:14.name=§6Ring of Regeneration
+item.infusedRing:15.name=§6Ring of Greater Regeneration
+item.infusedRing:16.name=§6Ring of Fire Resistance
+item.infusedRing:17.name=§6Ring of Water Breathing
+item.infusedRing:18.name=§6Ring of Night Vision
 
-item.infusedLootAmulet1.name=§6Essence Shard Magnet
-item.infusedLootAmulet2.name=§6Essence Shard Gatherer
-item.infusedLootAmulet3.name=§6Essence Shard Collector
-item.infusedLootAmulet4.name=§6Essence Shard Accumulator
-item.infusedLootAmulet5.name=§6Essence Shard Amasser
+item.infusedLootAmulet:1.name=§6Essence Shard Magnet
+item.infusedLootAmulet:2.name=§6Essence Shard Gatherer
+item.infusedLootAmulet:3.name=§6Essence Shard Collector
+item.infusedLootAmulet:4.name=§6Essence Shard Accumulator
+item.infusedLootAmulet:5.name=§6Essence Shard Amasser
 
-item.infusedCleaveBelt1.name=§6Dervish's Sash
-item.infusedCleaveBelt2.name=§6Reaper's Waistband
-item.infusedCleaveBelt3.name=§6Belt of the Wyvern
-item.infusedCleaveBelt4.name=§6Girdle of the Hydra
-item.infusedCleaveBelt5.name=§6Draconic Harness
+item.infusedCleaveBelt:1.name=§6Dervish's Sash
+item.infusedCleaveBelt:2.name=§6Reaper's Waistband
+item.infusedCleaveBelt:3.name=§6Belt of the Wyvern
+item.infusedCleaveBelt:4.name=§6Girdle of the Hydra
+item.infusedCleaveBelt:5.name=§6Draconic Harness
 
 item.infusedApple.name=§6Essence Infused Apple
 
@@ -67,3 +67,5 @@ tile.infusedStarmetal.name=§6Infused Starmetal
 itemGroup.tabEssence=§6Essence Armory
 
 material.infusedstarmetal=§6Infused Starmetal
+
+enchantment.shardLoot=Essence Ripper

@@ -1,24 +1,31 @@
 package essenceMod.handlers;
 
+import java.util.ListIterator;
 import java.util.Random;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.init.ModArmory;
 import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
+import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemKnockbackBelt;
 import essenceMod.items.baubles.ItemLootAmulet;
 
@@ -47,25 +54,27 @@ public class EssenceEventHandler
 		}
 		if (event.entityLiving instanceof EntityMob)
 		{
-			if (rand.nextInt(25) < 5 + event.lootingLevel)
+			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
 			{
-				int amount;
-				if (event.lootingLevel == 0) amount = 1; 
-				else amount = 1 + rand.nextInt(Math.max(0, event.lootingLevel));
-				if (event.source.getEntity() instanceof EntityPlayer)
+				EntityPlayer player = (EntityPlayer) event.source.getEntity();
+				ItemStack weapon = player.getCurrentEquippedItem();
+				if (weapon != null && EnchantmentHelper.getEnchantmentLevel(ModArmory.shardLooter.effectId, weapon) == 1)
 				{
-					EntityPlayer player = (EntityPlayer) event.source.getEntity();
-					if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0).getItem() instanceof ItemLootAmulet)
+					int amuletLevel = 0;
+					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
+					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
 					{
-						ItemStack item = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-						if (ItemLootAmulet.getLevel(item) != 0)
-						{
-							amount += rand.nextInt(ItemLootAmulet.getLevel(item));
-							amount *= ItemLootAmulet.getLevel(item);
-						}
+						amuletLevel = ItemLootAmulet.getLevel(amulet);
+					}
+					if (rand.nextInt(30) < (5 * (1 + amuletLevel)))
+					{
+						int amount;
+						if (event.lootingLevel == 0) amount = 1;
+						else amount = 1 + rand.nextInt(Math.max(0, event.lootingLevel));
+						amount *= (1 + amuletLevel);
+						event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, amount)));
 					}
 				}
-				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, amount)));
 			}
 		}
 	}
@@ -119,6 +128,34 @@ public class EssenceEventHandler
 	}
 	
 	@SubscribeEvent
-	public void onPlayerPotionAdded(Event event)
-	{}
+	@SideOnly(Side.CLIENT)
+	public void infusedTooltip(ItemTooltipEvent event)
+	{
+		if (event.itemStack == null || event.entityPlayer == null || event.entityPlayer.worldObj == null) return;
+		if (event.itemStack.getItem() instanceof ItemModSword)
+		{
+			ListIterator<String> iterator = event.toolTip.listIterator();
+			while (iterator.hasNext())
+			{
+				String next = iterator.next();
+				if (next.contains("Attack Damage"))
+				{
+					iterator.previous();
+					float weaponDamage = event.itemStack.stackTagCompound.getFloat("weaponDamage");
+					float fireDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Fire") * weaponDamage * 0.05F;
+					float witherDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Wither") * weaponDamage * 0.05F;
+					float magicDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Magic") * weaponDamage * 0.05F;
+					float chaosDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Chaos") * weaponDamage * 0.05F;
+					float divineDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Divine") * weaponDamage * 0.05F;
+					
+					if (fireDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + fireDamage + " Fire Damage");
+					if (witherDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + witherDamage + " Wither Damage");
+					if (magicDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + magicDamage + " Magic Damage");
+					if (chaosDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + chaosDamage + " Chaos Damage");
+					if (divineDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + divineDamage + " Divine Damage");
+					break;
+				}
+			}
+		}
+	}
 }

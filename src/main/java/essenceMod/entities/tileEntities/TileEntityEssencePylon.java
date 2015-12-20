@@ -1,7 +1,7 @@
 package essenceMod.entities.tileEntities;
 
 import java.util.ArrayList;
-import essenceMod.help.Reference;
+import essenceMod.utility.Reference;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 

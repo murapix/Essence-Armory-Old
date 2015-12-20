@@ -14,8 +14,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.help.Reference;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
 
 public class EssencePylon extends BlockContainer
 {

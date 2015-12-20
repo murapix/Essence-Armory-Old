@@ -3,8 +3,8 @@ package essenceMod.items;
 import java.util.List;
 import java.util.UUID;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -12,30 +12,30 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.help.Reference;
-import essenceMod.help.UtilityHelper;
+import essenceMod.crafting.Upgrade;
 import essenceMod.init.ModArmory;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
+import essenceMod.utility.UtilityHelper;
 
 public class ItemModArmor extends ItemArmor implements IModItem
 {
 	private final AttributeModifier health = new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "EssenceArmoryArmorHealth", 2D, 0);
-	
-	int level, resist, thorns, absorption, protection, fireProt, blastProt, projProt, witherProt, magicProt, healthBoost;
-	public final int maxLevel = 15, maxResist = 5, maxThorns = 3, maxAbsorption = 5, maxProtection = 4, maxFireProt = 4, maxBlastProt = 4, maxProjProt = 4, maxWitherProt = 4, maxMagicProt = 4, maxHealthBoost = 5;
-	boolean invisible;
-	
-	int armorType;
 
+	int level;
+	int armorType;
 	int absorptionDelay;
 	float absorptionRemaining;
 
@@ -46,32 +46,8 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		setMaxDamage(0);
 		MinecraftForge.EVENT_BUS.register(this);
 
-		level = resist = thorns = absorption = protection = fireProt = blastProt = projProt = witherProt = magicProt = healthBoost = 0;
-		invisible = false;
+		level = 0;
 		armorType = ArmorType;
-	}
-
-	public ItemModArmor(ArmorMaterial material, int ArmorType, String[] upgrades)
-	{
-		this(material, ArmorType);
-
-		level = upgrades.length;
-		for (String str : upgrades)
-		{
-			if (str.equals("Resistance")) resist++;
-			else if (str.equals("Thorns")) thorns++;
-			else if (str.equals("Absorption")) absorption++;
-			else if (str.equals("Protection")) protection++;
-			else if (str.equals("Fire Protection")) fireProt++;
-			else if (str.equals("BlastProtection")) blastProt++;
-			else if (str.equals("Projectile Protection")) projProt++;
-			else if (str.equals("Wither Protection")) witherProt++;
-			else if (str.equals("Magic Protection")) magicProt++;
-			else if (str.equals("Health Boost")) healthBoost++;
-			else if (str.equals("Invisible")) invisible = true;
-		}
-		absorption = 5;
-		healthBoost = 5;
 	}
 
 	@Override
@@ -79,19 +55,7 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	{
 		if (!item.hasTagCompound()) item.setTagCompound(new NBTTagCompound());
 		item.stackTagCompound.setInteger("Level", level);
-		item.stackTagCompound.setInteger("Resistance", resist);
-		item.stackTagCompound.setInteger("Thorns", thorns);
-		item.stackTagCompound.setInteger("Absorption", absorption);
-		item.stackTagCompound.setInteger("Protection", protection);
-		item.stackTagCompound.setInteger("Blast Protection", blastProt);
-		item.stackTagCompound.setInteger("Fire Protection", fireProt);
-		item.stackTagCompound.setInteger("Projectile Protection", projProt);
-		item.stackTagCompound.setInteger("Wither Protection", witherProt);
-		item.stackTagCompound.setInteger("Magic Protection", magicProt);
-		item.stackTagCompound.setInteger("Health Boost", healthBoost);
 		item.stackTagCompound.setInteger("Absorption Delay", 0);
-		
-		if (thorns != 0) item.addEnchantment(Enchantment.thorns, thorns);
 	}
 
 	@Override
@@ -121,14 +85,14 @@ public class ItemModArmor extends ItemArmor implements IModItem
 			for (int i = 1; i <= 4; i++)
 			{
 				ItemStack item = player.getEquipmentInSlot(i);
-				if (item == null);
+				if (item == null) ;
 				else if (item.getItem() instanceof ItemModArmor)
 				{
 					if (item.hasTagCompound())
 					{
 						if (item.stackTagCompound.getInteger("Absorption Delay") != 0) resetAbsorption = false;
-						absorption += item.stackTagCompound.getInteger("Absorption");
-						healthBoost += item.stackTagCompound.getInteger("Health Boost");
+						absorption += ItemModArmor.getUpgradeLevel(item, "Absorption");
+						healthBoost += ItemModArmor.getUpgradeLevel(item, "Health Boost");
 					}
 					else onCreated(item, player.worldObj, player);
 				}
@@ -140,13 +104,13 @@ public class ItemModArmor extends ItemArmor implements IModItem
 			float currentAbsorption = player.getAbsorptionAmount();
 			if (currentAbsorption > maxAbsorption && resetAbsorption) player.setAbsorptionAmount(maxAbsorption + absorption);
 			else if (currentAbsorption <= maxAbsorption && resetAbsorption) player.setAbsorptionAmount(currentAbsorption + absorption);
-			
+
 			UUID playerID = player.getGameProfile().getId();
 			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
 			if (attribute != null)
 			{
-					attribute.removeModifier(health);
-					attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + healthBoost, health.getAmount() * healthBoost, health.getOperation()));
+				attribute.removeModifier(health);
+				attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + healthBoost, health.getAmount() * healthBoost, health.getOperation()));
 			}
 		}
 	}
@@ -156,19 +120,37 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	{
 		if (event.entityLiving instanceof EntityPlayer)
 		{
+			DamageSource damage = event.source;
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			ItemStack[] equipment = new ItemStack[4];
 			int resistance = 0;
+			int protection = 0;
+			int thorns = 0;
 			for (int i = 0; i < 4; i++)
 			{
 				equipment[i] = player.getEquipmentInSlot(i + 1);
 				if (equipment[i] != null && equipment[i].getItem() instanceof ItemModArmor)
 				{
 					equipment[i].stackTagCompound.setInteger("Absorption Delay", 200);
-					resistance += equipment[i].stackTagCompound.getInteger("Resistance");
+					resistance += ItemModArmor.getUpgradeLevel(equipment[i], "Resistance");
+					protection += ItemModArmor.getUpgradeLevel(equipment[i], "Protection") * 2;
+					thorns += ItemModArmor.getUpgradeLevel(equipment[i], "Thorns");
+
+					if (damage.isFireDamage()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Fire Protection") * 3;
+					else if (damage.isMagicDamage()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Magic Protection") * 3;
+					else if (damage.isProjectile()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Projectile Protection") * 3;
+					else if (damage.isExplosion()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Blast Protection") * 3;
+					else if (damage.damageType.equals(DamageSource.wither.damageType)) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Wither Protection") * 3;
 				}
 			}
+			event.ammount *= (1 - protection / 100);
 			event.ammount *= (1 - resistance / 20);
+
+			Entity entity = event.source.getEntity();
+			if (entity != null)
+			{
+				if (thorns != 0) entity.attackEntityFrom(DamageSource.causeThornsDamage(player), thorns * 0.25F);
+			}
 		}
 	}
 
@@ -187,7 +169,7 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		}
 		else return null;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
@@ -196,16 +178,10 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack par1ItemStack)
-	{
-		return true;
-	}
-
-	@Override
 	public void addInformation(ItemStack item, EntityPlayer player, List list, boolean bool)
 	{
 		if (!item.hasTagCompound()) onCreated(item, player.worldObj, player);
-		
+
 		if (item.stackTagCompound.getInteger("Absorption") != 0)
 		{
 			list.add("Absorption " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Absorption")));
@@ -214,5 +190,40 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		{
 			list.add("Health Boost " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Health Boost")));
 		}
+	}
+
+	/**
+	 * Returns the level of the upgrade with the given name found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
+	 * 
+	 * @param item
+	 *            The item being checked for the upgrade.
+	 * @param name
+	 *            The name of the upgrade.
+	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
+	 */
+	public static int getUpgradeLevel(ItemStack item, String name)
+	{
+		NBTTagList upgradeList = item.stackTagCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);
+		for (int i = 0; i < upgradeList.tagCount(); i++)
+		{
+			NBTTagCompound tag = upgradeList.getCompoundTagAt(i);
+			if (tag.getString("Name").equals(name)) return tag.getInteger("Level");
+		}
+		return 0;
+	}
+
+	/**
+	 * Returns the level of the given upgrade found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
+	 * 
+	 * @param item
+	 *            The item being checked for the upgrade.
+	 * @param upgrade
+	 *            The upgrade of which the level is being checked.
+	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
+	 */
+	public static int getUpgradeLevel(ItemStack item, Upgrade upgrade)
+	{
+		if (upgrade == null || upgrade.name == null) return 0;
+		return ItemModArmor.getUpgradeLevel(item, upgrade.name);
 	}
 }

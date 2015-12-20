@@ -1,4 +1,4 @@
-package essenceMod.help;
+package essenceMod.utility;
 
 import org.apache.logging.log4j.Level;
 import cpw.mods.fml.common.FMLLog;

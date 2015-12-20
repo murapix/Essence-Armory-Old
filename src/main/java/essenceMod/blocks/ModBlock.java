@@ -6,8 +6,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.help.Reference;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
 
 public class ModBlock extends Block
 {

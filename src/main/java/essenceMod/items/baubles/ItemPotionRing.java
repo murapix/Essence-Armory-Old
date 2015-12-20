@@ -2,14 +2,18 @@ package essenceMod.items.baubles;
 
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -19,25 +23,69 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.help.UtilityHelper;
+import essenceMod.utility.Reference;
+import essenceMod.utility.UtilityHelper;
 
 public class ItemPotionRing extends ItemBauble
 {
-	int level, potionID, cooldown;
-
+	public int level, cooldown;
+	public Effect type;
+	public IIcon[] icons = new IIcon[19];
+	
 	private final AttributeModifier speed = new AttributeModifier(UUID.fromString("91AEAA56-376B-4498-935B-2F7F68070635"), "EssenceArmoryRingSpeed", 0.2D, 2);
 
+	private enum Effect
+	{
+		NONE,
+		SWIFTNESS,
+		HASTE,
+		STRENGTH,
+		JUMP,
+		REGENERATION,
+		SPECIAL;
+	}
+	
+	
 	public ItemPotionRing()
 	{
-		this(0, 0);
+		this(0, Effect.NONE);
 	}
+	
 
-	public ItemPotionRing(int level, int potionID)
+	public ItemPotionRing(int level, Effect effect)
 	{
-		super();
 		this.level = level;
-		this.potionID = potionID;
+		this.type = effect;
 		MinecraftForge.EVENT_BUS.register(this);
+		this.setHasSubtypes(true);
+		this.setMaxDamage(0);
+	}
+	
+	@Override
+	public void registerIcons(IIconRegister iconRegister)
+	{
+		for (int i = 0; i < 19; i++)
+			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
+	}
+	
+	@Override
+	public IIcon getIconFromDamage(int meta)
+	{
+		if (meta > 19) meta = 0;
+		return icons[meta];
+	}
+	
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list)
+	{
+		for (int i = 0; i < 19; i++)
+			list.add(new ItemStack(item, 1, i));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack item)
+	{
+		return this.getUnlocalizedName() + ":" + item.getItemDamage();
 	}
 
 	@Override
@@ -63,7 +111,7 @@ public class ItemPotionRing extends ItemBauble
 			IAttributeInstance attribute = p.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
 			if (attribute != null)
 			{
-				if (potionID == Potion.moveSpeed.id)
+				if (type == Effect.SWIFTNESS)
 				{
 					attribute.removeModifier(speed);
 				}
@@ -75,9 +123,47 @@ public class ItemPotionRing extends ItemBauble
 	public void onCreated(ItemStack item, World world, EntityPlayer player)
 	{
 		super.onCreated(item, world, player);
-
+		if (type == Effect.NONE)
+			switch (item.getItemDamage())
+			{
+				case 0:
+					type = Effect.NONE;
+					break;
+				case 1:
+				case 2:
+				case 3:
+					type = Effect.SWIFTNESS;
+					break;
+				case 4:
+				case 5:
+				case 6:
+					type = Effect.HASTE;
+					break;
+				case 7:
+				case 8:
+				case 9:
+					type = Effect.STRENGTH;
+					break;
+				case 10:
+				case 11:
+				case 12:
+					type = Effect.JUMP;
+					break;
+				case 13:
+				case 14:
+				case 15:
+					type = Effect.REGENERATION;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					type = Effect.SPECIAL;
+					break;
+			}
+		if (level == 0) level = (item.getItemDamage() + 2) % 3 + 1;
+		if (type == Effect.NONE) level = 0; 
 		item.stackTagCompound.setInteger("Level", level);
-		item.stackTagCompound.setInteger("PotionID", potionID);
+		item.stackTagCompound.setInteger("Type", type.ordinal());
 	}
 
 	@Override
@@ -86,8 +172,8 @@ public class ItemPotionRing extends ItemBauble
 		super.onWornTick(item, player);
 
 		int level = item.stackTagCompound.getInteger("Level");
-		int potionID = item.stackTagCompound.getInteger("PotionID");
-		if (potionID == Potion.regeneration.id)
+		int type = item.stackTagCompound.getInteger("Type");
+		if (type == Effect.REGENERATION.ordinal())
 		{
 			if (cooldown != 0) cooldown--;
 			else if (cooldown == 0)
@@ -96,9 +182,12 @@ public class ItemPotionRing extends ItemBauble
 				cooldown = 60 / ((ItemPotionRing) item.getItem()).getLevel(item);
 			}
 		}
-		if (potionID == Potion.nightVision.id) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
-		if (potionID == Potion.waterBreathing.id) player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 20, 0));
-		if (potionID == Potion.fireResistance.id) player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 20, 0));
+		if (type == Effect.SPECIAL.ordinal())
+		{
+			if (level == 1) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
+			if (level == 2) player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 20, 0));
+			if (level == 3) player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 20, 0));
+		}
 	}
 
 	public int getLevel(ItemStack item)
@@ -106,52 +195,50 @@ public class ItemPotionRing extends ItemBauble
 		return item.stackTagCompound.getInteger("Level");
 	}
 
-	public int getPotionID(ItemStack item)
+	public int getType(ItemStack item)
 	{
-		return item.stackTagCompound.getInteger("PotionID");
+		return item.stackTagCompound.getInteger("Type");
 	}
 
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean bool)
 	{
 		String info = "";
+		int level = 0;
 		if (itemStack.stackTagCompound == null) onCreated(itemStack, entityPlayer.worldObj, entityPlayer);
 
 		if (itemStack.stackTagCompound.hasKey("Level"))
 		{
-			int level = itemStack.stackTagCompound.getInteger("Level");
+			level = itemStack.stackTagCompound.getInteger("Level");
 			info = UtilityHelper.toRoman(level);
 		}
 
 		if (itemStack.stackTagCompound.hasKey("PotionID"))
 		{
-			int potionID = itemStack.stackTagCompound.getInteger("PotionID");
+			int type = itemStack.stackTagCompound.getInteger("Type");
 			String potionName;
-			switch (potionID)
+			switch (type)
 			{
 				case 1:
 					potionName = "Swiftness";
 					break;
-				case 3:
+				case 2:
 					potionName = "Haste";
 					break;
-				case 5:
+				case 3:
 					potionName = "Strength";
 					break;
-				case 8:
+				case 4:
 					potionName = "Jump Boost";
 					break;
-				case 10:
+				case 5:
 					potionName = "Regeneration";
 					break;
-				case 12:
-					potionName = "Fire Resistance";
-					break;
-				case 13:
-					potionName = "Water Breathing";
-					break;
-				case 16:
-					potionName = "Night Vision";
+				case 6:
+					if (level == 1) potionName = "Fire Resistance";
+					else if (level == 2) potionName = "Water Breathing";
+					else if (level == 3) potionName = "Night Vision";
+					else potionName = "No Effect";
 					break;
 				default:
 					potionName = "No Effect";
@@ -172,12 +259,12 @@ public class ItemPotionRing extends ItemBauble
 			int strengthLevel = 0;
 			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring1.getItem()).getPotionID(ring1);
+				int potionID = ((ItemPotionRing) ring1.getItem()).getType(ring1);
 				if (potionID == Potion.damageBoost.id) strengthLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
 			}
 			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring2.getItem()).getPotionID(ring2);
+				int potionID = ((ItemPotionRing) ring2.getItem()).getType(ring2);
 				if (potionID == Potion.damageBoost.id) strengthLevel = Math.max(strengthLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
 			}
 			event.ammount += event.ammount * strengthLevel / 40.0F;
@@ -190,13 +277,13 @@ public class ItemPotionRing extends ItemBauble
 			int jumpLevel = 0;
 			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring1.getItem()).getPotionID(ring1);
-				if (potionID == Potion.jump.id) jumpLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
+				int type = ((ItemPotionRing) ring1.getItem()).getType(ring1);
+				if (type == Effect.JUMP.ordinal()) jumpLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
 			}
 			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring2.getItem()).getPotionID(ring2);
-				if (potionID == Potion.jump.id) jumpLevel = Math.max(jumpLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
+				int type = ((ItemPotionRing) ring2.getItem()).getType(ring2);
+				if (type == Effect.JUMP.ordinal()) jumpLevel = Math.max(jumpLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
 			}
 			event.ammount -= jumpLevel / 20;
 		}
@@ -213,22 +300,20 @@ public class ItemPotionRing extends ItemBauble
 			int swiftnessLevel = 0;
 			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring1.getItem()).getPotionID(ring1);
-				if (potionID == Potion.moveSpeed.id) swiftnessLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
+				int type = ((ItemPotionRing) ring1.getItem()).getType(ring1);
+				if (type == Effect.SWIFTNESS.ordinal()) swiftnessLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
 			}
 			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring2.getItem()).getPotionID(ring2);
-				if (potionID == Potion.moveSpeed.id) swiftnessLevel = Math.max(swiftnessLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
+				int type = ((ItemPotionRing) ring2.getItem()).getType(ring2);
+				if (type == Effect.SWIFTNESS.ordinal()) swiftnessLevel = Math.max(swiftnessLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
 			}
 			UUID playerID = player.getGameProfile().getId();
 			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
 			if (attribute != null)
 			{
-				if (potionID == Potion.moveSpeed.id)
+				if (type == Effect.SWIFTNESS)
 				{
-					double current = attribute.getAttributeValue();
-					double next = speed.getAmount() * level;
 					attribute.removeModifier(speed);
 					attribute.applyModifier(new AttributeModifier(speed.getID(), speed.getName() + swiftnessLevel, speed.getAmount() * swiftnessLevel, speed.getOperation()));
 				}
@@ -245,13 +330,13 @@ public class ItemPotionRing extends ItemBauble
 		int hasteLevel = 0;
 		if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
 		{
-			int potionID = ((ItemPotionRing) ring1.getItem()).getPotionID(ring1);
-			if (potionID == Potion.digSpeed.id) hasteLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
+			int type = ((ItemPotionRing) ring1.getItem()).getType(ring1);
+			if (type == Effect.HASTE.ordinal()) hasteLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
 		}
 		if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
 		{
-			int potionID = ((ItemPotionRing) ring2.getItem()).getPotionID(ring2);
-			if (potionID == Potion.digSpeed.id) hasteLevel = Math.max(hasteLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
+			int type = ((ItemPotionRing) ring2.getItem()).getType(ring2);
+			if (type == Effect.HASTE.ordinal()) hasteLevel = Math.max(hasteLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
 		}
 		event.newSpeed *= (1 + 0.01F * hasteLevel);
 	}
@@ -267,13 +352,13 @@ public class ItemPotionRing extends ItemBauble
 			int jumpLevel = 0;
 			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring1.getItem()).getPotionID(ring1);
-				if (potionID == Potion.jump.id) jumpLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
+				int type = ((ItemPotionRing) ring1.getItem()).getType(ring1);
+				if (type == Effect.JUMP.ordinal()) jumpLevel = ((ItemPotionRing) ring1.getItem()).getLevel(ring1);
 			}
 			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
 			{
-				int potionID = ((ItemPotionRing) ring2.getItem()).getPotionID(ring2);
-				if (potionID == Potion.jump.id) jumpLevel = Math.max(jumpLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
+				int type = ((ItemPotionRing) ring2.getItem()).getType(ring2);
+				if (type == Effect.JUMP.ordinal()) jumpLevel = Math.max(jumpLevel, ((ItemPotionRing) ring2.getItem()).getLevel(ring2));
 			}
 			switch (jumpLevel)
 			{

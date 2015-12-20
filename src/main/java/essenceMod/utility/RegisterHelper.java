@@ -1,4 +1,4 @@
-package essenceMod.help;
+package essenceMod.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

@@ -13,10 +13,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import essenceMod.crafting.InfuserRecipes;
+import essenceMod.crafting.Upgrade;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.gui.GuiEssenceInfuser;
-import essenceMod.help.Reference;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
 
 public class EssenceInfuser extends BlockContainer
 {
@@ -83,12 +85,12 @@ public class EssenceInfuser extends BlockContainer
 					{
 						boolean bool = tileEntity.checkMultiBlockForm();
 						player.addChatMessage(new ChatComponentText(bool ? "- Essence Infuser is correctly set up." : "! Essence Infuser is not correctly set up."));
-						Minecraft.getMinecraft().displayGuiScreen(new GuiEssenceInfuser(player.inventory, tileEntity));
+//						Minecraft.getMinecraft().displayGuiScreen(new GuiEssenceInfuser(player.inventory, tileEntity));
 						tileEntity.multiblock = bool;
 						if (tileEntity.isReady())
 						{
 							tileEntity.activate();
-							player.addChatMessage(new ChatComponentText("Beginng infusion"));
+							player.addChatMessage(new ChatComponentText("- Beginng infusion"));
 						}
 						return true;
 					}

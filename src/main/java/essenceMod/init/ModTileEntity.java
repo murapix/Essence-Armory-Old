@@ -3,8 +3,8 @@ package essenceMod.init;
 import cpw.mods.fml.common.registry.GameRegistry;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.help.Reference;
-import essenceMod.help.RegisterHelper;
+import essenceMod.utility.Reference;
+import essenceMod.utility.RegisterHelper;
 
 public class ModTileEntity
 {

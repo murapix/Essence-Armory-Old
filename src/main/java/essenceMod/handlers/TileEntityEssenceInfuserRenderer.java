@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 import essenceMod.blocks.models.ModelEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.help.Reference;
+import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuserRenderer extends TileEntitySpecialRenderer
 {

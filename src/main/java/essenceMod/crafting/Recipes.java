@@ -7,7 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModBlocks;
 import essenceMod.init.ModItems;
-import essenceMod.items.baubles.ItemPotionRing;
+import essenceMod.enchantment.EnchantmentShard;
 
 public class Recipes
 {
@@ -47,41 +47,46 @@ public class Recipes
 
 		GameRegistry.addShapedRecipe(new ItemStack(ModItems.infusedApple), new Object[] { " A ", "ABA", " A ", 'A', ModItems.platedStar, 'B', Items.apple });
 
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedBaseRing), new Object[] { " A ", "A A", " B ", 'A', Items.gold_nugget, 'B', ModItems.infusedDiamond });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedBaseAmulet), new Object[] { " A ", "A A", " B ", 'A', Items.string, 'B', ModItems.infusedDiamond });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedBaseBelt), new Object[] { " A ", "A A", " B ", 'A', Items.leather, 'B', ModItems.infusedDiamond });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.baseRing), new Object[] { " A ", "A A", " B ", 'A', Items.gold_nugget, 'B', ModItems.infusedDiamond });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.baseAmulet), new Object[] { " A ", "A A", " B ", 'A', Items.string, 'B', ModItems.infusedDiamond });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.baseBelt), new Object[] { " A ", "A A", " B ", 'A', Items.leather, 'B', ModItems.infusedDiamond });
 
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveIBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.infusedStar, 'C', ModArmory.infusedBaseBelt });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveIIBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.crystalStar, 'C', ModArmory.cleaveIBelt });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveIIIBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.platedDiamond, 'C', ModArmory.cleaveIIBelt });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveIVBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.platedStar, 'C', ModArmory.cleaveIIIBelt });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveVBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModBlocks.infusedStarmetal, 'C', ModArmory.cleaveIVBelt });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.infusedStar, 'C', ModArmory.baseBelt });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.crystalStar, 'C', ModArmory.cleaveBelt });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.platedDiamond, 'C', ModArmory.cleaveBelt });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModItems.platedStar, 'C', ModArmory.cleaveBelt });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.cleaveBelt), new Object[] { "ABA", "BCB", "ABA", 'A', Items.gunpowder, 'B', ModBlocks.infusedStarmetal, 'C', ModArmory.cleaveBelt });
 
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootIAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedShard, 'C', ModArmory.infusedBaseAmulet });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootIIAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedCrystal, 'C', ModArmory.lootIAmulet });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootIIIAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedStar, 'C', ModArmory.lootIIAmulet });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootIVAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedDiamond, 'C', ModArmory.lootIIIAmulet });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootVAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedIngot, 'C', ModArmory.lootIVAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedShard, 'C', ModArmory.baseAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedCrystal, 'C', ModArmory.lootAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedStar, 'C', ModArmory.lootAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedDiamond, 'C', ModArmory.lootAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.lootAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Blocks.lapis_block, 'B', ModItems.infusedIngot, 'C', ModArmory.lootAmulet });
 
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedFlightAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Items.feather, 'B', ModItems.platedStar, 'C', ModArmory.infusedBaseAmulet });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.flightAmulet), new Object[] { "ABA", "BCB", "ABA", 'A', Items.feather, 'B', ModItems.platedStar, 'C', ModArmory.baseAmulet });
 
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.fireRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.magma_cream, 'B', ModItems.infusedIngot, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.waterRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.fish, 'B', ModItems.infusedShard, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.nightRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.golden_carrot, 'B', ModItems.infusedShard, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.swiftnessIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.infusedIngot, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.swiftnessIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.platedDiamond, 'C', ModArmory.swiftnessIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.swiftnessIIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.platedStar, 'C', ModArmory.swiftnessIIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.hasteIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.infusedDiamond, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.hasteIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.crystalStar, 'C', ModArmory.hasteIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.hasteIIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.infusedIngot, 'C', ModArmory.hasteIIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.jumpIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.infusedDiamond, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.jumpIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.crystalStar, 'C', ModArmory.jumpIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.jumpIIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.infusedIngot, 'C', ModArmory.jumpIIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.regenerationIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModItems.platedStar, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.regenerationIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModBlocks.infusedBlock, 'C', ModArmory.regenerationIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.regenerationIIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModBlocks.infusedStarmetal, 'C', ModArmory.regenerationIIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.strengthIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModItems.platedStar, 'C', ModArmory.infusedBaseRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.strengthIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModBlocks.infusedBlock, 'C', ModArmory.strengthIRing });
-		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.strengthIIIRing), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModBlocks.infusedStarmetal, 'C', ModArmory.strengthIIRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 1), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.infusedIngot, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 2), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.platedDiamond, 'C', new ItemStack(ModArmory.potionRing, 1, 1) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 3), new Object[] { "ABA", "BCB", "ABA", 'A', Items.sugar, 'B', ModItems.platedStar, 'C', new ItemStack(ModArmory.potionRing, 1, 2) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 4), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.infusedDiamond, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 5), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.crystalStar, 'C', new ItemStack(ModArmory.potionRing, 1, 4) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 6), new Object[] { "ABA", "BCB", "ABA", 'A', Items.redstone, 'B', ModItems.infusedIngot, 'C', new ItemStack(ModArmory.potionRing, 1, 5) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 7), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModItems.platedStar, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 8), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModBlocks.infusedBlock, 'C', new ItemStack(ModArmory.potionRing, 1, 7) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 9), new Object[] { "ABA", "BCB", "ABA", 'A', Items.blaze_powder, 'B', ModBlocks.infusedStarmetal, 'C', new ItemStack(ModArmory.potionRing, 1, 8) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 10), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.infusedDiamond, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 11), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.crystalStar, 'C', new ItemStack(ModArmory.potionRing, 1, 10) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 12), new Object[] { "ABA", "BCB", "ABA", 'A', Items.slime_ball, 'B', ModItems.infusedIngot, 'C', new ItemStack(ModArmory.potionRing, 1, 11) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 13), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModItems.platedStar, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 14), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModBlocks.infusedBlock, 'C', new ItemStack(ModArmory.potionRing, 1, 13) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 15), new Object[] { "ABA", "BCB", "ABA", 'A', Items.ghast_tear, 'B', ModBlocks.infusedStarmetal, 'C', new ItemStack(ModArmory.potionRing, 1, 14) });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 16), new Object[] { "ABA", "BCB", "ABA", 'A', Items.magma_cream, 'B', ModItems.infusedIngot, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 17), new Object[] { "ABA", "BCB", "ABA", 'A', Items.fish, 'B', ModItems.infusedShard, 'C', ModArmory.baseRing });
+		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 18), new Object[] { "ABA", "BCB", "ABA", 'A', Items.golden_carrot, 'B', ModItems.infusedShard, 'C', ModArmory.baseRing });
+		
+		ItemStack enchantedBook;
+		enchantedBook = new ItemStack(Items.enchanted_book);
+		enchantedBook.addEnchantment(ModArmory.shardLooter, 1);
+		GameRegistry.addShapelessRecipe(enchantedBook, new Object[] {Items.book, Items.diamond_sword});
 	}
 }

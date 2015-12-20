@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import essenceMod.blocks.EssenceInfuser;
 import essenceMod.blocks.EssencePylon;
 import essenceMod.blocks.ModBlock;
-import essenceMod.help.RegisterHelper;
+import essenceMod.utility.RegisterHelper;
 
 public class ModBlocks
 {

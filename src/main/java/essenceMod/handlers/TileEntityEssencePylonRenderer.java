@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 import essenceMod.blocks.models.ModelEssencePylon;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.help.Reference;
+import essenceMod.utility.Reference;
 
 public class TileEntityEssencePylonRenderer extends TileEntitySpecialRenderer
 {

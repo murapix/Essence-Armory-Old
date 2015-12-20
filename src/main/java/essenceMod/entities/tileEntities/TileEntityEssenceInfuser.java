@@ -3,9 +3,7 @@ package essenceMod.entities.tileEntities;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,9 +12,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import essenceMod.crafting.InfuserRecipes;
-import essenceMod.help.Reference;
+import essenceMod.crafting.Upgrade;
 import essenceMod.items.IModItem;
 import essenceMod.items.ItemModSword;
+import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 {
@@ -55,21 +54,17 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 				}
 				else if (ticksRemaining == 0 && active)
 				{
-					if (inv.getItem() instanceof ItemModSword)
+					if (inv.getItem() instanceof IModItem)
 					{
-						String upgrade = InfuserRecipes.checkRecipe(inv, getInnerItems(), getOuterItems());
-						if (upgrade.endsWith(" I") || upgrade.endsWith(" V")) upgrade = upgrade.substring(0, upgrade.length() - 2);
-						if (upgrade.endsWith(" II") || upgrade.endsWith(" IV")) upgrade = upgrade.substring(0, upgrade.length() - 3);
-						if (upgrade.endsWith(" III")) upgrade = upgrade.substring(0, upgrade.length() - 4);
-						if (upgrade.endsWith(" ")) upgrade = upgrade.substring(0, upgrade.length() - 1);
-						ItemModSword.addLevel(inv, upgrade);
+						Upgrade upgrade = InfuserRecipes.checkRecipe(inv, getInnerItems(), getOuterItems());
+						if (inv.getItem() instanceof ItemModSword) inv = InfuserRecipes.addLevel(inv, upgrade);
 						active = false;
 					}
 				}
 			}
 		}
 	}
-
+	
 	private ArrayList<ItemStack> getInnerItems()
 	{
 		ArrayList<ItemStack> items = new ArrayList<ItemStack>();

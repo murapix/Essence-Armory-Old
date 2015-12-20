@@ -5,7 +5,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import essenceMod.EssenceMod;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
-import essenceMod.help.LogHelper;
+import essenceMod.utility.LogHelper;
 
 public class ModEntities
 {

@@ -1,4 +1,4 @@
-package essenceMod.help;
+package essenceMod.utility;
 
 public class UtilityHelper
 {

@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.help.Reference;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
 
 public class ItemModBow extends ItemBow implements IModItem
 {

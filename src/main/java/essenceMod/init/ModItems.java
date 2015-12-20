@@ -3,9 +3,9 @@ package essenceMod.init;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
-import essenceMod.help.RegisterHelper;
 import essenceMod.items.ItemMod;
 import essenceMod.items.ItemModFood;
+import essenceMod.utility.RegisterHelper;
 
 public class ModItems
 {

@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import baubles.api.IBauble;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.help.Reference;
 import essenceMod.items.ItemMod;
+import essenceMod.utility.Reference;
 
 public abstract class ItemBauble extends ItemMod implements IBauble
 {

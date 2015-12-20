@@ -53,6 +53,6 @@ public class ItemModFood extends ItemFood
 	
 	public ItemModFood addPotionEffect(int potionID, int potionDuration, int potionAmplifier)
 	{
-		return setPotionEffect(potionID, potionDuration, potionAmplifier, 0);
+		return setPotionEffect(potionID, potionDuration, potionAmplifier, 100);
 	}
 }
