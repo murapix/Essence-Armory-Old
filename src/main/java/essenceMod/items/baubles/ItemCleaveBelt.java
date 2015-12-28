@@ -69,54 +69,57 @@ public class ItemCleaveBelt extends ItemBauble
 	@SubscribeEvent
 	public void onPlayerAttack(AttackEntityEvent event)
 	{
-		EntityLivingBase target = (EntityLivingBase) event.target;
-		World world = target.worldObj;
 		EntityPlayer attacker = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(attacker).getStackInSlot(3);
 		if (belt != null && belt.getItem() instanceof ItemCleaveBelt)
 		{
-			int level = ItemCleaveBelt.getLevel(belt);
-			if (level == 0) return;
-			AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(target.posX - level, target.posY - 1, target.posZ - level, target.posX + level, target.posY + 1, target.posZ + level);
-			List list;
-			if (target instanceof EntityMob)
+			if (event.target instanceof EntityLivingBase)
 			{
-				list = world.getEntitiesWithinAABB(EntityMob.class, axis);
-				list.remove(target);
-				list.remove(attacker);
-			}
-			else if (target instanceof EntityAmbientCreature)
-			{
-				list = world.getEntitiesWithinAABB(EntityAmbientCreature.class, axis);
-				list.remove(target);
-				list.remove(attacker);
-			}
-			else if (target instanceof EntityPlayer)
-			{
-				list = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
-				list.remove(target);
-				list.remove(attacker);
-			}
-			else
-			{
-				list = world.getEntitiesWithinAABB(EntityLivingBase.class, axis);
-				list.remove(target);
-				list.remove(attacker);
-			}
-			ItemStack weapon = attacker.getCurrentEquippedItem();
-			double damage = 0;
-			Iterator iterator = weapon.getItem().getAttributeModifiers(weapon).get(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName()).iterator();
-			while (iterator.hasNext())
-			{
-				damage += ((AttributeModifier) iterator.next()).getAmount();
-			}
-			for (Object obj : list)
-			{
-				EntityLivingBase entity = (EntityLivingBase) obj;
-				double xDiff = Math.abs(target.posX - entity.posX);
-				double zDiff = Math.abs(target.posZ - entity.posZ);
-				int distance = MathHelper.floor_double(Math.max(xDiff, zDiff));
-				entity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), (float) damage * 0.2F * (5 - distance));
+				EntityLivingBase target = (EntityLivingBase) event.target;
+				World world = target.worldObj;
+				int level = ItemCleaveBelt.getLevel(belt);
+				if (level == 0) return;
+				AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(target.posX - level, target.posY - 1, target.posZ - level, target.posX + level, target.posY + 1, target.posZ + level);
+				List list;
+				if (target instanceof EntityMob)
+				{
+					list = world.getEntitiesWithinAABB(EntityMob.class, axis);
+					list.remove(target);
+					list.remove(attacker);
+				}
+				else if (target instanceof EntityAmbientCreature)
+				{
+					list = world.getEntitiesWithinAABB(EntityAmbientCreature.class, axis);
+					list.remove(target);
+					list.remove(attacker);
+				}
+				else if (target instanceof EntityPlayer)
+				{
+					list = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
+					list.remove(target);
+					list.remove(attacker);
+				}
+				else
+				{
+					list = world.getEntitiesWithinAABB(EntityLivingBase.class, axis);
+					list.remove(target);
+					list.remove(attacker);
+				}
+				ItemStack weapon = attacker.getCurrentEquippedItem();
+				double damage = 0;
+				Iterator iterator = weapon.getItem().getAttributeModifiers(weapon).get(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName()).iterator();
+				while (iterator.hasNext())
+				{
+					damage += ((AttributeModifier) iterator.next()).getAmount();
+				}
+				for (Object obj : list)
+				{
+					EntityLivingBase entity = (EntityLivingBase) obj;
+					double xDiff = Math.abs(target.posX - entity.posX);
+					double zDiff = Math.abs(target.posZ - entity.posZ);
+					int distance = MathHelper.floor_double(Math.max(xDiff, zDiff));
+					entity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), (float) damage * 0.2F * (5 - distance));
+				}
 			}
 		}
 	}

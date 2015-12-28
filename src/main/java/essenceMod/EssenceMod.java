@@ -15,8 +15,9 @@ import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Recipes;
 import essenceMod.crafting.Upgrade;
 import essenceMod.handlers.CommandUpgrade;
+import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.EssenceEventHandler;
-import essenceMod.handlers.TConstructHandler;
+import essenceMod.handlers.compatibility.TConstructHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModBlocks;
 import essenceMod.init.ModEntities;
@@ -26,7 +27,7 @@ import essenceMod.utility.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
 dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
-		"required-after:Baubles@[1.7.10-1.0.1.10,);" +
+		"required-after:Baubles;" +
 		"after:TConstruct@[1.7.10-1.8.7,);" +
 		"after:Draconic-Evolution@[1.7.10-1.0.2-Snapshot_3,);" +
 		"after:TravellersGear@[1.7.10-1.16.6,);" +
@@ -38,11 +39,13 @@ public class EssenceMod
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		ConfigHandler.initProps(event.getSuggestedConfigurationFile());
 		ModItems.init();
 		ModBlocks.init();
 		ModArmory.init();
 		ModEntities.init();
 		ModTileEntity.init();
+		EssenceEventHandler.preinit();
 	}
 
 	@Mod.EventHandler
@@ -63,7 +66,6 @@ public class EssenceMod
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		EssenceEventHandler.postinit();
 	}
 	
 	@Mod.EventHandler

@@ -1,10 +1,11 @@
 package essenceMod.items;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -56,6 +57,7 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		if (!item.hasTagCompound()) item.setTagCompound(new NBTTagCompound());
 		item.stackTagCompound.setInteger("Level", level);
 		item.stackTagCompound.setInteger("Absorption Delay", 0);
+
 	}
 
 	@Override
@@ -88,13 +90,9 @@ public class ItemModArmor extends ItemArmor implements IModItem
 				if (item == null) ;
 				else if (item.getItem() instanceof ItemModArmor)
 				{
-					if (item.hasTagCompound())
-					{
-						if (item.stackTagCompound.getInteger("Absorption Delay") != 0) resetAbsorption = false;
-						absorption += ItemModArmor.getUpgradeLevel(item, "Absorption");
-						healthBoost += ItemModArmor.getUpgradeLevel(item, "Health Boost");
-					}
-					else onCreated(item, player.worldObj, player);
+					if (item.stackTagCompound.getInteger("Absorption Delay") != 0) resetAbsorption = false;
+					absorption += UtilityHelper.getUpgradeLevel(item, "Absorption");
+					healthBoost += UtilityHelper.getUpgradeLevel(item, "HealthBoost");
 				}
 			}
 			PotionEffect potion = player.getActivePotionEffect(Potion.field_76444_x);
@@ -132,15 +130,15 @@ public class ItemModArmor extends ItemArmor implements IModItem
 				if (equipment[i] != null && equipment[i].getItem() instanceof ItemModArmor)
 				{
 					equipment[i].stackTagCompound.setInteger("Absorption Delay", 200);
-					resistance += ItemModArmor.getUpgradeLevel(equipment[i], "Resistance");
-					protection += ItemModArmor.getUpgradeLevel(equipment[i], "Protection") * 2;
-					thorns += ItemModArmor.getUpgradeLevel(equipment[i], "Thorns");
+					resistance += UtilityHelper.getUpgradeLevel(equipment[i], "Resistance");
+					protection += UtilityHelper.getUpgradeLevel(equipment[i], "Protection") * 2;
+					thorns += UtilityHelper.getUpgradeLevel(equipment[i], "Thorns");
 
-					if (damage.isFireDamage()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Fire Protection") * 3;
-					else if (damage.isMagicDamage()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Magic Protection") * 3;
-					else if (damage.isProjectile()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Projectile Protection") * 3;
-					else if (damage.isExplosion()) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Blast Protection") * 3;
-					else if (damage.damageType.equals(DamageSource.wither.damageType)) protection += ItemModArmor.getUpgradeLevel(equipment[i], "Wither Protection") * 3;
+					if (damage.isFireDamage()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "FireProtection") * 3;
+					else if (damage.isMagicDamage()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "MagicProtection") * 3;
+					else if (damage.isProjectile()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "ProjectileProtection") * 3;
+					else if (damage.isExplosion()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "BlastProtection") * 3;
+					else if (damage.damageType.equals(DamageSource.wither.damageType)) protection += UtilityHelper.getUpgradeLevel(equipment[i], "WitherProtection") * 3;
 				}
 			}
 			event.ammount *= (1 - protection / 100);
@@ -159,12 +157,10 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	{
 		if (item.getItem() == ModArmory.infusedHelm || item.getItem() == ModArmory.infusedPlate || item.getItem() == ModArmory.infusedBoots)
 		{
-			if (item.stackTagCompound.getBoolean("Invisible")) return Reference.MODID + ":models/armor/invis_layer1.png";
 			return Reference.MODID + ":models/armor/infused_layer1.png";
 		}
 		else if (item.getItem() == ModArmory.infusedPants)
 		{
-			if (item.stackTagCompound.getBoolean("Invisible")) return Reference.MODID + ":models/armor/invis_layer2.png";
 			return Reference.MODID + ":models/armor/infused_layer2.png";
 		}
 		else return null;
@@ -181,49 +177,99 @@ public class ItemModArmor extends ItemArmor implements IModItem
 	public void addInformation(ItemStack item, EntityPlayer player, List list, boolean bool)
 	{
 		if (!item.hasTagCompound()) onCreated(item, player.worldObj, player);
-
-		if (item.stackTagCompound.getInteger("Absorption") != 0)
-		{
-			list.add("Absorption " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Absorption")));
-		}
-		if (item.stackTagCompound.getInteger("Health Boost") != 0)
-		{
-			list.add("Health Boost " + UtilityHelper.toRoman(item.stackTagCompound.getInteger("Health Boost")));
-		}
+		if (GuiScreen.isShiftKeyDown()) list.addAll(addShiftInfo(item));
+		else list.addAll(addNormalInfo(item));
 	}
 
-	/**
-	 * Returns the level of the upgrade with the given name found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
-	 * 
-	 * @param item
-	 *            The item being checked for the upgrade.
-	 * @param name
-	 *            The name of the upgrade.
-	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
-	 */
-	public static int getUpgradeLevel(ItemStack item, String name)
+	private List addNormalInfo(ItemStack item)
 	{
-		NBTTagList upgradeList = item.stackTagCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);
-		for (int i = 0; i < upgradeList.tagCount(); i++)
+		List list = new ArrayList();
+
+		int level = ItemModArmor.getLevel(item);
+		int protection = UtilityHelper.getUpgradeLevel(item, "Protection");
+		int fireProtection = UtilityHelper.getUpgradeLevel(item, "FireProtection");
+		int magicProtection = UtilityHelper.getUpgradeLevel(item, "MagicProtection");
+		int witherProtection = UtilityHelper.getUpgradeLevel(item, "WitherProtection");
+		int blastProtection = UtilityHelper.getUpgradeLevel(item, "BlastProtection");
+		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ProjectileProtection");
+		int resistance = UtilityHelper.getUpgradeLevel(item, "Resistance");
+		int absorption = UtilityHelper.getUpgradeLevel(item, "Absorption");
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, "HealthBoost");
+		int thorns = UtilityHelper.getUpgradeLevel(item, "Thorns");
+		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "PoisonThorns");
+		int blindThorns = UtilityHelper.getUpgradeLevel(item, "BlindThorns");
+
+		if (level != 0)
 		{
-			NBTTagCompound tag = upgradeList.getCompoundTagAt(i);
-			if (tag.getString("Name").equals(name)) return tag.getInteger("Level");
+			list.add("Hold SHIFT for more information");
+			list.add("Level: " + UtilityHelper.toRoman(level));
 		}
-		return 0;
+		if (protection != 0) list.add("Protection " + UtilityHelper.toRoman(protection));
+		if (fireProtection != 0) list.add("Fire Protection " + UtilityHelper.toRoman(fireProtection));
+		if (magicProtection != 0) list.add("Magic Protection " + UtilityHelper.toRoman(magicProtection));
+		if (witherProtection != 0) list.add("Wither Protection " + UtilityHelper.toRoman(witherProtection));
+		if (blastProtection != 0) list.add("Blast Protection " + UtilityHelper.toRoman(blastProtection));
+		if (projectileProtection != 0) list.add("Projectile Protection " + UtilityHelper.toRoman(projectileProtection));
+		if (resistance != 0) list.add("Resistance " + UtilityHelper.toRoman(resistance));
+		if (absorption != 0) list.add("Absorption " + UtilityHelper.toRoman(absorption));
+		if (healthBoost != 0) list.add("Health Boost " + UtilityHelper.toRoman(healthBoost));
+		if (thorns != 0) list.add("Thorns " + UtilityHelper.toRoman(thorns));
+		if (poisonThorns != 0) list.add("Poisonous " + UtilityHelper.toRoman(poisonThorns));
+		if (blindThorns != 0) list.add("Blinding " + UtilityHelper.toRoman(blindThorns));
+
+		return list;
 	}
 
-	/**
-	 * Returns the level of the given upgrade found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
-	 * 
-	 * @param item
-	 *            The item being checked for the upgrade.
-	 * @param upgrade
-	 *            The upgrade of which the level is being checked.
-	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
-	 */
-	public static int getUpgradeLevel(ItemStack item, Upgrade upgrade)
+	private List addShiftInfo(ItemStack item)
 	{
-		if (upgrade == null || upgrade.name == null) return 0;
-		return ItemModArmor.getUpgradeLevel(item, upgrade.name);
+		List list = new ArrayList();
+
+		int level = ItemModArmor.getLevel(item);
+		int protection = UtilityHelper.getUpgradeLevel(item, "Protection");
+		int fireProtection = UtilityHelper.getUpgradeLevel(item, "FireProtection");
+		int magicProtection = UtilityHelper.getUpgradeLevel(item, "MagicProtection");
+		int witherProtection = UtilityHelper.getUpgradeLevel(item, "WitherProtection");
+		int blastProtection = UtilityHelper.getUpgradeLevel(item, "BlastProtection");
+		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ProjectileProtection");
+		int resistance = UtilityHelper.getUpgradeLevel(item, "Resistance");
+		int absorption = UtilityHelper.getUpgradeLevel(item, "Absorption");
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, "HealthBoost");
+		int thorns = UtilityHelper.getUpgradeLevel(item, "Thorns");
+		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "PoisonThorns");
+		int blindThorns = UtilityHelper.getUpgradeLevel(item, "BlindThorns");
+
+		if (level != 0)
+		{
+			list.add("Hold SHIFT for more information");
+			list.add("Level: " + UtilityHelper.toRoman(level));
+		}
+
+		int baseRes = protection * 2;
+		int fireRes = fireProtection * 3;
+		int magicRes = magicProtection * 3;
+		int witherRes = witherProtection * 3;
+		int blastRes = blastProtection * 3;
+		int projRes = projectileProtection * 3;
+		int res = resistance * 5;
+
+		list.add("All damage reduced by " + baseRes + "%");
+		if (fireRes != 0) list.add("Fire damage reduced by an additional " + fireRes + "%");
+		if (magicRes != 0) list.add("Magic damage reduced by an additional " + magicRes + "%");
+		if (witherRes != 0) list.add("Wither damage reduced by an additional " + witherRes + "%");
+		if (blastRes != 0) list.add("Blast damage reduced by an additional " + blastRes + "%");
+		if (projRes != 0) list.add("Projectile damage reduced by an additional " + projRes + "%");
+		if (res != 0) list.add("All damage reduced further by " + res + "%");
+		if (absorption != 0) list.add("Gain a temporary shield of " + (absorption / 2) + " hearts");
+		if (healthBoost != 0) list.add("Gain " + (healthBoost / 2) + " hearts");
+		if (thorns != 0) list.add("Deals " + (thorns * 0.25F) + " damage to any who attack you");
+		if (poisonThorns != 0) list.add("Poisons any who attack you for " + poisonThorns + " seconds");
+		if (blindThorns != 0) list.add("Blinds any who attack you for " + (blindThorns * 0.5) + " seconds");
+
+		return list;
+	}
+
+	public static int getLevel(ItemStack item)
+	{
+		return item.stackTagCompound.getInteger("Level");
 	}
 }

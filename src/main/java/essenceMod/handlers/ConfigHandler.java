@@ -5,65 +5,137 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler
 {
-	public static boolean miaticActive;
-	public static boolean iaticActive;
-	public static boolean diaticActive;
-
-	public static boolean miaticDrops;
-	public static boolean iaticDrops;
-	public static boolean diaticDrops;
-
-	public static double miaticDropProbability;
-	public static int miaticMin;
-	public static int miaticMax;
-	public static double iaticDropProbability;
-	public static int iaticMin;
-	public static int iaticMax;
-	public static double diaticDropProbability;
-	public static int diaticMin;
-	public static int diaticMax;
-
-	public static boolean miaticRecipeActive;
-	public static boolean iaticRecipeActive;
-	public static boolean diaticRecipeActive;
-
-	public static int miaticRecipeResult;
-	public static int iaticRecipeResult;
-	public static int diaticRecipeResult;
-
+	//Config Categories
+	public static final String CATEGORY_DROPS = "Essence Shard Drop Settings";
+	public static final String CATEGORY_SWORD = "Essence Infused Sword Upgrade Settings";
+	public static final String CATEGORY_BOW = "Essence Infused Bow Upgrade Settings";
+	public static final String CATEGORY_ARMOR = "Essence Infused Armor Upgrade Setting";
+	public static final String CATEGORY_COMPAT = "Mod Compatibility Settings";
+	public static final String CATEGORY_BAUBLES = "Essence Infused Trinkets Settings";
+	public static final String CATEGORY_TRAVELGEAR = "Essence Infused Traveller's Gear Settings";
+	public static final String CATEGORY_TINKERS = "Tinkers' Construct Compatibility Settings";
+	
+	//CATEGORY_DROPS variables
+	public static boolean useWhiteList;
+	public static String[] whiteList;
+	public static boolean useBlackList;
+	public static String[] blackList;
+	public static float dragonShardChance;
+	public static int dragonShardCount;
+	public static float witherShardChance;
+	public static int witherShardCount;
+	
+	//CATEGORY_SWORD variables
+	public static boolean isFireDamagePercent;
+	public static float fireDamageMulti;
+	public static int fireDamageAmount;
+	public static boolean isMagicDamagePercent;
+	public static float magicDamageMulti;
+	public static int magicDamageAmount;
+	public static boolean isWitherDamagePercent;
+	public static float witherDamageMulti;
+	public static int witherDamageAmount;
+	
+	//CATEGORY_COMPAT variables
+	public static boolean extrautilitiesIntegration;
+	public static boolean isDivineDamagePercent;
+	public static float divineDamageMulti;
+	public static int divineDamageAmount;
+	public static boolean draconicevolutionIntegration;
+	public static boolean isChaosDamagePercent;
+	public static float chaosDamageMulti;
+	public static int chaosDamageAmount;
+	
+	//CATEGORY_BOW variables
+	
+	
+	//CATEGORY_ARMOR variables
+	public static float thornsDamage;
+	public static int poisonThornsDuration;
+	public static int blindThornsDuration;
+	public static int blindThornsChance;
+	public static int healthBoostCount;
+	public static int absorptionCount;
+	public static int absorptionDelay;
+	
+	//CATEGORY_BAUBLES variables
+	
+	
+	//CATEGORY_TINKERS variables
+	public static boolean ticoIntegration;
+	public static int ticoHarvestLevel;
+	public static int ticoDurability;
+	public static int ticoMiningSpeed;
+	public static int ticoBaseDamage;
+	public static float ticoHandleMod;
+	public static int ticoReinforced;
+	public static int ticoDrawSpeed;
+	public static float ticoProjSpeed;
+	public static float ticoProjMass;
+	public static float ticoProjFrag;
+	public static int ticoBaseModCount;
+	public static int ticoPartModCount;
+	
+	//CATEGORY_TRAVELGEAR variables
+	public static boolean travellersgearIntegration;
+	
 	public static void initProps(File location)
 	{
-		File mainFile = new File(location + "/Mianite.cfg");
-
-		Configuration config = new Configuration(mainFile);
+		Configuration config = new Configuration(location);
 		config.load();
-
-		miaticActive = config.get("sectionUse", "miaticActive", true).getBoolean(true);
-		iaticActive = config.get("sectionUse", "iaticActive", true).getBoolean(true);
-		diaticActive = config.get("sectionUse", "diaticActive", true).getBoolean(true);
-
-		miaticDrops = config.get("entityDrops", "miaticDrops", true).getBoolean(true);
-		miaticDropProbability = config.get("miaticDrops", "miaticDropProbability", 0.1).getDouble(0.1);
-		miaticMin = config.get("entityDrops", "miaticMin", 1).getInt(1);
-		miaticMax = config.get("entityDrops", "miaticMax", 1).getInt(1);
-
-		iaticDrops = config.get("entityDrops", "iaticDrops", true).getBoolean(true);
-		iaticDropProbability = config.get("iaticDrops", "iaticDropProbability", 0.1).getDouble(0.1);
-		iaticMin = config.get("entityDrops", "iaticMin", 1).getInt(1);
-		iaticMax = config.get("entityDrops", "iaticMax", 1).getInt(1);
-
-		diaticDrops = config.get("entityDrops", "diaticDrops", true).getBoolean(true);
-		diaticDropProbability = config.get("diaticDrops", "diaticDropProbability", 0.1).getDouble(0.1);
-		diaticMin = config.get("entityDrops", "diaticMin", 1).getInt(1);
-		diaticMax = config.get("entityDrops", "diaticMax", 1).getInt(1);
-
-		miaticRecipeActive = config.get("recipies", "miaticRecipeActive", true).getBoolean(true);
-		miaticRecipeResult = config.get("recipes", "miaticRecipeResult", 1).getInt(1);
-
-		iaticRecipeActive = config.get("recipes", "iaticRecipeActive", true).getBoolean(true);
-		iaticRecipeResult = config.get("recipes", "iaticRecipeResult", 1).getInt(1);
-
-		diaticRecipeActive = config.get("recipes", "diaticRecipeActive", true).getBoolean(true);
-		diaticRecipeResult = config.get("recipes", "diaticRecipeResult", 1).getInt(1);
+		
+		useWhiteList = config.getBoolean("useWhiteList", CATEGORY_DROPS, false, "If set to true, only the listed mobs will drop Essence Shards. Default: false");
+		whiteList = config.getStringList("whiteList", CATEGORY_DROPS, new String[]{""}, "The array of mobs that can drop Essence Shards, separated with a ,");
+		useBlackList = config.getBoolean("useBlackList", CATEGORY_DROPS, false, "If set to true, the following listed mobs will NOT drop Essence Shards. Default: false");
+		blackList = config.getStringList("blackList", CATEGORY_DROPS, new String[]{""}, "The array of mobs that will NOT drop Essence Shards, separated with a ,");
+		dragonShardChance = config.getFloat("dragonShardChance", CATEGORY_DROPS, 0, 0, 1, "The chance that the Ender Dragon will drop Essence Shards. Default: 0");
+		dragonShardCount = config.getInt("dragonShardCount", CATEGORY_DROPS, 64, 0, Integer.MAX_VALUE, "The base number of Essence Shards the Ender Dragon can drop when slain. Default: 64");
+		witherShardChance = config.getFloat("witherShardChance", CATEGORY_DROPS, 0, 0, 1, "The chance that the Wither will drop Essence Shards. Default: 0");
+		witherShardCount = config.getInt("witherShardCount", CATEGORY_DROPS, 16, 0, Integer.MAX_VALUE, "The base number of Essence Shards the Wither can drop when slain. Default: 16");
+		
+		isFireDamagePercent = config.getBoolean("isFireDamagePercent", CATEGORY_SWORD, true, "If set to true, the fire damage upgrade adds a percentage of the total damage as fire damage. If set to false, it adds a flat amount. Default: true");
+		fireDamageMulti = config.getFloat("fireDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as fire damage per level of the fire damage upgrade. Default: 0.05");
+		magicDamageAmount = config.getInt("magicDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the magic damage upgrade. Default: 1");
+		isMagicDamagePercent = config.getBoolean("isMagicDamagePercent", CATEGORY_SWORD, true, "If set to true, the magic damage upgrade adds a percentage of the total damage as magic damage. If set to false, it adds a flat amount. Default: true");
+		magicDamageMulti = config.getFloat("magicDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as magic damage per level of the magic damage upgrade. Default: 0.05");
+		magicDamageAmount = config.getInt("magicDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the magic damage upgrade. Default: 1");
+		isWitherDamagePercent = config.getBoolean("isWitherDamagePercent", CATEGORY_SWORD, true, "If set to true, the wither damage upgrade adds a percentage of the total damage as wither damage. If set to false, it adds a flat amount. Default: true");
+		witherDamageMulti = config.getFloat("witherDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as wither damage per level of the wither damage upgrade. Default: 0.05");
+		witherDamageAmount = config.getInt("witherDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the wither damage upgrade. Default: 1");
+		
+		extrautilitiesIntegration = config.getBoolean("extrautilitiesIntegration", CATEGORY_COMPAT, true, "If set to true, Extra Utilities compatibility will be used. Default: true");
+		isDivineDamagePercent = config.getBoolean("isDivineDamagePercent", CATEGORY_COMPAT, true, "If set to true, the divine damage upgrade adds a percentage of the total damage as divine damage. If set to false, it adds a flat amount. Default: true");
+		divineDamageMulti = config.getFloat("divineDamageMulti", CATEGORY_COMPAT, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as divine damage per level of the divine damage upgrade. Default: 0.05");
+		divineDamageAmount = config.getInt("divineDamageAmount", CATEGORY_COMPAT, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the divine damage upgrade. Default: 1");
+		draconicevolutionIntegration = config.getBoolean("draconicevolutionIntegration", CATEGORY_COMPAT, true, "If set to true, Draconic Evolution compatibility will be used. Default: true");
+		isChaosDamagePercent = config.getBoolean("isChaosDamagePercent", CATEGORY_COMPAT, true, "If set to true, the chaos damage upgrade adds a percentage of the total damage as chaos damage. If set to false, it adds a flat amount. Default: true");
+		chaosDamageMulti = config.getFloat("chaosDamageMulti", CATEGORY_COMPAT, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as chaos damage per level of the chaos damage upgrade. Default: 0.05");
+		chaosDamageAmount = config.getInt("chaosDamageAmount", CATEGORY_COMPAT, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the chaos damage upgrade. Default: 1");
+		
+		thornsDamage = config.getFloat("thornsDamage", CATEGORY_ARMOR, 0.25F, 0, Float.MAX_VALUE, "The amount of damage the thorns armor upgrade deals per level. Default: 0.25");
+		poisonThornsDuration = config.getInt("poisonThornsDuration", CATEGORY_ARMOR, 10, 0, Integer.MAX_VALUE, "The duration in ticks for which the poisonous armor upgrade adds per level. Remember, 20 ticks is 1 second. Default: 10");
+		blindThornsDuration = config.getInt("blindThornsDuration", CATEGORY_ARMOR, 10, 0, Integer.MAX_VALUE, "The duration in ticks for which the blinding armor upgrade adds per level. Rememeber, 20 ticks is 1 second. Default: 10");
+		blindThornsChance = config.getInt("blindThornsChance", CATEGORY_ARMOR, 25, 0, 100, "The chance each piece of armor with the blinding armor upgrade adds to blind the enemy. Default: 25 (x4 is a 100% chance)");
+		healthBoostCount = config.getInt("healthBoostCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of health the health boost upgrade adds per level. Remember, each 1 point of health is only 1/2 a heart. Default: 1");
+		absorptionCount = config.getInt("absorptionCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of temporary health the absorption upgrade adds per level. Remember, each 1 point of health is only 1/2 a heart. Default: 1");
+		absorptionDelay = config.getInt("absorptionDelay", CATEGORY_ARMOR, 200, 0, Integer.MAX_VALUE, "The number of ticks without taking any damage required for absorption hearts to return. Remember, 20 ticks is 1 second. Default: 200");
+		
+		ticoIntegration = config.getBoolean("ticoIntegration", CATEGORY_TINKERS, true, "If set to true, the Tinkers' Construct parts will be generated if possible. Default: true");
+		ticoHarvestLevel = config.getInt("ticoHarvestLevel", CATEGORY_TINKERS, 4, 1, Integer.MAX_VALUE, "The harvest level given by Tinkers' Construct parts. Default: 4");
+		ticoDurability = config.getInt("ticoDurability", CATEGORY_TINKERS, 10000, 1, Integer.MAX_VALUE, "The durability of Tinkers' Construct parts. Default: 10000");
+		ticoMiningSpeed = config.getInt("ticoMiningSpeed", CATEGORY_TINKERS, 900, 1, Integer.MAX_VALUE, "The mining speed of Tinkers' Construct parts. Remember, a value of 100 is only a mining speed of 1. Default: 900");
+		ticoBaseDamage = config.getInt("ticoBaseDamage", CATEGORY_TINKERS, 8, 1, Integer.MAX_VALUE, "The damage dealt by Tinkers' Construct parts. Default: 8");
+		ticoHandleMod = config.getFloat("ticoHandleMod", CATEGORY_TINKERS, 1.5F, 0F, Float.MAX_VALUE, "The handle modifier given by Tinkers' Construct parts. Default: 1.5");
+		ticoReinforced = config.getInt("ticoReinforced", CATEGORY_TINKERS, 10, 0, 10, "The number of reinforced modifiers added by each Tinkers' Construct part. Default: 10");
+		ticoDrawSpeed = config.getInt("ticoDrawSpeed", CATEGORY_TINKERS, 15, 0, Integer.MAX_VALUE, "The draw speed of Tinkers' Construct parts. Note: Not a 1 to 1 ratio, possibly a 1 to 0.15 ratio. Default: 15");
+		ticoProjSpeed = config.getFloat("ticoProjSpeed", CATEGORY_TINKERS, 9.6F, 0F, Float.MAX_VALUE, "The arrow speed of Tinkers' Construct parts. Default: 9.6");
+		ticoProjMass = config.getFloat("ticoProjMass", CATEGORY_TINKERS, 5.6F, 0F, Float.MAX_VALUE, "The weight of Tinkers' Construct parts. Default: 5.6");
+		ticoProjFrag = config.getFloat("ticoProjFrag", CATEGORY_TINKERS, 0.9F, 0F, 1F, "The chance that Tinkers' Construct ammo won't break on impact. Default: 0.9");
+		ticoBaseModCount = config.getInt("ticoBaseModCount", CATEGORY_TINKERS, 1, 0, Integer.MAX_VALUE, "The number of extra modifiers given by using Infused Starmetal parts. Default: 1");
+		ticoPartModCount = config.getInt("ticoPartModCount", CATEGORY_TINKERS, 1, 0, Integer.MAX_VALUE, "The number of extra modifiers given for each Infused Starmetal part. Default: 1");
+		
+		travellersgearIntegration = config.getBoolean("travellersgearIntegration", CATEGORY_TRAVELGEAR, true, "If set to true, the Traveller's Gear versions of baubles will be used if possible. Default: true");
+		
+		config.save();
 	}
 }

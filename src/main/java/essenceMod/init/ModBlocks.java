@@ -8,8 +8,8 @@ import essenceMod.utility.RegisterHelper;
 
 public class ModBlocks
 {
-	public static Block infusedBlock = new ModBlock().setBlockName("infusedBlock");
-	public static Block infusedStarmetal = new ModBlock().setBlockName("infusedStarmetal");
+	public static Block infusedBlock = new ModBlock("infusedBlock");
+	public static Block infusedStarmetal = new ModBlock("infusedStarmetal");
 	public static Block essenceInfuser = new EssenceInfuser().setBlockName("essenceInfuser");
 	public static Block essencePylon = new EssencePylon().setBlockName("essencePylon");
 	

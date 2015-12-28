@@ -11,9 +11,10 @@ import essenceMod.utility.Reference;
 
 public class ModBlock extends Block
 {
-	public ModBlock()
+	public ModBlock(String blockName)
 	{
 		super(Material.iron);
+		setBlockName(blockName);
 		setBlockTextureName(Reference.MODID + ":" + getUnlocalizedName().substring(5));
 		setCreativeTab(ModTabs.tabEssence);
 		setStepSound(soundTypeMetal);

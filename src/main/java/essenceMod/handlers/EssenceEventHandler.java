@@ -3,10 +3,13 @@ package essenceMod.handlers;
 import java.util.ListIterator;
 import java.util.Random;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,24 +25,26 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.handlers.compatibility.TConstructHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemKnockbackBelt;
 import essenceMod.items.baubles.ItemLootAmulet;
+import essenceMod.utility.UtilityHelper;
 
 public class EssenceEventHandler
 {
 	Random rand = new Random();
 
-	public static void postinit()
+	public static void preinit()
 	{
 		MinecraftForge.EVENT_BUS.register(new EssenceEventHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new EssenceEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new EssenceEventHandler());
 		FMLCommonHandler.instance().bus().register(new EssenceEventHandler());
-		
+
 		MinecraftForge.EVENT_BUS.register(new TConstructHandler());
 		
 		Random rand = new Random();
@@ -88,26 +93,54 @@ public class EssenceEventHandler
 			DamageSource source = event.source;
 			int protValue = 0;
 			int resValue = 0;
+			int poisonThorns = 0;
+			int poisonCount = 0;
+			int blindThorns = 0;
+			int blindCount = 0;
 			for (int i = 0; i < 4; i++)
 			{
-				ItemStack armor = player.getEquipmentInSlot(i+1);
+				ItemStack armor = player.getEquipmentInSlot(i + 1);
 				if (armor != null && armor.getItem() instanceof ItemModArmor)
 				{
-					protValue += armor.stackTagCompound.getInteger("Protection") * 2;
-					if (source.isFireDamage()) protValue += armor.stackTagCompound.getInteger("Fire Protection") * 3;
-					if (source.isExplosion()) protValue += armor.stackTagCompound.getInteger("Blast Protection") * 3;
-					if (source.isMagicDamage()) protValue += armor.stackTagCompound.getInteger("Magic Protection") * 3;
-					if (source.isProjectile()) protValue += armor.stackTagCompound.getInteger("Projectile Protection") * 3;
-					if (source == source.wither) protValue += armor.stackTagCompound.getInteger("Wither Protection") * 3;
-					resValue += armor.stackTagCompound.getInteger("Resistance");
+					protValue += UtilityHelper.getUpgradeLevel(armor, "Protection") * 2;
+					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "Fire Protection") * 3;
+					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "Blast Protection") * 3;
+					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "Magic Protection") * 3;
+					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, "Projectile Protection") * 3;
+					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, "Wither Protection") * 3;
+					resValue += UtilityHelper.getUpgradeLevel(armor, "Resistance");
+					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, "PoisonThorns");
+					if (poisonTemp != 0)
+					{
+						poisonThorns += poisonTemp;
+						poisonCount++;
+					}
+					int blindTemp = UtilityHelper.getUpgradeLevel(armor, "BlindThorns");
+					if (blindTemp != 0)
+					{
+						blindThorns += blindTemp;
+						blindCount++;
+					}
 				}
 			}
 			double protReduction = protValue * 0.01;
 			double resReduction = resValue * 0.04;
 			event.ammount *= (1 - protReduction) * (1 - resReduction);
+			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase enemy = (EntityLivingBase) event.source.getEntity();
+				if (rand.nextInt(100) < (25 * blindCount))
+				{
+					enemy.addPotionEffect(new PotionEffect(Potion.blindness.id, blindThorns * 10, 0));
+				}
+				if (poisonCount != 0)
+				{
+					enemy.addPotionEffect(new PotionEffect(Potion.poison.id, poisonThorns * 10, poisonCount - 1));
+				}
+			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onFlyableFall(PlayerFlyableFallEvent event)
 	{
@@ -126,7 +159,7 @@ public class EssenceEventHandler
 			if (belt != null && belt.getItem() instanceof ItemKnockbackBelt) ItemKnockbackBelt.knockback(belt, player, event.distance);
 		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void infusedTooltip(ItemTooltipEvent event)
@@ -142,17 +175,43 @@ public class EssenceEventHandler
 				{
 					iterator.previous();
 					float weaponDamage = event.itemStack.stackTagCompound.getFloat("weaponDamage");
-					float fireDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Fire") * weaponDamage * 0.05F;
-					float witherDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Wither") * weaponDamage * 0.05F;
-					float magicDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Magic") * weaponDamage * 0.05F;
-					float chaosDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Chaos") * weaponDamage * 0.05F;
-					float divineDamage = ItemModSword.getUpgradeLevel(event.itemStack, "Divine") * weaponDamage * 0.05F;
+					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Fire") * weaponDamage * 0.05F;
+					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Wither") * weaponDamage * 0.05F;
+					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Magic") * weaponDamage * 0.05F;
+					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Chaos") * weaponDamage * 0.05F;
+					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Divine") * weaponDamage * 0.05F;
 					
-					if (fireDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + fireDamage + " Fire Damage");
-					if (witherDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + witherDamage + " Wither Damage");
-					if (magicDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + magicDamage + " Magic Damage");
-					if (chaosDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + chaosDamage + " Chaos Damage");
-					if (divineDamage != 0) iterator.add(EnumChatFormatting.BLUE + "+" + divineDamage + " Divine Damage");
+					double fireText = Math.round(fireDamage * 4) / 4D;
+					double witherText = Math.round(witherDamage * 4) / 4D;
+					double magicText = Math.round(magicDamage * 4) / 4D;
+					double chaosText = Math.round(chaosDamage * 4) / 4D;
+					double divineText = Math.round(divineDamage * 4) / 4D;
+
+					if (fireText != 0)
+					{
+						if (fireText == (int) fireText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) fireText) + " Fire Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + fireText + " Fire Damage");
+					}
+					if (witherText != 0)
+					{
+						if (witherText == (int) witherText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) witherText) + " Wither Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + witherText + " Wither Damage");
+					}
+					if (magicText != 0)
+					{
+						if (magicText == (int) magicText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) magicText) + " Magic Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + magicText + " Magic Damage");
+					}
+					if (chaosText != 0)
+					{
+						if (chaosText == (int) chaosText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) chaosText) + " Chaos Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + chaosText + " Chaos Damage");
+					}
+					if (divineText != 0)
+					{
+						if (divineText == (int) divineText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) divineText) + " Divine Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + divineText + " Divine Damage");
+					}
 					break;
 				}
 			}

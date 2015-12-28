@@ -46,7 +46,7 @@ public class ModArmory
 	public static Item baseAmulet = new ItemBaseAmulet().setUnlocalizedName("infusedBaseAmulet");
 
 	public static Item flightAmulet = new ItemFlightAmulet().setUnlocalizedName("infusedFlightAmulet");
-	public static Item potionRing = new ItemPotionRing().setUnlocalizedName("infusedRing");
+	public static Item potionRing = new ItemPotionRing().setUnlocalizedName("infusedPotionRing");
 	public static Item lootAmulet = new ItemLootAmulet(1).setUnlocalizedName("infusedLootAmulet");
 	public static Item cleaveBelt = new ItemCleaveBelt(1).setUnlocalizedName("infusedCleaveBelt");
 	public static Item knockbackBelt = new ItemKnockbackBelt().setUnlocalizedName("infusedKnockbackBelt");
