@@ -1,5 +1,6 @@
 package essenceMod;
 
+import java.util.UUID;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -53,7 +54,7 @@ public class EssenceMod
 	{
 		Recipes.init();
 		InfuserRecipes.init();
-		if (Loader.isModLoaded("TConstruct"))
+		if (Loader.isModLoaded("TConstruct") && ConfigHandler.ticoIntegration)
 		{
 			try
 			{
@@ -66,6 +67,7 @@ public class EssenceMod
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
+//		System.out.println(UUID.randomUUID());
 	}
 	
 	@Mod.EventHandler

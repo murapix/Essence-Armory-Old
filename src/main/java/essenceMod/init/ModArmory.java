@@ -6,6 +6,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Loader;
 import essenceMod.enchantment.EnchantmentShard;
+import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModBow;
 import essenceMod.items.ItemModSword;
@@ -80,7 +81,7 @@ public class ModArmory
 		RegisterHelper.registerItem(cleaveBelt);
 		RegisterHelper.registerItem(knockbackBelt);
 
-		if (Loader.isModLoaded("TravellersGear"))
+		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 		{
 			try
 			{

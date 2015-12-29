@@ -26,6 +26,9 @@ public class ConfigHandler
 	public static int witherShardCount;
 	
 	//CATEGORY_SWORD variables
+	public static boolean isNormalDamagePercent;
+	public static float normalDamageMulti;
+	public static int normalDamageAmount;
 	public static boolean isFireDamagePercent;
 	public static float fireDamageMulti;
 	public static int fireDamageAmount;
@@ -93,9 +96,12 @@ public class ConfigHandler
 		witherShardChance = config.getFloat("witherShardChance", CATEGORY_DROPS, 0, 0, 1, "The chance that the Wither will drop Essence Shards. Default: 0");
 		witherShardCount = config.getInt("witherShardCount", CATEGORY_DROPS, 16, 0, Integer.MAX_VALUE, "The base number of Essence Shards the Wither can drop when slain. Default: 16");
 		
+		isNormalDamagePercent = config.getBoolean("isNormalDamagePercent", CATEGORY_SWORD, true, "If set to true, the normal damage upgrade adds a percentage of the total damage as plain damage. If set to false, it adds a flat amount. Default: true");
+		normalDamageMulti = config.getFloat("normalDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as normal damage per level of the normal damage upgrade. Default: 0.05");
+		normalDamageAmount = config.getInt("normalDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the normal damage upgrade. Default: 1");
 		isFireDamagePercent = config.getBoolean("isFireDamagePercent", CATEGORY_SWORD, true, "If set to true, the fire damage upgrade adds a percentage of the total damage as fire damage. If set to false, it adds a flat amount. Default: true");
 		fireDamageMulti = config.getFloat("fireDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as fire damage per level of the fire damage upgrade. Default: 0.05");
-		magicDamageAmount = config.getInt("magicDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the magic damage upgrade. Default: 1");
+		fireDamageAmount = config.getInt("fireDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the fire damage upgrade. Default: 1");
 		isMagicDamagePercent = config.getBoolean("isMagicDamagePercent", CATEGORY_SWORD, true, "If set to true, the magic damage upgrade adds a percentage of the total damage as magic damage. If set to false, it adds a flat amount. Default: true");
 		magicDamageMulti = config.getFloat("magicDamageMulti", CATEGORY_SWORD, 0.05F, 0, Float.MAX_VALUE, "The percentage of the total damage added as magic damage per level of the magic damage upgrade. Default: 0.05");
 		magicDamageAmount = config.getInt("magicDamageAmount", CATEGORY_SWORD, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the magic damage upgrade. Default: 1");
@@ -113,11 +119,11 @@ public class ConfigHandler
 		chaosDamageAmount = config.getInt("chaosDamageAmount", CATEGORY_COMPAT, 1, 0, Integer.MAX_VALUE, "The amount of damage gained per level of the chaos damage upgrade. Default: 1");
 		
 		thornsDamage = config.getFloat("thornsDamage", CATEGORY_ARMOR, 0.25F, 0, Float.MAX_VALUE, "The amount of damage the thorns armor upgrade deals per level. Default: 0.25");
-		poisonThornsDuration = config.getInt("poisonThornsDuration", CATEGORY_ARMOR, 10, 0, Integer.MAX_VALUE, "The duration in ticks for which the poisonous armor upgrade adds per level. Remember, 20 ticks is 1 second. Default: 10");
+		poisonThornsDuration = config.getInt("poisonThornsDuration", CATEGORY_ARMOR, 20, 0, Integer.MAX_VALUE, "The duration in ticks for which the poisonous armor upgrade adds per level. Remember, 20 ticks is 1 second. Default: 10");
 		blindThornsDuration = config.getInt("blindThornsDuration", CATEGORY_ARMOR, 10, 0, Integer.MAX_VALUE, "The duration in ticks for which the blinding armor upgrade adds per level. Rememeber, 20 ticks is 1 second. Default: 10");
 		blindThornsChance = config.getInt("blindThornsChance", CATEGORY_ARMOR, 25, 0, 100, "The chance each piece of armor with the blinding armor upgrade adds to blind the enemy. Default: 25 (x4 is a 100% chance)");
-		healthBoostCount = config.getInt("healthBoostCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of health the health boost upgrade adds per level. Remember, each 1 point of health is only 1/2 a heart. Default: 1");
-		absorptionCount = config.getInt("absorptionCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of temporary health the absorption upgrade adds per level. Remember, each 1 point of health is only 1/2 a heart. Default: 1");
+		healthBoostCount = config.getInt("healthBoostCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of health the health boost upgrade adds per level. Remember, each heart is two health. Default: 2");
+		absorptionCount = config.getInt("absorptionCount", CATEGORY_ARMOR, 1, 1, Integer.MAX_VALUE, "The amount of temporary health the absorption upgrade adds per level. Remember, each heart is two health. Default: 2");
 		absorptionDelay = config.getInt("absorptionDelay", CATEGORY_ARMOR, 200, 0, Integer.MAX_VALUE, "The number of ticks without taking any damage required for absorption hearts to return. Remember, 20 ticks is 1 second. Default: 200");
 		
 		ticoIntegration = config.getBoolean("ticoIntegration", CATEGORY_TINKERS, true, "If set to true, the Tinkers' Construct parts will be generated if possible. Default: true");

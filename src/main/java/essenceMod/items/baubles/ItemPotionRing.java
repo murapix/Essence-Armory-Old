@@ -33,7 +33,8 @@ public class ItemPotionRing extends ItemBauble
 	public int level, cooldown;
 	public IIcon[] icons = new IIcon[19];
 	
-	private final AttributeModifier speed = new AttributeModifier(UUID.fromString("91AEAA56-376B-4498-935B-2F7F68070635"), "EssenceArmoryRingSpeed", 0.2D, 2);
+	private final AttributeModifier speed = new AttributeModifier(UUID.fromString("BCA6DE48-7202-4AA5-B5E0-628D346179C7"), "EssenceArmoryRingSpeed", 0.2D, 2);
+	private final AttributeModifier strength = new AttributeModifier(UUID.fromString("F8924A96-C647-4C2C-A68E-2543CA6B6306"), "EssenceArmoryRingStrength", 0.5D, 2);
 
 	public ItemPotionRing()
 	{
@@ -101,6 +102,14 @@ public class ItemPotionRing extends ItemBauble
 				if (UtilityHelper.getUpgradeLevel(item, "Swiftness") != 0)
 				{
 					attribute.removeModifier(speed);
+				}
+			}
+			attribute = p.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage);
+			if (attribute != null)
+			{
+				if (UtilityHelper.getUpgradeLevel(item, "Strength") != 0)
+				{
+					attribute.removeModifier(strength);
 				}
 			}
 		}
@@ -211,16 +220,6 @@ public class ItemPotionRing extends ItemBauble
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event)
 	{
-		if (event.source.getEntity() instanceof EntityPlayer)
-		{
-			EntityPlayer player = (EntityPlayer) event.source.getEntity();
-			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
-			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
-			int strengthLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing) strengthLevel = UtilityHelper.getUpgradeLevel(ring1, "Strength");
-			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing) strengthLevel = Math.max(strengthLevel, UtilityHelper.getUpgradeLevel(ring2, "Strength"));
-			event.ammount += event.ammount * strengthLevel / 40.0F;
-		}
 		if (event.entityLiving instanceof EntityPlayer && event.source.getDamageType() == event.source.fall.getDamageType())
 		{
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
@@ -234,7 +233,7 @@ public class ItemPotionRing extends ItemBauble
 	}
 
 	@SubscribeEvent
-	public void updatePlayerSwiftness(LivingUpdateEvent event)
+	public void updatePlayerStats(LivingUpdateEvent event)
 	{
 		if (event.entityLiving instanceof EntityPlayer)
 		{
@@ -242,8 +241,17 @@ public class ItemPotionRing extends ItemBauble
 			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int swiftnessLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing) swiftnessLevel = UtilityHelper.getUpgradeLevel(ring1, "Swiftness"); 
-			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing) swiftnessLevel = Math.max(swiftnessLevel, UtilityHelper.getUpgradeLevel(ring2, "Swiftness"));
+			int strengthLevel = 0;
+			if (ring1 != null && ring1.getItem() instanceof ItemPotionRing)
+			{
+				swiftnessLevel = UtilityHelper.getUpgradeLevel(ring1, "Swiftness");
+				strengthLevel = UtilityHelper.getUpgradeLevel(ring1, "Strength");
+			}
+			if (ring2 != null && ring2.getItem() instanceof ItemPotionRing)
+			{
+				swiftnessLevel = Math.max(swiftnessLevel, UtilityHelper.getUpgradeLevel(ring2, "Swiftness"));
+				strengthLevel = Math.max(strengthLevel, UtilityHelper.getUpgradeLevel(ring2, "Strength"));
+			}
 			UUID playerID = player.getGameProfile().getId();
 			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
 			if (attribute != null)
@@ -252,6 +260,15 @@ public class ItemPotionRing extends ItemBauble
 				{
 					attribute.removeModifier(speed);
 					attribute.applyModifier(new AttributeModifier(speed.getID(), speed.getName() + swiftnessLevel, speed.getAmount() * swiftnessLevel, speed.getOperation()));
+				}
+			}
+			attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage);
+			if (attribute != null)
+			{
+				if (strengthLevel != 0)
+				{
+					attribute.removeModifier(strength);
+					attribute.applyModifier(new AttributeModifier(strength.getID(), strength.getName() + strengthLevel, strength.getAmount() * strengthLevel, strength.getOperation()));
 				}
 			}
 		}

@@ -83,10 +83,5 @@ public class Recipes
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 16), new Object[] { "ABA", "BCB", "ABA", 'A', Items.magma_cream, 'B', ModItems.infusedIngot, 'C', ModArmory.baseRing });
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 17), new Object[] { "ABA", "BCB", "ABA", 'A', Items.fish, 'B', ModItems.infusedShard, 'C', ModArmory.baseRing });
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.potionRing, 1, 18), new Object[] { "ABA", "BCB", "ABA", 'A', Items.golden_carrot, 'B', ModItems.infusedShard, 'C', ModArmory.baseRing });
-		
-		ItemStack enchantedBook;
-		enchantedBook = new ItemStack(Items.enchanted_book);
-		enchantedBook.addEnchantment(ModArmory.shardLooter, 1);
-		GameRegistry.addShapelessRecipe(enchantedBook, new Object[] {Items.book, Items.diamond_sword});
 	}
 }

@@ -26,6 +26,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.crafting.Upgrade;
+import essenceMod.handlers.ConfigHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
@@ -33,7 +34,7 @@ import essenceMod.utility.UtilityHelper;
 
 public class ItemModArmor extends ItemArmor implements IModItem
 {
-	private final AttributeModifier health = new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "EssenceArmoryArmorHealth", 2D, 0);
+	private final AttributeModifier health = new AttributeModifier(UUID.fromString("EE15F16D-AA48-45CE-8B72-BF5A1A1D5CFD"), "EssenceArmoryArmorHealth", ConfigHandler.healthBoostCount, 0);
 
 	int level;
 	int armorType;
@@ -95,6 +96,7 @@ public class ItemModArmor extends ItemArmor implements IModItem
 					healthBoost += UtilityHelper.getUpgradeLevel(item, "HealthBoost");
 				}
 			}
+			absorption *= ConfigHandler.absorptionCount;
 			PotionEffect potion = player.getActivePotionEffect(Potion.field_76444_x);
 			float maxAbsorption;
 			if (potion == null) maxAbsorption = 0;
@@ -109,45 +111,6 @@ public class ItemModArmor extends ItemArmor implements IModItem
 			{
 				attribute.removeModifier(health);
 				attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + healthBoost, health.getAmount() * healthBoost, health.getOperation()));
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onLivingHurt(LivingHurtEvent event)
-	{
-		if (event.entityLiving instanceof EntityPlayer)
-		{
-			DamageSource damage = event.source;
-			EntityPlayer player = (EntityPlayer) event.entityLiving;
-			ItemStack[] equipment = new ItemStack[4];
-			int resistance = 0;
-			int protection = 0;
-			int thorns = 0;
-			for (int i = 0; i < 4; i++)
-			{
-				equipment[i] = player.getEquipmentInSlot(i + 1);
-				if (equipment[i] != null && equipment[i].getItem() instanceof ItemModArmor)
-				{
-					equipment[i].stackTagCompound.setInteger("Absorption Delay", 200);
-					resistance += UtilityHelper.getUpgradeLevel(equipment[i], "Resistance");
-					protection += UtilityHelper.getUpgradeLevel(equipment[i], "Protection") * 2;
-					thorns += UtilityHelper.getUpgradeLevel(equipment[i], "Thorns");
-
-					if (damage.isFireDamage()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "FireProtection") * 3;
-					else if (damage.isMagicDamage()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "MagicProtection") * 3;
-					else if (damage.isProjectile()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "ProjectileProtection") * 3;
-					else if (damage.isExplosion()) protection += UtilityHelper.getUpgradeLevel(equipment[i], "BlastProtection") * 3;
-					else if (damage.damageType.equals(DamageSource.wither.damageType)) protection += UtilityHelper.getUpgradeLevel(equipment[i], "WitherProtection") * 3;
-				}
-			}
-			event.ammount *= (1 - protection / 100);
-			event.ammount *= (1 - resistance / 20);
-
-			Entity entity = event.source.getEntity();
-			if (entity != null)
-			{
-				if (thorns != 0) entity.attackEntityFrom(DamageSource.causeThornsDamage(player), thorns * 0.25F);
 			}
 		}
 	}
@@ -259,11 +222,11 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		if (blastRes != 0) list.add("Blast damage reduced by an additional " + blastRes + "%");
 		if (projRes != 0) list.add("Projectile damage reduced by an additional " + projRes + "%");
 		if (res != 0) list.add("All damage reduced further by " + res + "%");
-		if (absorption != 0) list.add("Gain a temporary shield of " + (absorption / 2) + " hearts");
-		if (healthBoost != 0) list.add("Gain " + (healthBoost / 2) + " hearts");
+		if (absorption != 0) list.add("Gain a temporary shield of " + absorption + " health");
+		if (healthBoost != 0) list.add("Gain " + healthBoost + " health");
 		if (thorns != 0) list.add("Deals " + (thorns * 0.25F) + " damage to any who attack you");
-		if (poisonThorns != 0) list.add("Poisons any who attack you for " + poisonThorns + " seconds");
-		if (blindThorns != 0) list.add("Blinds any who attack you for " + (blindThorns * 0.5) + " seconds");
+		if (poisonThorns != 0) list.add("Poisons any who attack you for " + poisonThorns * ConfigHandler.poisonThornsDuration / 20 + " seconds");
+		if (blindThorns != 0) list.add("Gives a chance to blind any who attack you for " + blindThorns * ConfigHandler.blindThornsDuration / 20 + " seconds");
 
 		return list;
 	}

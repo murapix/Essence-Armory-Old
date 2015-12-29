@@ -1,9 +1,12 @@
 package essenceMod.handlers;
 
+import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,11 +23,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.entities.EntityBoss;
 import essenceMod.handlers.compatibility.TConstructHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModItems;
@@ -45,7 +48,7 @@ public class EssenceEventHandler
 		MinecraftForge.ORE_GEN_BUS.register(new EssenceEventHandler());
 		FMLCommonHandler.instance().bus().register(new EssenceEventHandler());
 
-		MinecraftForge.EVENT_BUS.register(new TConstructHandler());
+		if (ConfigHandler.ticoIntegration) MinecraftForge.EVENT_BUS.register(new TConstructHandler());
 		
 		Random rand = new Random();
 	}
@@ -53,14 +56,22 @@ public class EssenceEventHandler
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onLivingDropsEvent(LivingDropsEvent event)
 	{
-		if (Loader.isModLoaded("TConstruct"))
-		{
-			System.out.println("Tinkers Construct Loaded");
-		}
 		if (event.entityLiving instanceof EntityMob)
 		{
 			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
 			{
+				if (ConfigHandler.useWhiteList)
+				{
+					ArrayList<String> whiteListedMobs = new ArrayList<String>();
+					for (String string : ConfigHandler.whiteList) whiteListedMobs.add(string);
+					if (!(whiteListedMobs.contains(event.entityLiving.toString()))) return;
+				}
+				if (ConfigHandler.useBlackList)
+				{
+					ArrayList<String> blackListedMobs = new ArrayList<String>();
+					for (String string : ConfigHandler.blackList) blackListedMobs.add(string);
+					if (blackListedMobs.contains(event.entityLiving.toString())) return;
+				}
 				EntityPlayer player = (EntityPlayer) event.source.getEntity();
 				ItemStack weapon = player.getCurrentEquippedItem();
 				if (weapon != null && EnchantmentHelper.getEnchantmentLevel(ModArmory.shardLooter.effectId, weapon) == 1)
@@ -82,6 +93,62 @@ public class EssenceEventHandler
 				}
 			}
 		}
+		
+		if (event.entityLiving instanceof EntityDragon && rand.nextInt(100) < ConfigHandler.dragonShardChance * 100)
+		{
+			int shardCount = ConfigHandler.dragonShardCount;
+			
+			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
+			{
+				EntityPlayer player = (EntityPlayer) event.source.getEntity();
+				ItemStack weapon = player.getCurrentEquippedItem();
+				if (weapon != null && EnchantmentHelper.getEnchantmentLevel(ModArmory.shardLooter.effectId, weapon) == 1)
+				{
+					int amuletLevel = 0;
+					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
+					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
+					{
+						amuletLevel = ItemLootAmulet.getLevel(amulet);
+					}
+					shardCount *= (1 + amuletLevel);
+				}
+			}
+			
+			while (shardCount > 64)
+			{
+				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, 64)));
+				shardCount -= 64;
+			}
+			if (shardCount != 0) event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, shardCount)));
+		}
+		
+		if (event.entityLiving instanceof EntityWither && rand.nextInt(100) < ConfigHandler.witherShardChance * 100)
+		{
+			int shardCount = ConfigHandler.witherShardCount;
+			
+			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
+			{
+				EntityPlayer player = (EntityPlayer) event.source.getEntity();
+				ItemStack weapon = player.getCurrentEquippedItem();
+				if (weapon != null && EnchantmentHelper.getEnchantmentLevel(ModArmory.shardLooter.effectId, weapon) == 1)
+				{
+					int amuletLevel = 0;
+					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
+					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
+					{
+						amuletLevel = ItemLootAmulet.getLevel(amulet);
+					}
+					shardCount *= (1 + amuletLevel);
+				}
+			}
+			
+			while (shardCount > 64)
+			{
+				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, 64)));
+				shardCount -= 64;
+			}
+			if (shardCount != 0) event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, shardCount)));
+		}
 	}
 
 	@SubscribeEvent
@@ -102,6 +169,7 @@ public class EssenceEventHandler
 				ItemStack armor = player.getEquipmentInSlot(i + 1);
 				if (armor != null && armor.getItem() instanceof ItemModArmor)
 				{
+					armor.stackTagCompound.setInteger("Absorption Delay", ConfigHandler.absorptionDelay);
 					protValue += UtilityHelper.getUpgradeLevel(armor, "Protection") * 2;
 					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "Fire Protection") * 3;
 					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "Blast Protection") * 3;
@@ -129,13 +197,13 @@ public class EssenceEventHandler
 			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityLivingBase)
 			{
 				EntityLivingBase enemy = (EntityLivingBase) event.source.getEntity();
-				if (rand.nextInt(100) < (25 * blindCount))
+				if (rand.nextInt(100) < (ConfigHandler.blindThornsChance * blindCount))
 				{
-					enemy.addPotionEffect(new PotionEffect(Potion.blindness.id, blindThorns * 10, 0));
+					enemy.addPotionEffect(new PotionEffect(Potion.blindness.id, blindThorns * ConfigHandler.blindThornsDuration, 0));
 				}
 				if (poisonCount != 0)
 				{
-					enemy.addPotionEffect(new PotionEffect(Potion.poison.id, poisonThorns * 10, poisonCount - 1));
+					enemy.addPotionEffect(new PotionEffect(Potion.poison.id, poisonThorns * ConfigHandler.poisonThornsDuration, poisonCount - 1));
 				}
 			}
 		}

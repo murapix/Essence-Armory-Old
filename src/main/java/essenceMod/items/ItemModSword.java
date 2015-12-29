@@ -22,6 +22,7 @@ import com.google.common.collect.Multimap;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.ExUHandler;
 import essenceMod.init.ModArmory;
@@ -102,25 +103,28 @@ public class ItemModSword extends ItemSword implements IModItem
 			enemy.attackEntityFrom(playerDamage, weaponDamage * pierceMultiplier);
 		}
 
-		float fireMult = UtilityHelper.getUpgradeLevel(item, "Fire") * 0.05F;
-		if (fireMult != 0)
+		float fire = UtilityHelper.getUpgradeLevel(item, "Fire");
+		fire *= ConfigHandler.isFireDamagePercent ? ConfigHandler.fireDamageMulti * weaponDamage : ConfigHandler.fireDamageAmount;
+		if (fire != 0)
 		{
 			enemy.hurtResistantTime = 0;
-			enemy.attackEntityFrom(fireDamage, Math.round(weaponDamage * fireMult * 4) / 4F);
+			enemy.attackEntityFrom(fireDamage, Math.round(fire * 4) / 4F);
 		}
 
-		float witherMult = UtilityHelper.getUpgradeLevel(item, "Wither") * 0.05F;
-		if (witherMult != 0)
+		float wither = UtilityHelper.getUpgradeLevel(item, "Wither");
+		wither *= ConfigHandler.isWitherDamagePercent ? ConfigHandler.witherDamageMulti * weaponDamage : ConfigHandler.witherDamageAmount;
+		if (wither != 0)
 		{
 			enemy.hurtResistantTime = 0;
-			enemy.attackEntityFrom(witherDamage, Math.round(weaponDamage * witherMult * 4) / 4F);
+			enemy.attackEntityFrom(witherDamage, Math.round(wither * 4) / 4F);
 		}
 
-		float magicMult = UtilityHelper.getUpgradeLevel(item, "Magic") * 0.05F;
-		if (magicMult != 0)
+		float magic = UtilityHelper.getUpgradeLevel(item, "Magic");
+		magic *= ConfigHandler.isMagicDamagePercent ? ConfigHandler.magicDamageMulti * weaponDamage : ConfigHandler.magicDamageAmount;
+		if (magic != 0)
 		{
 			enemy.hurtResistantTime = 0;
-			enemy.attackEntityFrom(magicDamage, Math.round(weaponDamage * magicMult * 4) / 4F);
+			enemy.attackEntityFrom(magicDamage, Math.round(magic * 4) / 4F);
 		}
 
 		int poison = UtilityHelper.getUpgradeLevel(item, "Poison");
@@ -144,7 +148,7 @@ public class ItemModSword extends ItemSword implements IModItem
 		int knockback = UtilityHelper.getUpgradeLevel(item, "Knockback");
 		if (knockback != 0) enemy.knockBack(player, weaponDamage, (player.posX - enemy.posX) * knockback, (player.posZ - enemy.posZ) * knockback);
 
-		if (Loader.isModLoaded("DraconicEvolution"))
+		if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration)
 		{
 			try
 			{
@@ -154,7 +158,7 @@ public class ItemModSword extends ItemSword implements IModItem
 			{}
 		}
 
-		if (Loader.isModLoaded("ExtraUtilities"))
+		if (Loader.isModLoaded("ExtraUtilities") && ConfigHandler.extrautilitiesIntegration)
 		{
 			try
 			{
@@ -259,12 +263,36 @@ public class ItemModSword extends ItemSword implements IModItem
 		if (blind != 0) list.add("Blind: Attacks blind enemies for " + blind + " seconds.");
 		if (slow != 0) list.add("Slow: Attacks slow enemies for " + slow + " seconds.");
 		if (pierce != 0) list.add("Piercing: Attacks ignore " + pierce * 20 + "% of armor.");
-		if (damage != 0) list.add("Sharpness: Attacks deal " + damage * 5 + "% increased damage.");
-		if (magic != 0) list.add("Wrath: Attacks deal " + magic * 5 + "% more damage as magic damage.");
-		if (fire != 0) list.add("Anger: Attacks deal " + fire * 5 + "% more damage as fire damage.");
-		if (wither != 0) list.add("Hatred: Attacks deal " + wither * 5 + "% more damage as wither damage.");
-		if (chaos != 0) list.add("Entropy: Attacks deal " + chaos * 5 + "% more damage as chaos damage.");
-		if (divine != 0) list.add("Divinity: Attacks deal " + divine * 5 + "% more damage as divine damage.");
+		if (damage != 0)
+		{
+			if (ConfigHandler.isNormalDamagePercent) list.add("Sharpness: Attacks deal " + damage * ConfigHandler.normalDamageMulti * 100 + "% increased damage.");
+			else list.add("Sharpness: Attacks deal " + damage * ConfigHandler.normalDamageAmount + " extra damage.");
+		}
+		if (magic != 0)
+		{
+			if (ConfigHandler.isMagicDamagePercent) list.add("Wrath: Attacks deal " + magic * ConfigHandler.magicDamageMulti * 100 + "% more damage as magic damage.");
+			else list.add("Wrath: Attacks deal " + magic * ConfigHandler.magicDamageAmount + " extra damage as magic damage.");
+		}
+		if (fire != 0)
+		{
+			if (ConfigHandler.isFireDamagePercent) list.add("Anger: Attacks deal " + fire * ConfigHandler.fireDamageMulti * 100 + "% more damage as fire damage.");
+			else list.add("Anger: Attacks deal " + fire * ConfigHandler.fireDamageAmount + " extra damage as fire damage.");
+		}
+		if (wither != 0)
+		{
+			if (ConfigHandler.isWitherDamagePercent) list.add("Hatred: Attacks deal " + wither * ConfigHandler.witherDamageMulti * 100 + "% more damage as wither damage.");
+			else list.add("Hatred: Attacks deal " + wither * ConfigHandler.witherDamageAmount + " extra damage as wither damage.");
+		}
+		if (chaos != 0)
+		{
+			if (ConfigHandler.isChaosDamagePercent) list.add("Entropy: Attacks deal " + chaos * ConfigHandler.chaosDamageMulti * 100 + "% more damage as chaos damage.");
+			else list.add("Entropy: Attacks deal " + chaos * ConfigHandler.chaosDamageAmount + " extra damage as chaos damage.");
+		}
+		if (divine != 0)
+		{
+			if (ConfigHandler.isDivineDamagePercent) list.add("Divinity: Attacks deal " + divine * ConfigHandler.divineDamageMulti * 100 + "% more damage as divine damage.");
+			else list.add("Divinity: Attacks deal " + divine * ConfigHandler.divineDamageAmount + " extra damage as divine damage.");
+		}
 		return list;
 	}
 }
