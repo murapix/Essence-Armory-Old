@@ -92,8 +92,8 @@ public class ItemModArmor extends ItemArmor implements IModItem
 				else if (item.getItem() instanceof ItemModArmor)
 				{
 					if (item.stackTagCompound.getInteger("Absorption Delay") != 0) resetAbsorption = false;
-					absorption += UtilityHelper.getUpgradeLevel(item, "Absorption");
-					healthBoost += UtilityHelper.getUpgradeLevel(item, "HealthBoost");
+					absorption += UtilityHelper.getUpgradeLevel(item, "ArmorAbsorption");
+					healthBoost += UtilityHelper.getUpgradeLevel(item, "ArmorHealthBoost");
 				}
 			}
 			absorption *= ConfigHandler.absorptionCount;
@@ -149,18 +149,18 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		List list = new ArrayList();
 
 		int level = ItemModArmor.getLevel(item);
-		int protection = UtilityHelper.getUpgradeLevel(item, "Protection");
-		int fireProtection = UtilityHelper.getUpgradeLevel(item, "FireProtection");
-		int magicProtection = UtilityHelper.getUpgradeLevel(item, "MagicProtection");
-		int witherProtection = UtilityHelper.getUpgradeLevel(item, "WitherProtection");
-		int blastProtection = UtilityHelper.getUpgradeLevel(item, "BlastProtection");
-		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ProjectileProtection");
-		int resistance = UtilityHelper.getUpgradeLevel(item, "Resistance");
-		int absorption = UtilityHelper.getUpgradeLevel(item, "Absorption");
-		int healthBoost = UtilityHelper.getUpgradeLevel(item, "HealthBoost");
-		int thorns = UtilityHelper.getUpgradeLevel(item, "Thorns");
-		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "PoisonThorns");
-		int blindThorns = UtilityHelper.getUpgradeLevel(item, "BlindThorns");
+		int protection = UtilityHelper.getUpgradeLevel(item, "ArmorPhysicalProtection");
+		int fireProtection = UtilityHelper.getUpgradeLevel(item, "ArmorFireProtection");
+		int magicProtection = UtilityHelper.getUpgradeLevel(item, "ArmorMagicProtection");
+		int witherProtection = UtilityHelper.getUpgradeLevel(item, "ArmorWitherProtection");
+		int blastProtection = UtilityHelper.getUpgradeLevel(item, "ArmorBlastProtection");
+		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ArmorProjectileProtection");
+		int resistance = UtilityHelper.getUpgradeLevel(item, "ArmorResistance");
+		int absorption = UtilityHelper.getUpgradeLevel(item, "ArmorAbsorption");
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, "ArmorHealthBoost");
+		int thorns = UtilityHelper.getUpgradeLevel(item, "ArmorPhysicalThorns");
+		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "ArmorMagicThorns");
+		int blindThorns = UtilityHelper.getUpgradeLevel(item, "ArmorBlindThorns");
 
 		if (level != 0)
 		{
@@ -188,18 +188,18 @@ public class ItemModArmor extends ItemArmor implements IModItem
 		List list = new ArrayList();
 
 		int level = ItemModArmor.getLevel(item);
-		int protection = UtilityHelper.getUpgradeLevel(item, "Protection");
-		int fireProtection = UtilityHelper.getUpgradeLevel(item, "FireProtection");
-		int magicProtection = UtilityHelper.getUpgradeLevel(item, "MagicProtection");
-		int witherProtection = UtilityHelper.getUpgradeLevel(item, "WitherProtection");
-		int blastProtection = UtilityHelper.getUpgradeLevel(item, "BlastProtection");
-		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ProjectileProtection");
-		int resistance = UtilityHelper.getUpgradeLevel(item, "Resistance");
-		int absorption = UtilityHelper.getUpgradeLevel(item, "Absorption");
-		int healthBoost = UtilityHelper.getUpgradeLevel(item, "HealthBoost");
-		int thorns = UtilityHelper.getUpgradeLevel(item, "Thorns");
-		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "PoisonThorns");
-		int blindThorns = UtilityHelper.getUpgradeLevel(item, "BlindThorns");
+		int protection = UtilityHelper.getUpgradeLevel(item, "ArmorPhysicalProtection");
+		int fireProtection = UtilityHelper.getUpgradeLevel(item, "ArmorFireProtection");
+		int magicProtection = UtilityHelper.getUpgradeLevel(item, "ArmorMagicProtection");
+		int witherProtection = UtilityHelper.getUpgradeLevel(item, "ArmorWitherProtection");
+		int blastProtection = UtilityHelper.getUpgradeLevel(item, "ArmorBlastProtection");
+		int projectileProtection = UtilityHelper.getUpgradeLevel(item, "ArmorProjectileProtection");
+		int resistance = UtilityHelper.getUpgradeLevel(item, "ArmorResistance");
+		int absorption = UtilityHelper.getUpgradeLevel(item, "ArmorAbsorption");
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, "ArmorHealthBoost");
+		int thorns = UtilityHelper.getUpgradeLevel(item, "ArmorPhysicalThorns");
+		int poisonThorns = UtilityHelper.getUpgradeLevel(item, "ArmorMagicThorns");
+		int blindThorns = UtilityHelper.getUpgradeLevel(item, "ArmorBlindThorns");
 
 		if (level != 0)
 		{

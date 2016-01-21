@@ -26,5 +26,6 @@ public class RegisterHelper
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, new TileEntityEssenceInfuserRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, new TileEntityEssencePylonRenderer());
+		
 	}
 }

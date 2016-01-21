@@ -6,15 +6,18 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Recipes;
 import essenceMod.crafting.Upgrade;
+import essenceMod.gui.GuiHandler;
 import essenceMod.handlers.CommandUpgrade;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.EssenceEventHandler;
@@ -35,6 +38,7 @@ dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
 		"after:extrautilities@[1.2.11,);")
 public class EssenceMod
 {
+	@Instance
 	public static EssenceMod instance;
 	
 	@Mod.EventHandler
@@ -62,6 +66,7 @@ public class EssenceMod
 			}
 			catch (Exception e){}
 		}
+		NetworkRegistry.INSTANCE.registerGuiHandler(EssenceMod.instance, new GuiHandler());
 	}
 
 	@Mod.EventHandler

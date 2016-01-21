@@ -13,10 +13,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import essenceMod.EssenceMod;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Upgrade;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.gui.GuiEssenceInfuser;
+import essenceMod.gui.GuiHandler;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
@@ -59,48 +61,8 @@ public class EssenceInfuser extends BlockContainer
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
-		if (!world.isRemote)
-		{
-			TileEntityEssenceInfuser tileEntity = (TileEntityEssenceInfuser) world.getTileEntity(x, y, z);
-			if (tileEntity.isActive())
-			{
-				player.addChatMessage(new ChatComponentText("Infusion Progress: " + ((200 - tileEntity.ticksRemaining()) / 2) + "%"));
-			}
-			else
-			{
-				if (tileEntity.inv != null)
-				{
-					if (player.isSneaking() && player.getCurrentEquippedItem() == null)
-					{
-						player.setCurrentItemOrArmor(0, tileEntity.inv.copy());
-						if (tileEntity.inv.hasTagCompound()) player.getEquipmentInSlot(0).setTagCompound((NBTTagCompound) tileEntity.inv.getTagCompound().copy());
-						tileEntity.setInventorySlotContents(0, null);
-					}
-					else if (player.isSneaking() && player.getCurrentEquippedItem() != null)
-					{
-						dropItems(world, x, y, z);
-						tileEntity.setInventorySlotContents(0, null);
-					}
-					else
-					{
-						boolean bool = tileEntity.checkMultiBlockForm();
-						player.addChatMessage(new ChatComponentText(bool ? "- Essence Infuser is correctly set up." : "! Essence Infuser is not correctly set up."));
-//						Minecraft.getMinecraft().displayGuiScreen(new GuiEssenceInfuser(player.inventory, tileEntity));
-						tileEntity.multiblock = bool;
-						if (tileEntity.isReady())
-						{
-							tileEntity.activate();
-							player.addChatMessage(new ChatComponentText("- Beginng infusion"));
-						}
-						return true;
-					}
-				}
-				else if (tileEntity.isItemValidForSlot(0, player.getCurrentEquippedItem()))
-				{
-					tileEntity.setInventorySlotContents(0, player.getCurrentEquippedItem().splitStack(1).copy());
-				}
-			}
-		}
+		if (world.isRemote) return true;
+		player.openGui(EssenceMod.instance, GuiHandler.GUIID_ESSENCE_INFUSER, world, x, y, z);
 		return true;
 	}
 

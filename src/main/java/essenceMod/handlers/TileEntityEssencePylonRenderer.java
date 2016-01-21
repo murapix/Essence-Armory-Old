@@ -53,7 +53,7 @@ public class TileEntityEssencePylonRenderer extends TileEntitySpecialRenderer
 		{
 			TileEntityEssencePylon pylon = (TileEntityEssencePylon) te;
 			GL11.glPushMatrix();
-			GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+			GL11.glTranslated(x + 0.5, y + 1.0, z + 0.5);
 			if (pylon.getStackInSlot(0) != null)
 			{
 				EntityItem hover = new EntityItem(pylon.getWorldObj());

@@ -42,9 +42,10 @@ public class ItemModSword extends ItemSword implements IModItem
 	{
 		if (item.stackTagCompound == null) onCreated(item, world, (EntityPlayer) entity);
 		int level = item.stackTagCompound.getInteger("Level");
-		int damage = UtilityHelper.getUpgradeLevel(item, "Damage");
+		float damage = UtilityHelper.getUpgradeLevel(item, "SwordPhysicalDamage");
 		weaponDamage = 4.0F + toolMaterial.getDamageVsEntity() + level;
-		weaponDamage *= (1 + 0.05 * damage);
+		damage *= ConfigHandler.isNormalDamagePercent ? ConfigHandler.normalDamageMulti * weaponDamage : ConfigHandler.normalDamageAmount;
+		weaponDamage += damage;
 		item.stackTagCompound.setFloat("weaponDamage", weaponDamage);
 	}
 
@@ -69,9 +70,10 @@ public class ItemModSword extends ItemSword implements IModItem
 	public void onCreated(ItemStack item, World world, EntityPlayer entityPlayer)
 	{
 		if (item.stackTagCompound == null) item.setTagCompound(new NBTTagCompound());
-		int damage = UtilityHelper.getUpgradeLevel(item, "Damage");
+		float damage = UtilityHelper.getUpgradeLevel(item, "SwordPhysicalDamage");
 		weaponDamage = 4.0F + toolMaterial.getDamageVsEntity() + level;
-		weaponDamage *= (1 + 0.05 * damage);
+		damage *= ConfigHandler.isNormalDamagePercent ? ConfigHandler.normalDamageMulti * weaponDamage : ConfigHandler.normalDamageAmount;
+		weaponDamage += damage;
 		item.stackTagCompound.setInteger("Level", level);
 		item.stackTagCompound.setFloat("weaponDamage", weaponDamage);
 		item.addEnchantment(ModArmory.shardLooter, 1);
@@ -89,7 +91,7 @@ public class ItemModSword extends ItemSword implements IModItem
 
 		float weaponDamage = item.stackTagCompound.getFloat("weaponDamage");
 
-		int pierce = UtilityHelper.getUpgradeLevel(item, "Pierce");
+		int pierce = UtilityHelper.getUpgradeLevel(item, "SwordArmorPiercing");
 		int enemyArmor = enemy.getTotalArmorValue();
 		if (enemyArmor >= 25)
 		{
@@ -103,7 +105,7 @@ public class ItemModSword extends ItemSword implements IModItem
 			enemy.attackEntityFrom(playerDamage, weaponDamage * pierceMultiplier);
 		}
 
-		float fire = UtilityHelper.getUpgradeLevel(item, "Fire");
+		float fire = UtilityHelper.getUpgradeLevel(item, "SwordFireDamage");
 		fire *= ConfigHandler.isFireDamagePercent ? ConfigHandler.fireDamageMulti * weaponDamage : ConfigHandler.fireDamageAmount;
 		if (fire != 0)
 		{
@@ -111,7 +113,7 @@ public class ItemModSword extends ItemSword implements IModItem
 			enemy.attackEntityFrom(fireDamage, Math.round(fire * 4) / 4F);
 		}
 
-		float wither = UtilityHelper.getUpgradeLevel(item, "Wither");
+		float wither = UtilityHelper.getUpgradeLevel(item, "SwordWitherDamage");
 		wither *= ConfigHandler.isWitherDamagePercent ? ConfigHandler.witherDamageMulti * weaponDamage : ConfigHandler.witherDamageAmount;
 		if (wither != 0)
 		{
@@ -119,7 +121,7 @@ public class ItemModSword extends ItemSword implements IModItem
 			enemy.attackEntityFrom(witherDamage, Math.round(wither * 4) / 4F);
 		}
 
-		float magic = UtilityHelper.getUpgradeLevel(item, "Magic");
+		float magic = UtilityHelper.getUpgradeLevel(item, "SwordMagicDamage");
 		magic *= ConfigHandler.isMagicDamagePercent ? ConfigHandler.magicDamageMulti * weaponDamage : ConfigHandler.magicDamageAmount;
 		if (magic != 0)
 		{
@@ -127,32 +129,32 @@ public class ItemModSword extends ItemSword implements IModItem
 			enemy.attackEntityFrom(magicDamage, Math.round(magic * 4) / 4F);
 		}
 
-		int poison = UtilityHelper.getUpgradeLevel(item, "Poison");
+		int poison = UtilityHelper.getUpgradeLevel(item, "SwordMagicDoT");
 		if (poison != 0) enemy.addPotionEffect(new PotionEffect(Potion.poison.id, 25 * poison, poison - 1));
 
-		int burn = UtilityHelper.getUpgradeLevel(item, "Burn");
+		int burn = UtilityHelper.getUpgradeLevel(item, "SwordFireDoT");
 		if (burn != 0) enemy.setFire(burn);
 
-		int decay = UtilityHelper.getUpgradeLevel(item, "Decay");
+		int decay = UtilityHelper.getUpgradeLevel(item, "SwordWitherDoT");
 		if (decay != 0) enemy.addPotionEffect(new PotionEffect(Potion.wither.id, 25 * decay, decay - 1));
 
-		int lifesteal = UtilityHelper.getUpgradeLevel(item, "Lifesteal");
+		int lifesteal = UtilityHelper.getUpgradeLevel(item, "SwordLifesteal");
 		if (lifesteal != 0) player.heal(lifesteal * weaponDamage * 0.05F);
 
-		int slow = UtilityHelper.getUpgradeLevel(item, "Slow");
+		int slow = UtilityHelper.getUpgradeLevel(item, "SwordSlow");
 		if (slow != 0) enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25 * slow, slow - 1));
 
-		int blind = UtilityHelper.getUpgradeLevel(item, "Blind");
+		int blind = UtilityHelper.getUpgradeLevel(item, "SwordBlind");
 		if (blind != 0) enemy.addPotionEffect(new PotionEffect(Potion.blindness.id, 25 * slow));
 
-		int knockback = UtilityHelper.getUpgradeLevel(item, "Knockback");
+		int knockback = UtilityHelper.getUpgradeLevel(item, "SwordKnockback");
 		if (knockback != 0) enemy.knockBack(player, weaponDamage, (player.posX - enemy.posX) * knockback, (player.posZ - enemy.posZ) * knockback);
 
 		if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration)
 		{
 			try
 			{
-				DraconicEvolutionHandler.doChaosDamage(item, (EntityPlayer) player, enemy, weaponDamage);
+				DraconicEvolutionHandler.doSwordChaosDamage(item, (EntityPlayer) player, enemy, weaponDamage);
 			}
 			catch (Exception e)
 			{}
@@ -162,7 +164,7 @@ public class ItemModSword extends ItemSword implements IModItem
 		{
 			try
 			{
-				ExUHandler.doDivineDamage(item, (EntityPlayer) player, enemy, weaponDamage);
+				ExUHandler.doSwordDivineDamage(item, (EntityPlayer) player, enemy, weaponDamage);
 			}
 			catch (Exception e)
 			{}
@@ -196,20 +198,20 @@ public class ItemModSword extends ItemSword implements IModItem
 		List list = new ArrayList();
 
 		int level = ItemModSword.getLevel(item);
-		int burn = UtilityHelper.getUpgradeLevel(item, "Burn");
-		int poison = UtilityHelper.getUpgradeLevel(item, "Poison");
-		int decay = UtilityHelper.getUpgradeLevel(item, "Decay");
-		int lifesteal = UtilityHelper.getUpgradeLevel(item, "Lifesteal");
-		int knockback = UtilityHelper.getUpgradeLevel(item, "Knockback");
-		int blind = UtilityHelper.getUpgradeLevel(item, "Blind");
-		int slow = UtilityHelper.getUpgradeLevel(item, "Slow");
-		int pierce = UtilityHelper.getUpgradeLevel(item, "Pierce");
-		int damage = UtilityHelper.getUpgradeLevel(item, "Damage");
-		int magic = UtilityHelper.getUpgradeLevel(item, "Magic");
-		int fire = UtilityHelper.getUpgradeLevel(item, "Fire");
-		int wither = UtilityHelper.getUpgradeLevel(item, "Wither");
-		int chaos = UtilityHelper.getUpgradeLevel(item, "Chaos");
-		int divine = UtilityHelper.getUpgradeLevel(item, "Divine");
+		int burn = UtilityHelper.getUpgradeLevel(item, "SwordFireDoT");
+		int poison = UtilityHelper.getUpgradeLevel(item, "SwordMagicDoT");
+		int decay = UtilityHelper.getUpgradeLevel(item, "SwordWitherDoT");
+		int lifesteal = UtilityHelper.getUpgradeLevel(item, "SwordLifesteal");
+		int knockback = UtilityHelper.getUpgradeLevel(item, "SwordKnockback");
+		int blind = UtilityHelper.getUpgradeLevel(item, "SwordBlind");
+		int slow = UtilityHelper.getUpgradeLevel(item, "SwordSlow");
+		int pierce = UtilityHelper.getUpgradeLevel(item, "SwordArmorPiercing");
+		int damage = UtilityHelper.getUpgradeLevel(item, "SwordPhysicalDamage");
+		int magic = UtilityHelper.getUpgradeLevel(item, "SwordMagicDamage");
+		int fire = UtilityHelper.getUpgradeLevel(item, "SwordFireDamage");
+		int wither = UtilityHelper.getUpgradeLevel(item, "SwordWitherDamage");
+		int chaos = UtilityHelper.getUpgradeLevel(item, "SwordChaosDamage");
+		int divine = UtilityHelper.getUpgradeLevel(item, "SwordDivineDamage");
 
 		if (level != 0)
 		{
@@ -239,20 +241,20 @@ public class ItemModSword extends ItemSword implements IModItem
 		List list = new ArrayList();
 
 		int level = ItemModSword.getLevel(item);
-		int burn = UtilityHelper.getUpgradeLevel(item, "Burn");
-		int poison = UtilityHelper.getUpgradeLevel(item, "Poison");
-		int decay = UtilityHelper.getUpgradeLevel(item, "Decay");
-		int lifesteal = UtilityHelper.getUpgradeLevel(item, "Lifesteal");
-		int knockback = UtilityHelper.getUpgradeLevel(item, "Knockback");
-		int blind = UtilityHelper.getUpgradeLevel(item, "Blind");
-		int slow = UtilityHelper.getUpgradeLevel(item, "Slow");
-		int pierce = UtilityHelper.getUpgradeLevel(item, "Pierce");
-		int damage = UtilityHelper.getUpgradeLevel(item, "Damage");
-		int magic = UtilityHelper.getUpgradeLevel(item, "Magic");
-		int fire = UtilityHelper.getUpgradeLevel(item, "Fire");
-		int wither = UtilityHelper.getUpgradeLevel(item, "Wither");
-		int chaos = UtilityHelper.getUpgradeLevel(item, "Chaos");
-		int divine = UtilityHelper.getUpgradeLevel(item, "Divine");
+		int burn = UtilityHelper.getUpgradeLevel(item, "SwordFireDoT");
+		int poison = UtilityHelper.getUpgradeLevel(item, "SwordMagicDoT");
+		int decay = UtilityHelper.getUpgradeLevel(item, "SwordWitherDoT");
+		int lifesteal = UtilityHelper.getUpgradeLevel(item, "SwordLifesteal");
+		int knockback = UtilityHelper.getUpgradeLevel(item, "SwordKnockback");
+		int blind = UtilityHelper.getUpgradeLevel(item, "SwordBlind");
+		int slow = UtilityHelper.getUpgradeLevel(item, "SwordSlow");
+		int pierce = UtilityHelper.getUpgradeLevel(item, "SwordArmorPiercing");
+		int damage = UtilityHelper.getUpgradeLevel(item, "SwordPhysicalDamage");
+		int magic = UtilityHelper.getUpgradeLevel(item, "SwordMagicDamage");
+		int fire = UtilityHelper.getUpgradeLevel(item, "SwordFireDamage");
+		int wither = UtilityHelper.getUpgradeLevel(item, "SwordWitherDamage");
+		int chaos = UtilityHelper.getUpgradeLevel(item, "SwordChaosDamage");
+		int divine = UtilityHelper.getUpgradeLevel(item, "SwordDivineDamage");
 
 		if (level != 0) list.add("Level: " + UtilityHelper.toRoman(level));
 		if (burn != 0) list.add("Burn: Attacks light enemies on fire for " + burn + " seconds.");

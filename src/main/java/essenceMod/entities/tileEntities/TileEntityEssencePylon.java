@@ -7,6 +7,12 @@ import net.minecraft.item.ItemStack;
 
 public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements IInventory
 {	
+	public TileEntityEssencePylon()
+	{
+		super();
+		slots = new ItemStack[1];
+	}
+	
 	@Override
 	public void updateEntity()
 	{}

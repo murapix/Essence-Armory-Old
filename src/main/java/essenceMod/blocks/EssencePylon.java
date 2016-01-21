@@ -10,10 +10,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
+import essenceMod.EssenceMod;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
+import essenceMod.gui.GuiHandler;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
@@ -56,41 +56,10 @@ public class EssencePylon extends BlockContainer
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
-		if (!world.isRemote)
-		{
-			TileEntityEssencePylon tileEntity = (TileEntityEssencePylon) world.getTileEntity(x, y, z);
-			if (tileEntity.inv != null)
-			{
-				if (player.isSneaking() && player.getCurrentEquippedItem() == null)
-				{
-					player.setCurrentItemOrArmor(0, tileEntity.inv);
-					tileEntity.inv = null;
-				}
-				else if (player.isSneaking() && player.getCurrentEquippedItem() != null)
-				{
-					dropItems(world, x, y, z);
-					tileEntity.inv = null;
-				}
-				else
-				{
-					if (tileEntity.inv != null && tileEntity.inv.stackSize != 0)
-						player.addChatComponentMessage(new ChatComponentText("- Pylon contains " + tileEntity.inv.stackSize + " " + tileEntity.inv.getDisplayName()));
-				}
-			}
-			else
-			{
-				if (tileEntity.isItemValidForSlot(0, player.getCurrentEquippedItem()))
-				{
-					if (player.getCurrentEquippedItem() != null) tileEntity.inv = player.getCurrentEquippedItem().splitStack(1).copy();
-				}
-				else
-				{
-					player.addChatComponentMessage(new ChatComponentText("- Pylon contains no item"));
-				}
-			}
-		}
+		if (world.isRemote) return true;
+		
+		player.openGui(EssenceMod.instance, GuiHandler.GUIID_ESSENCE_PYLON, world, x, y, z);
 		return true;
-
 	}
 
 	@Override

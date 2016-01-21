@@ -23,18 +23,19 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.entities.EntityBoss;
+import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.TConstructHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
-import essenceMod.items.baubles.ItemKnockbackBelt;
-import essenceMod.items.baubles.ItemLootAmulet;
+import essenceMod.items.baubles.ItemBaseAmulet;
+import essenceMod.items.baubles.ItemBaseBelt;
 import essenceMod.utility.UtilityHelper;
 
 public class EssenceEventHandler
@@ -78,9 +79,9 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
 					{
-						amuletLevel = ItemLootAmulet.getLevel(amulet);
+						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					if (rand.nextInt(30) < (5 * (1 + amuletLevel)))
 					{
@@ -106,9 +107,9 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
 					{
-						amuletLevel = ItemLootAmulet.getLevel(amulet);
+						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					shardCount *= (1 + amuletLevel);
 				}
@@ -134,9 +135,9 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemLootAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
 					{
-						amuletLevel = ItemLootAmulet.getLevel(amulet);
+						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					shardCount *= (1 + amuletLevel);
 				}
@@ -170,20 +171,21 @@ public class EssenceEventHandler
 				if (armor != null && armor.getItem() instanceof ItemModArmor)
 				{
 					armor.stackTagCompound.setInteger("Absorption Delay", ConfigHandler.absorptionDelay);
-					protValue += UtilityHelper.getUpgradeLevel(armor, "Protection") * 2;
-					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "Fire Protection") * 3;
-					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "Blast Protection") * 3;
-					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "Magic Protection") * 3;
-					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, "Projectile Protection") * 3;
-					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, "Wither Protection") * 3;
-					resValue += UtilityHelper.getUpgradeLevel(armor, "Resistance");
-					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, "PoisonThorns");
+					protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorPhysicalProtection") * 2;
+					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorFireProtection") * 3;
+					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorBlastProtection") * 3;
+					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorMagicProtection") * 3;
+					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorProjectileProtection") * 3;
+					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorWitherProtection") * 3;
+					if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration) protValue += DraconicEvolutionHandler.getChaosDamageProtection(armor, source);
+					resValue += UtilityHelper.getUpgradeLevel(armor, "ArmorResistance");
+					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorMagicThorns");
 					if (poisonTemp != 0)
 					{
 						poisonThorns += poisonTemp;
 						poisonCount++;
 					}
-					int blindTemp = UtilityHelper.getUpgradeLevel(armor, "BlindThorns");
+					int blindTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorBlindThorns");
 					if (blindTemp != 0)
 					{
 						blindThorns += blindTemp;
@@ -191,7 +193,7 @@ public class EssenceEventHandler
 					}
 				}
 			}
-			double protReduction = protValue * 0.01;
+			double protReduction = protValue * ConfigHandler.maxProtectionValue / 80;
 			double resReduction = resValue * 0.04;
 			event.ammount *= (1 - protReduction) * (1 - resReduction);
 			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityLivingBase)
@@ -214,7 +216,7 @@ public class EssenceEventHandler
 	{
 		EntityPlayer player = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-		if (belt != null && belt.getItem() instanceof ItemKnockbackBelt) ItemKnockbackBelt.knockback(belt, player, event.distance);
+		if (belt != null && belt.getItem() instanceof ItemBaseBelt) ItemBaseBelt.knockback(belt, player, event.distance);
 	}
 
 	@SubscribeEvent
@@ -224,7 +226,7 @@ public class EssenceEventHandler
 		{
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-			if (belt != null && belt.getItem() instanceof ItemKnockbackBelt) ItemKnockbackBelt.knockback(belt, player, event.distance);
+			if (belt != null && belt.getItem() instanceof ItemBaseBelt) ItemBaseBelt.knockback(belt, player, event.distance);
 		}
 	}
 
@@ -243,11 +245,17 @@ public class EssenceEventHandler
 				{
 					iterator.previous();
 					float weaponDamage = event.itemStack.stackTagCompound.getFloat("weaponDamage");
-					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Fire") * weaponDamage * 0.05F;
-					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Wither") * weaponDamage * 0.05F;
-					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Magic") * weaponDamage * 0.05F;
-					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Chaos") * weaponDamage * 0.05F;
-					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "Divine") * weaponDamage * 0.05F;
+					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordFireDamage");
+					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordWitherDamage");
+					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordMagicDamage");
+					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordChaosDamage");
+					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordDivineDamage");
+					
+					fireDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.fireDamageMulti : ConfigHandler.fireDamageAmount;
+					witherDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;
+					magicDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.magicDamageMulti : ConfigHandler.magicDamageAmount;
+					chaosDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.chaosDamageMulti : ConfigHandler.chaosDamageAmount;
+					divineDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.divineDamageMulti : ConfigHandler.divineDamageAmount;
 					
 					double fireText = Math.round(fireDamage * 4) / 4D;
 					double witherText = Math.round(witherDamage * 4) / 4D;
