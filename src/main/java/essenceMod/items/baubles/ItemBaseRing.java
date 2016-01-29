@@ -149,14 +149,14 @@ public class ItemBaseRing extends ItemBauble
 		item.stackTagCompound.setInteger("Level", 0);
 		int meta = item.getItemDamage();
 		if (meta == 0) return;
-		else if (meta <= 3) InfuserRecipes.addLevel(item, new Upgrade("RingPotionSwiftness", meta));
-		else if (meta <= 6) InfuserRecipes.addLevel(item, new Upgrade("RingPotionHaste", meta - 3));
-		else if (meta <= 9) InfuserRecipes.addLevel(item, new Upgrade("RingPotionStrength", meta - 6));
-		else if (meta <= 12) InfuserRecipes.addLevel(item, new Upgrade("RingPotionJumpBoost", meta - 9));
-		else if (meta <= 15) InfuserRecipes.addLevel(item, new Upgrade("RingPotionRegeneration", meta - 12));
-		else if (meta == 16) InfuserRecipes.addLevel(item, new Upgrade("RingPotionNightVision", 1));
-		else if (meta == 17) InfuserRecipes.addLevel(item, new Upgrade("RingPotionWaterBreathing", 1));
-		else if (meta == 18) InfuserRecipes.addLevel(item, new Upgrade("RingPotionFireResistance", 1));
+		else if (meta <= 3) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionSwiftness", meta));
+		else if (meta <= 6) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionHaste", meta - 3));
+		else if (meta <= 9) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionStrength", meta - 6));
+		else if (meta <= 12) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionJumpBoost", meta - 9));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionRegeneration", meta - 12));
+		else if (meta == 16) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionNightVision", 1));
+		else if (meta == 17) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionWaterBreathing", 1));
+		else if (meta == 18) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionFireResistance", 1));
 	}
 
 	@Override

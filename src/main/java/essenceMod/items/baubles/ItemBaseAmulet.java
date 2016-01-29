@@ -12,13 +12,13 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import tconstruct.util.Reference;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Upgrade;
+import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
 public class ItemBaseAmulet extends ItemBauble
@@ -43,9 +43,9 @@ public class ItemBaseAmulet extends ItemBauble
 	@Override
 	public void registerIcons(IIconRegister iconRegister)
 	{
-		icons[0] = iconRegister.registerIcon(Reference.MOD_ID + ":" + getUnlocalizedName().substring(5));
+		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
 		for (int i = 1; i < icons.length; i++)
-			icons[i] = iconRegister.registerIcon(Reference.MOD_ID + ":" + getUnlocalizedName().substring(5) + "-" + i);
+			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5)/* + "-" + i*/);
 	}
 	
 	@Override
@@ -75,11 +75,11 @@ public class ItemBaseAmulet extends ItemBauble
 		item.stackTagCompound.setInteger("Level", 0);
 		int meta = item.getItemDamage();
 		if (meta == 0) return;
-		else if (meta <= 5) InfuserRecipes.addLevel(item, new Upgrade("AmuletPoisonImmunity", meta));
-		else if (meta <= 10) InfuserRecipes.addLevel(item, new Upgrade("AmuletWitherImmunity", meta - 5));
-		else if (meta <= 15) InfuserRecipes.addLevel(item, new Upgrade("AmuletFireImmunity", meta - 10));
-		else if (meta <= 20) InfuserRecipes.addLevel(item, new Upgrade("AmuletLooting", meta - 15));
-		else InfuserRecipes.addLevel(item, new Upgrade("AmuletFlight", meta - 20));
+		else if (meta <= 5) InfuserRecipes.addUpgrade(item, new Upgrade("AmuletPoisonImmunity", meta));
+		else if (meta <= 10) InfuserRecipes.addUpgrade(item, new Upgrade("AmuletWitherImmunity", meta - 5));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, new Upgrade("AmuletFireImmunity", meta - 10));
+		else if (meta <= 20) InfuserRecipes.addUpgrade(item, new Upgrade("AmuletLooting", meta - 15));
+		else InfuserRecipes.addUpgrade(item, new Upgrade("AmuletFlight", meta - 20));
 	}
 	
 	@Override

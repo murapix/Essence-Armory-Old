@@ -293,4 +293,10 @@ public class EssenceEventHandler
 			}
 		}
 	}
+	
+//	@SubscribeEvent
+//	public void spawnOPZombie()
+//	{
+//		
+//	}
 }

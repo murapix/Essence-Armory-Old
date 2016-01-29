@@ -1,6 +1,7 @@
 package essenceMod;
 
-import java.util.UUID;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -16,7 +17,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Recipes;
-import essenceMod.crafting.Upgrade;
 import essenceMod.gui.GuiHandler;
 import essenceMod.handlers.CommandUpgrade;
 import essenceMod.handlers.ConfigHandler;
@@ -96,7 +96,7 @@ public class EssenceMod
 					for (int i = 0; i < upgradeList.tagCount(); i++)
 					{
 						NBTTagCompound upgrade = upgradeList.getCompoundTagAt(i);
-						InfuserRecipes.upgradeLimits.put(new Upgrade(upgrade.getString("Name")), upgrade.getString("Type"));
+//						InfuserRecipes.upgradeLimits.put(new Upgrade(upgrade.getString("Name")), upgrade.getString("Type"));
 					}
 				}
 			}
@@ -105,7 +105,7 @@ public class EssenceMod
 				if (message.isNBTMessage())
 				{
 					NBTTagCompound upgrade = message.getNBTValue();
-					InfuserRecipes.upgradeLimits.put(new Upgrade(upgrade.getString("Name")), upgrade.getString("Type"));
+//					InfuserRecipes.upgradeLimits.put(new Upgrade(upgrade.getString("Name")), upgrade.getString("Type"));
 				}
 			}
 		}

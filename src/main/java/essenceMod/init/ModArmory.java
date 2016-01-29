@@ -34,9 +34,9 @@ public class ModArmory
 	public static Item infusedPants = new ItemModArmor(AINFUSED, 2).setUnlocalizedName("infusedPants");
 	public static Item infusedBoots = new ItemModArmor(AINFUSED, 3).setUnlocalizedName("infusedBoots");
 
-	public static Item baseRing = new ItemBaseRing().setUnlocalizedName("infusedBaseRing");
-	public static Item baseBelt = new ItemBaseBelt().setUnlocalizedName("infusedBaseBelt");
-	public static Item baseAmulet = new ItemBaseAmulet().setUnlocalizedName("infusedBaseAmulet");
+	public static Item infusedRing = new ItemBaseRing().setUnlocalizedName("infusedRing");
+	public static Item infusedBelt = new ItemBaseBelt().setUnlocalizedName("infusedBelt");
+	public static Item infusedAmulet = new ItemBaseAmulet().setUnlocalizedName("infusedAmulet");
 
 	public static Item healthyVambraces;
 	public static Item immunityPauldrons;
@@ -53,9 +53,9 @@ public class ModArmory
 		RegisterHelper.registerItem(infusedPants);
 		RegisterHelper.registerItem(infusedBoots);
 
-		RegisterHelper.registerItem(baseAmulet);
-		RegisterHelper.registerItem(baseBelt);
-		RegisterHelper.registerItem(baseRing);
+		RegisterHelper.registerItem(infusedAmulet);
+		RegisterHelper.registerItem(infusedBelt);
+		RegisterHelper.registerItem(infusedRing);
 
 		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 		{

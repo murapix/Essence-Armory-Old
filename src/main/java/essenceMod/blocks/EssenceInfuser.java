@@ -3,6 +3,7 @@ package essenceMod.blocks;
 import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -62,7 +63,7 @@ public class EssenceInfuser extends BlockContainer
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
 		if (world.isRemote) return true;
-		player.openGui(EssenceMod.instance, GuiHandler.GUIID_ESSENCE_INFUSER, world, x, y, z);
+		player.openGui(EssenceMod.instance, GuiHandler.EssenceInfuserGui, world, x, y, z);
 		return true;
 	}
 

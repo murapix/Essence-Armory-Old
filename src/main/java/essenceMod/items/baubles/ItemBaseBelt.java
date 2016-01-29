@@ -25,12 +25,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import tconstruct.util.Reference;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.Upgrade;
+import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
 public class ItemBaseBelt extends ItemBauble
@@ -57,9 +57,9 @@ public class ItemBaseBelt extends ItemBauble
 	@Override
 	public void registerIcons(IIconRegister iconRegister)
 	{
-		icons[0] = iconRegister.registerIcon(Reference.MOD_ID + ":" + getUnlocalizedName().substring(5));
+		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
 		for (int i = 1; i < icons.length; i++)
-			icons[i] = iconRegister.registerIcon(Reference.MOD_ID + ":" + getUnlocalizedName().substring(5) + "-" + i);
+			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5)/* + "-" + i*/);
 	}
 	
 	@Override
@@ -100,10 +100,10 @@ public class ItemBaseBelt extends ItemBauble
 		int meta = item.getItemDamage();
 		item.stackTagCompound.setInteger("Level", 0);
 		if (meta == 0) return;
-		else if (meta <= 5) InfuserRecipes.addLevel(item, new Upgrade("BeltCleave", meta));
-		else if (meta <= 10) InfuserRecipes.addLevel(item, new Upgrade("BeltKnockback", meta - 5));
-		else if (meta <= 15) InfuserRecipes.addLevel(item, new Upgrade("BeltHealth", meta - 10));
-		else if (meta == 16) InfuserRecipes.addLevel(item, new Upgrade("BeltMiningLimit", 1));
+		else if (meta <= 5) InfuserRecipes.addUpgrade(item, new Upgrade("BeltCleave", meta));
+		else if (meta <= 10) InfuserRecipes.addUpgrade(item, new Upgrade("BeltKnockback", meta - 5));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, new Upgrade("BeltHealth", meta - 10));
+		else if (meta == 16) InfuserRecipes.addUpgrade(item, new Upgrade("BeltMiningLimit", 1));
 	}
 	
 	@Override

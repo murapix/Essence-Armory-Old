@@ -58,7 +58,7 @@ public class EssencePylon extends BlockContainer
 	{
 		if (world.isRemote) return true;
 		
-		player.openGui(EssenceMod.instance, GuiHandler.GUIID_ESSENCE_PYLON, world, x, y, z);
+		player.openGui(EssenceMod.instance, GuiHandler.EssencePylonGui, world, x, y, z);
 		return true;
 	}
 

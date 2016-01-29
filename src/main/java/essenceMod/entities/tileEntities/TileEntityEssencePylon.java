@@ -28,4 +28,9 @@ public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements 
 	{
 		return Reference.MODID + ".TileEntityEssencePylon";
 	}
+	
+	public void infuse()
+	{
+		if (slots[0] != null) slots[0] = null;
+	}
 }

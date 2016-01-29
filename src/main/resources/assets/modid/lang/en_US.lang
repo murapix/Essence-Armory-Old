@@ -1,15 +1,15 @@
-item.infusedShard.name=§6Shard of Essence
-item.gemInfused.name=§6Essence Infused Crystal
+item.shardInfused.name=§6Shard of Essence
+item.gemInfused.name=§6Essence Infused Diamond
 item.nuggetInfused.name=§6Essence Infused Nugget
-item.infusedStar.name=§6Essence Infused Star
-item.infusedDiamond.name=§6Crystallized Essence Diamond
-item.gemStar.name=§6Crystallized Essence Star
+item.starInfused.name=§6Essence Infused Star
+item.gemCrystallized.name=§6Crystallized Essence Diamond
+item.starCrystallized.name=§6Crystallized Essence Star
 item.ingotInfused.name=§6Essence Infused Ingot
-item.platedDiamond.name=§6Essence Plated Diamond
-item.platedStar.name=§6Essence Plated Star
+item.gemPlated.name=§6Essence Plated Diamond
+item.starPlated.name=§6Essence Plated Star
 
-item.infusedRod.name=§6Essence Infused Stick
-item.infusedString.name=§6Essence Infused String
+item.stickInfused.name=§6Essence Infused Stick
+item.stringInfused.name=§6Essence Infused String
 
 item.infusedSword.name=§6Essence Infused Sword
 
@@ -20,45 +20,11 @@ item.infusedPlate.name=§6Essence Infused Chestplate
 item.infusedPants.name=§6Essence Infused Leggings
 item.infusedBoots.name=§6Essence Infused Boots
 
-item.infusedBaseRing.name=§6Infused Ring
-item.infusedBaseRing:0.name=§6Infused Ring
-item.infusedBaseBelt:0.name=§6Infused Belt
-item.infusedBaseAmulet:0.name=§6Infused Amulet
+item.infusedRing.name=§6Infused Ring
+item.infusedBelt.name=§6Infused Belt
+item.infusedAmulet.name=§6Infused Amulet
 
-item.infusedFlightAmulet.name=§6Angelic Amulet
-
-item.infusedBaseRing:1.name=§6Ring of Lesser Swiftness
-item.infusedBaseRing:2.name=§6Ring of Swiftness
-item.infusedBaseRing:3.name=§6Ring of Greater Swiftness
-item.infusedBaseRing:4.name=§6Ring of Lesser Haste
-item.infusedBaseRing:5.name=§6Ring of Haste
-item.infusedBaseRing:6.name=§6Ring of Greater Haste
-item.infusedBaseRing:7.name=§6Ring of Lesser Strength
-item.infusedBaseRing:8.name=§6Ring of Strength
-item.infusedBaseRing:9.name=§6Ring of Greater Strength
-item.infusedBaseRing:10.name=§6Ring of Lesser Jump Boost
-item.infusedBaseRing:11.name=§6Ring of Jump Boost
-item.infusedBaseRing:12.name=§6Ring of Greater Jump Boost
-item.infusedBaseRing:13.name=§6Ring of Lesser Regeneration
-item.infusedBaseRing:14.name=§6Ring of Regeneration
-item.infusedBaseRing:15.name=§6Ring of Greater Regeneration
-item.infusedBaseRing:16.name=§6Ring of Fire Resistance
-item.infusedBaseRing:17.name=§6Ring of Water Breathing
-item.infusedBaseRing:18.name=§6Ring of Night Vision
-
-item.infusedLootAmulet:1.name=§6Essence Shard Magnet
-item.infusedLootAmulet:2.name=§6Essence Shard Gatherer
-item.infusedLootAmulet:3.name=§6Essence Shard Collector
-item.infusedLootAmulet:4.name=§6Essence Shard Accumulator
-item.infusedLootAmulet:5.name=§6Essence Shard Amasser
-
-item.infusedCleaveBelt:1.name=§6Dervish's Sash
-item.infusedCleaveBelt:2.name=§6Reaper's Waistband
-item.infusedCleaveBelt:3.name=§6Belt of the Wyvern
-item.infusedCleaveBelt:4.name=§6Girdle of the Hydra
-item.infusedCleaveBelt:5.name=§6Draconic Harness
-
-item.infusedApple.name=§6Essence Infused Apple
+item.appleInfused.name=§6Essence Infused Apple
 
 tile.infusedBlock.name=§6Block of Infused Metal
 tile.essenceInfuser.name=§6Essence Infuser

@@ -16,145 +16,97 @@ import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 {
-	public static final int INNER_SLOT_COUNT = 4;
-	public static final int OUTER_SLOT_COUNT = 8;
-	public static final int TOTAL_SLOT_COUNT = INNER_SLOT_COUNT + OUTER_SLOT_COUNT + 1;
+	public static final int InfuserSlotCount = 1;
+	public static final int InnerSlotCount = 4;
+	public static final int OuterSlotCount = 8;
+	public static final int TotalSlotCount = InfuserSlotCount + InnerSlotCount + OuterSlotCount;
 
-	public static final int INFUSER_SLOT = 0;
-	public static final int FIRST_INNER_SLOT = INFUSER_SLOT + 1;
-	public static final int FIRST_OUTER_SLOT = FIRST_INNER_SLOT + INNER_SLOT_COUNT;
+	public static final int InfuserSlot = 0;
+	public static final int FirstInnerSlot = InfuserSlot + InfuserSlotCount;
+	public static final int FirstOuterSlot = FirstInnerSlot + InnerSlotCount;
 
-	protected ItemStack[] slots = new ItemStack[TOTAL_SLOT_COUNT];
+	protected ItemStack[] slots = new ItemStack[TotalSlotCount];
 
 	private ArrayList<TileEntity> pylons;
 
 	public int infuseTime;
-	public static final short TOTAL_INFUSE_TIME = 200;
+	public static final short TotalInfuseTime = 200;
 
 	@Override
 	public void updateEntity()
 	{
 		super.updateEntity();
-
-		if (checkPylons())
+		
+		checkPylons();
+		grabPylons();
+		
+		Upgrade upgrade = InfuserRecipes.checkRecipe(slots[InfuserSlot], getPylonItems());
+		if (upgrade != null)
 		{
-			if (canInfuse())
+			infuseTime++;
+			if (infuseTime >= TotalInfuseTime)
 			{
-				infuseTime++;
-
-				if (infuseTime >= TOTAL_INFUSE_TIME)
-				{
-					infuseItem();
-					infuseTime = 0;
-				}
+				updatePylons();
+				InfuserRecipes.addUpgrade(slots[InfuserSlot], upgrade);
+				infuseTime = 0;
 			}
-			else infuseTime = 0;
 		}
+		else infuseTime = 0;
 	}
 
 	private boolean checkPylons()
 	{
 		pylons = new ArrayList<TileEntity>();
-
-		pylons.add(worldObj.getTileEntity(xCoord + 1, yCoord - 1, zCoord));
-		pylons.add(worldObj.getTileEntity(xCoord - 1, yCoord - 1, zCoord));
-		pylons.add(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 1));
-		pylons.add(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 1));
-
-		pylons.add(worldObj.getTileEntity(xCoord + 3, yCoord - 1, zCoord));
-		pylons.add(worldObj.getTileEntity(xCoord - 3, yCoord - 1, zCoord));
-		pylons.add(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord + 3));
-		pylons.add(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord - 3));
-
-		pylons.add(worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord + 2));
-		pylons.add(worldObj.getTileEntity(xCoord + 2, yCoord - 1, zCoord - 2));
-		pylons.add(worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord + 2));
-		pylons.add(worldObj.getTileEntity(xCoord - 2, yCoord - 1, zCoord - 2));
-
-		if (pylons.size() != 12) return false;
-		for (TileEntity pylon : pylons)
+		
+		for (int xDiff = -5; xDiff < 5; xDiff++)
 		{
-			if (pylon == null) return false;
-			if (!(pylon instanceof TileEntityEssencePylon)) return false;
+			for (int zDiff = -5; zDiff < 5; zDiff++)
+			{
+				TileEntity entity = worldObj.getTileEntity(xCoord + xDiff, yCoord - 1, zCoord + zDiff);
+				if (entity != null && entity instanceof TileEntityEssencePylon) pylons.add(entity);
+			}
 		}
-
-		return true;
+		if (pylons.size() > 12)
+		{
+			pylons = (ArrayList<TileEntity>) pylons.subList(0, 12);
+		}
+		return pylons.size() >= 1;
 	}
 
 	private void grabPylons()
 	{
-		if (pylons.size() != 12) return;
-		for (TileEntity pylon : pylons)
-		{
-			if (pylon == null) return;
-			if (!(pylon instanceof TileEntityEssencePylon)) return;
-		}
-
 		for (int i = 0; i < pylons.size(); i++)
 		{
-			slots[i + 1] = ((TileEntityEssencePylon) pylons.get(i)).getStackInSlot(0);
+			if (pylons.get(i) == null || !(pylons.get(i) instanceof TileEntityEssencePylon))
+			{
+				pylons.remove(i);
+				i--;
+			}
+			else slots[i + 1] = ((TileEntityEssencePylon) pylons.get(i)).getStackInSlot(0);
 		}
 	}
 
 	private void updatePylons()
 	{
-		if (pylons.size() != 12) return;
-		for (TileEntity pylon : pylons)
-		{
-			if (pylon == null) return;
-			if (!(pylon instanceof TileEntityEssencePylon)) return;
-		}
-
 		for (int i = 0; i < pylons.size(); i++)
 		{
-			((TileEntityEssencePylon) pylons.get(i)).slots[0] = slots[i + 1];
-		}
-	}
-
-	private boolean canInfuse()
-	{
-		grabPylons();
-		return infuseItem(false);
-	}
-
-	private void infuseItem()
-	{
-		infuseItem(true);
-	}
-
-	private boolean infuseItem(boolean performInfusion)
-	{
-		for (int slot = INFUSER_SLOT; slot < INFUSER_SLOT + TOTAL_SLOT_COUNT; slot++)
-		{
-			if (slots[slot] == null) return false;
-		}
-		if (performInfusion)
-		{
-			Upgrade result = InfuserRecipes.checkRecipe(slots[INFUSER_SLOT], getInnerItems(), getOuterItems());
-			for (int slot = FIRST_INNER_SLOT; slot < INFUSER_SLOT + TOTAL_SLOT_COUNT; slot++)
+			if (pylons.get(i) == null || !(pylons.get(i) instanceof TileEntityEssencePylon))
 			{
-				slots[slot].stackSize--;
-				if (slots[slot].stackSize <= 0) slots[slot] = null;
+				pylons.remove(i);
+				i--;
 			}
-			InfuserRecipes.addLevel(slots[INFUSER_SLOT], result);
-			updatePylons();
+			else ((TileEntityEssencePylon) pylons.get(i)).infuse();
 		}
-		return true;
 	}
-
-	private ArrayList<ItemStack> getInnerItems()
+	
+	private ArrayList<ItemStack> getPylonItems()
 	{
 		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-		for (int i = FIRST_INNER_SLOT; i < FIRST_INNER_SLOT + INNER_SLOT_COUNT; i++)
-			items.add(getStackInSlot(i));
-		return items;
-	}
-
-	private ArrayList<ItemStack> getOuterItems()
-	{
-		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-		for (int i = FIRST_OUTER_SLOT; i < FIRST_OUTER_SLOT + OUTER_SLOT_COUNT; i++)
-			items.add(getStackInSlot(i));
+		for (int i = FirstInnerSlot; i < TotalSlotCount; i++)
+		{
+			ItemStack item = getStackInSlot(i);
+			if (item != null) items.add(item);
+		}
 		return items;
 	}
 
@@ -263,7 +215,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack item)
 	{
-		if (index == INFUSER_SLOT) return item != null && item.getItem() instanceof IModItem;
+		if (index == InfuserSlot) return item != null && item.getItem() instanceof IModItem;
 		return false;
 	}
 
