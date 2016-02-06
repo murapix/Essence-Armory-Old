@@ -32,10 +32,12 @@ import essenceMod.utility.Reference;
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
 dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
 		"required-after:Baubles;" +
-		"after:TConstruct@[1.7.10-1.8.7,);" +
-		"after:Draconic-Evolution@[1.7.10-1.0.2-Snapshot_3,);" +
-		"after:TravellersGear@[1.7.10-1.16.6,);" +
-		"after:extrautilities@[1.2.11,);")
+		"after:TConstruct;" +
+		"after:Draconic-Evolution;" +
+		"after:TravellersGear;" +
+		"after:extrautilities;" +
+		"after:Thaumcraft;" +
+		"after:arsmagica2;")
 public class EssenceMod
 {
 	@Instance

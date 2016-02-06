@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants.NBT;
 import scala.actors.threadpool.Arrays;
 import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.Upgrade;
+import essenceMod.crafting.upgrades.Upgrade;
 import essenceMod.items.IModItem;
 import essenceMod.utility.Reference;
 
@@ -66,9 +66,9 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 				if (entity != null && entity instanceof TileEntityEssencePylon) pylons.add(entity);
 			}
 		}
-		if (pylons.size() > 12)
+		while (pylons.size() > 12)
 		{
-			pylons = (ArrayList<TileEntity>) pylons.subList(0, 12);
+			pylons.remove(12);
 		}
 		return pylons.size() >= 1;
 	}

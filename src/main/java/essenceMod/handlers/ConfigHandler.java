@@ -43,16 +43,42 @@ public class ConfigHandler
 	public static float witherBowMulti;
 	
 	//CATEGORY_COMPAT variables
+	// Extra Utilities
 	public static boolean extrautilitiesIntegration;
 	public static boolean isDivineDamagePercent;
 	public static float divineDamageMulti;
 	public static int divineDamageAmount;
 	public static float divineBowMulti;
+	// Draconic Evolution
 	public static boolean draconicevolutionIntegration;
 	public static boolean isChaosDamagePercent;
 	public static float chaosDamageMulti;
 	public static int chaosDamageAmount;
 	public static float chaosBowMulti;
+	// Thaumcraft
+	public static boolean thaumcraftIntegration = true;
+	public static boolean isTaintDamagePercent = true;
+	public static float taintDamageMulti = 0.05F;
+	public static int taintDamageAmount = 1;
+	public static float taintBowMulti = 1;
+	// Ars Magica 2
+	public static boolean arsMagicaIntegration = true;
+	public static boolean isFrostDamagePercent = true;
+	public static float frostDamageMulti = 0.05F;
+	public static int frostDamageAmount = 1;
+	public static float frostBowMulti = 1;
+	public static boolean isHolyDamagePercent = true;
+	public static float holyDamageMulti = 0.05F;
+	public static int holyDamageAmount = 1;
+	public static float holyBowMulti = 1;
+	public static boolean isLightningDamagePercent = true;
+	public static float lightningDamageMulti = 0.05F;
+	public static int lightningDamageAmount = 1;
+	public static float lightningBowMulti = 1;
+	public static boolean isWindDamagePercent = true;
+	public static float windDamageMulti = 0.05F;
+	public static int windDamageAmount = 1;
+	public static float windBowMulti = 1;
 	
 	//CATEGORY_ARMOR variables
 	public static float thornsDamage;
@@ -62,6 +88,7 @@ public class ConfigHandler
 	public static int healthBoostCount;
 	public static int absorptionCount;
 	public static int absorptionDelay;
+	public static int absorptionRecharge = 20;
 	public static float maxProtectionValue;
 	
 	//CATEGORY_BAUBLES variables

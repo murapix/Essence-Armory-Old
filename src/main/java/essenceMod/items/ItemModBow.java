@@ -6,12 +6,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +19,8 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.handlers.ConfigHandler;
+import essenceMod.crafting.upgrades.UpgradeRegistry;
+import essenceMod.entities.EntityModArrow;
 import essenceMod.init.ModArmory;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
@@ -30,7 +28,7 @@ import essenceMod.utility.UtilityHelper;
 
 public class ItemModBow extends ItemBow implements IModItem
 {
-	private IIcon[] iconArray;
+	private IIcon[] icons;
 	
 	int level;
 
@@ -63,18 +61,18 @@ public class ItemModBow extends ItemBow implements IModItem
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		itemIcon = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_standby");
-		iconArray = new IIcon[bowPullIconNameArray.length];
+		icons = new IIcon[bowPullIconNameArray.length];
 		
-		for (int i = 0; i < iconArray.length; ++i)
+		for (int i = 0; i < icons.length; ++i)
 		{
-			iconArray[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_" + bowPullIconNameArray[i]);
+			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_" + bowPullIconNameArray[i]);
 		}
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getItemIconForUseDuration(int duration)
 	{
-		return iconArray[duration];
+		return icons[duration];
 	}
 	
 	public static int getLevel(ItemStack item)
@@ -94,7 +92,29 @@ public class ItemModBow extends ItemBow implements IModItem
 	{
 		List list = new ArrayList();
 		
-		
+		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDoT);
+		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDoT);
+		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDoT);
+		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDoT);
+		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArmorPiercing);
+		int arrowSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArrowSpeed);
+		int drawSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDrawSpeed);
+		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowKnockback);
+		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowBlind);
+		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowSlow);
+		int engangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowEntangled);
+		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostSlow);
+		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowPhysicalDamage);
+		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDamage);
+		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDamage);
+		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDamage);
+		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDivineDamage);
+		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowChaosDamage);
+		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDamage);
+		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostDamage);
+		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowHolyDamage);
+		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowLightningDamage);
+		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWindDamage);
 		
 		return list;
 	}
@@ -103,7 +123,29 @@ public class ItemModBow extends ItemBow implements IModItem
 	{
 		List list = new ArrayList();
 		
-		
+		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDoT);
+		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDoT);
+		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDoT);
+		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDoT);
+		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArmorPiercing);
+		int arrowSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArrowSpeed);
+		int drawSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDrawSpeed);
+		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowKnockback);
+		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowBlind);
+		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowSlow);
+		int engangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowEntangled);
+		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostSlow);
+		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowPhysicalDamage);
+		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDamage);
+		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDamage);
+		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDamage);
+		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDivineDamage);
+		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowChaosDamage);
+		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDamage);
+		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostDamage);
+		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowHolyDamage);
+		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowLightningDamage);
+		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWindDamage);
 		
 		return list;
 	}
@@ -143,18 +185,8 @@ public class ItemModBow extends ItemBow implements IModItem
 			float chargeCutoff = (float) (1 + UtilityHelper.getUpgradeLevel(item, "BowArrowSpeed") * 0.05F);
 			if (adjustedCharge > chargeCutoff) adjustedCharge = chargeCutoff;
 			
-			EntityArrow entityArrow = new EntityArrow(world, player, adjustedCharge * 2.0F);
+			EntityModArrow entityArrow = new EntityModArrow(world, player, adjustedCharge * 2.0F, item);
 			if (adjustedCharge == chargeCutoff) entityArrow.setIsCritical(true);
-			
-			entityArrow.setDamage(entityArrow.getDamage() * (1 + UtilityHelper.getUpgradeLevel(item, "BowPhysicalDamage") * ConfigHandler.normalDamageMulti * ConfigHandler.normalBowMulti));
-			
-			int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, item);
-			if (power > 0) entityArrow.setDamage(entityArrow.getDamage() + (double) power * 0.5D + 0.5D);
-			
-			int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, item);
-			if (punch > 0) entityArrow.setKnockbackStrength(punch);
-			
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, item) > 0) entityArrow.setFire(100);
 			
 			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + adjustedCharge * 0.5F);
 			
@@ -163,7 +195,6 @@ public class ItemModBow extends ItemBow implements IModItem
 			
 			if (!world.isRemote) world.spawnEntityInWorld(entityArrow);
 		}
-		
 		item.stackTagCompound.setBoolean("ItemInUse", false);
 	}
 }

@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.Upgrade;
+import essenceMod.crafting.upgrades.Upgrade;
+import essenceMod.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 
-public class ItemBaseRing extends ItemBauble
+public class ItemRing extends ItemBauble
 {
 	public int level, cooldown;
 	public IIcon[] icons = new IIcon[19];
@@ -39,12 +40,12 @@ public class ItemBaseRing extends ItemBauble
 	private final AttributeModifier speed = new AttributeModifier(UUID.fromString("BCA6DE48-7202-4AA5-B5E0-628D346179C7"), "EssenceArmoryRingSpeed", 0.2D, 2);
 	private final AttributeModifier strength = new AttributeModifier(UUID.fromString("F8924A96-C647-4C2C-A68E-2543CA6B6306"), "EssenceArmoryRingStrength", 0.5D, 2);
 
-	public ItemBaseRing()
+	public ItemRing()
 	{
 		this(0);
 	}
 
-	public ItemBaseRing(int level)
+	public ItemRing(int level)
 	{
 		this.level = level;
 		MinecraftForge.EVENT_BUS.register(this);
@@ -89,14 +90,14 @@ public class ItemBaseRing extends ItemBauble
 	@Override
 	public void onUpdate(ItemStack item, World world, Entity entity, int i, boolean b)
 	{
-		int swiftness = UtilityHelper.getUpgradeLevel(item, "RingPotionSwiftness");
-		int haste = UtilityHelper.getUpgradeLevel(item, "RingPotionHaste");
-		int strength = UtilityHelper.getUpgradeLevel(item, "RingPotionStrength");
-		int jumpBoost = UtilityHelper.getUpgradeLevel(item, "RingPotionJumpBoost");
-		int regeneration = UtilityHelper.getUpgradeLevel(item, "RingPotionRegeneration");
-		int nightVision = UtilityHelper.getUpgradeLevel(item, "RingPotionNightVision");
-		int waterBreathing = UtilityHelper.getUpgradeLevel(item, "RingPotionWaterBreathing");
-		int fireResistance = UtilityHelper.getUpgradeLevel(item, "RingPotionFireResistance");
+		int swiftness = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionSwiftness);
+		int haste = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionHaste);
+		int strength = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionStrength);
+		int jumpBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionJumpBoost);
+		int regeneration = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionRegeneration);
+		int nightVision = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionNightVision);
+		int waterBreathing = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionWaterBreathing);
+		int fireResistance = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionFireResistance);
 		
 		if (swiftness != 0) item.setItemDamage(swiftness);
 		else if (haste != 0) item.setItemDamage(haste + 3);
@@ -116,7 +117,7 @@ public class ItemBaseRing extends ItemBauble
 
 		if (item.hasTagCompound())
 		{
-			if (UtilityHelper.getUpgradeLevel(item, "RingPotionNightVision") != 0) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 1, 1));
+			if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionNightVision) != 0) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 1, 1));
 		}
 
 		if (player instanceof EntityPlayer)
@@ -126,7 +127,7 @@ public class ItemBaseRing extends ItemBauble
 			IAttributeInstance attribute = p.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
 			if (attribute != null)
 			{
-				if (UtilityHelper.getUpgradeLevel(item, "RingPotionSwiftness") != 0)
+				if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionSwiftness) != 0)
 				{
 					attribute.removeModifier(speed);
 				}
@@ -134,7 +135,7 @@ public class ItemBaseRing extends ItemBauble
 			attribute = p.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage);
 			if (attribute != null)
 			{
-				if (UtilityHelper.getUpgradeLevel(item, "RingPotionStrength") != 0)
+				if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionStrength) != 0)
 				{
 					attribute.removeModifier(strength);
 				}
@@ -149,14 +150,14 @@ public class ItemBaseRing extends ItemBauble
 		item.stackTagCompound.setInteger("Level", 0);
 		int meta = item.getItemDamage();
 		if (meta == 0) return;
-		else if (meta <= 3) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionSwiftness", meta));
-		else if (meta <= 6) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionHaste", meta - 3));
-		else if (meta <= 9) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionStrength", meta - 6));
-		else if (meta <= 12) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionJumpBoost", meta - 9));
-		else if (meta <= 15) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionRegeneration", meta - 12));
-		else if (meta == 16) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionNightVision", 1));
-		else if (meta == 17) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionWaterBreathing", 1));
-		else if (meta == 18) InfuserRecipes.addUpgrade(item, new Upgrade("RingPotionFireResistance", 1));
+		else if (meta <= 3) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionSwiftness.setLevel(meta));
+		else if (meta <= 6) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionHaste.setLevel(meta - 3));
+		else if (meta <= 9) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionStrength.setLevel(meta - 6));
+		else if (meta <= 12) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionJumpBoost.setLevel(meta - 9));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionRegeneration.setLevel(meta - 12));
+		else if (meta == 16) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionNightVision.setLevel(1));
+		else if (meta == 17) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionWaterBreathing.setLevel(1));
+		else if (meta == 18) InfuserRecipes.addUpgrade(item, UpgradeRegistry.RingPotionFireResistance.setLevel(1));
 	}
 
 	@Override
@@ -166,18 +167,18 @@ public class ItemBaseRing extends ItemBauble
 
 		int level = item.stackTagCompound.getInteger("Level");
 		int type = item.stackTagCompound.getInteger("Type");
-		if (UtilityHelper.getUpgradeLevel(item, "RingPotionRegenration") != 0)
+		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionRegeneration) != 0)
 		{
 			if (cooldown != 0) cooldown--;
 			else if (cooldown == 0)
 			{
 				player.heal(1);
-				cooldown = 60 / ((ItemBaseRing) item.getItem()).getLevel(item);
+				cooldown = 60 / ((ItemRing) item.getItem()).getLevel(item);
 			}
 		}
-		if (UtilityHelper.getUpgradeLevel(item, "RingPotionNightVision") != 0) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
-		if (UtilityHelper.getUpgradeLevel(item, "RingPotionWaterBreathing") != 0) player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 20, 0));
-		if (UtilityHelper.getUpgradeLevel(item, "RingPotionFireResistance") != 0) player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 20, 0));
+		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionNightVision) != 0) player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
+		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionWaterBreathing) != 0) player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 20, 0));
+		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionFireResistance) != 0) player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 20, 0));
 	}
 
 	public int getLevel(ItemStack item)
@@ -188,27 +189,25 @@ public class ItemBaseRing extends ItemBauble
 	@Override
 	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
-		String info = "";
-		int level = 0;
 		if (item.stackTagCompound == null) onCreated(item, entityPlayer.worldObj, entityPlayer);
-
-		level = item.stackTagCompound.getInteger("Level");
-		info = UtilityHelper.toRoman(level);
-
-		String potionName;
-		if (UtilityHelper.getUpgradeLevel(item, "RingPotionSwiftness") != 0) potionName = "Swiftness";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionHaste") != 0) potionName = "Haste";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionStrength") != 0) potionName = "Strength";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionJumpBoost") != 0) potionName = "Jump Boost";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionRegeneration") != 0) potionName = "Regeneration";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionNightVision") != 0) potionName = "Night Vision";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionWaterBreathing") != 0) potionName = "Water Breathing";
-		else if (UtilityHelper.getUpgradeLevel(item, "RingPotionFireResistance") != 0) potionName = "Fire Resistance";
-		else potionName = "No Effect";
 		
-		if (potionName != "No Effect") info = potionName + " " + info;
-		info = StatCollector.translateToLocal(info);
-		list.add(info);
+		int swiftness = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionSwiftness);
+		int haste = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionHaste);
+		int strength = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionStrength);
+		int jumpBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionJumpBoost);
+		int regeneration = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionRegeneration);
+		int nightVision = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionNightVision);
+		int waterBreathing = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionWaterBreathing);
+		int fireResistance = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionFireResistance);
+		
+		if (swiftness != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionSwiftness.name + swiftness));
+		if (haste != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionSwiftness.name + haste));
+		if (strength != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionStrength.name + strength));
+		if (jumpBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionJumpBoost.name + jumpBoost));
+		if (regeneration != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionRegeneration.name + regeneration));
+		if (nightVision != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionNightVision.name + nightVision));
+		if (waterBreathing != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionWaterBreathing.name + waterBreathing));
+		if (fireResistance != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.RingPotionFireResistance.name + fireResistance));
 	}
 
 	@SubscribeEvent
@@ -220,8 +219,8 @@ public class ItemBaseRing extends ItemBauble
 			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int jumpLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemBaseRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
-			if (ring2 != null && ring2.getItem() instanceof ItemBaseRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
+			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
+			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
 			event.ammount -= jumpLevel / 20;
 		}
 	}
@@ -236,12 +235,12 @@ public class ItemBaseRing extends ItemBauble
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int swiftnessLevel = 0;
 			int strengthLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemBaseRing)
+			if (ring1 != null && ring1.getItem() instanceof ItemRing)
 			{
 				swiftnessLevel = UtilityHelper.getUpgradeLevel(ring1, "Swiftness");
 				strengthLevel = UtilityHelper.getUpgradeLevel(ring1, "Strength");
 			}
-			if (ring2 != null && ring2.getItem() instanceof ItemBaseRing)
+			if (ring2 != null && ring2.getItem() instanceof ItemRing)
 			{
 				swiftnessLevel = Math.max(swiftnessLevel, UtilityHelper.getUpgradeLevel(ring2, "Swiftness"));
 				strengthLevel = Math.max(strengthLevel, UtilityHelper.getUpgradeLevel(ring2, "Strength"));
@@ -275,8 +274,8 @@ public class ItemBaseRing extends ItemBauble
 		ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 		ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 		int hasteLevel = 0;
-		if (ring1 != null && ring1.getItem() instanceof ItemBaseRing) hasteLevel = UtilityHelper.getUpgradeLevel(ring1, "Haste");
-		if (ring2 != null && ring2.getItem() instanceof ItemBaseRing) hasteLevel = Math.max(hasteLevel, UtilityHelper.getUpgradeLevel(ring2, "Haste"));
+		if (ring1 != null && ring1.getItem() instanceof ItemRing) hasteLevel = UtilityHelper.getUpgradeLevel(ring1, "Haste");
+		if (ring2 != null && ring2.getItem() instanceof ItemRing) hasteLevel = Math.max(hasteLevel, UtilityHelper.getUpgradeLevel(ring2, "Haste"));
 		event.newSpeed *= (1 + 0.01F * hasteLevel);
 	}
 
@@ -289,8 +288,8 @@ public class ItemBaseRing extends ItemBauble
 			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int jumpLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemBaseRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
-			if (ring2 != null && ring2.getItem() instanceof ItemBaseRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
+			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
+			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
 			switch (jumpLevel)
 			{
 				case 1:

@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
-import essenceMod.crafting.Upgrade;
+import essenceMod.crafting.upgrades.Upgrade;
 
 public class UtilityHelper
 {

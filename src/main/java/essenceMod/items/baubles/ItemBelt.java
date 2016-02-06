@@ -16,10 +16,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -27,25 +27,26 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.Upgrade;
+import essenceMod.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
-public class ItemBaseBelt extends ItemBauble
+public class ItemBelt extends ItemBauble
 {
 	int level;
 	public IIcon[] icons = new IIcon[17];
 	
-	private final AttributeModifier health = new AttributeModifier(UUID.fromString("BD4FE64C-9E37-4391-9D21-88F273020B0F"), "EssenceArmoryHealthBoost", 1D, 2);
+	private final AttributeModifier health = new AttributeModifier(UUID.fromString("BD4FE64C-9E37-4391-9D21-88F273020B0F"), "EssenceArmoryHealthBoost", 0.5D, 2);
 	
-	public ItemBaseBelt()
+	public ItemBelt()
 	{
 		this(0);
 	}
 	
-	public ItemBaseBelt(int level)
+	public ItemBelt(int level)
 	{
 		super();
 		this.level = level;
@@ -76,11 +77,11 @@ public class ItemBaseBelt extends ItemBauble
 			list.add(new ItemStack(item, 1, i));
 	}
 	
-	@Override
-	public String getUnlocalizedName(ItemStack item)
-	{
-		return this.getUnlocalizedName() + ":" + item.getItemDamage();
-	}
+//	@Override
+//	public String getUnlocalizedName(ItemStack item)
+//	{
+//		return this.getUnlocalizedName() + ":" + item.getItemDamage();
+//	}
 	
 	@Override
 	public BaubleType getBaubleType(ItemStack itemstack)
@@ -100,10 +101,10 @@ public class ItemBaseBelt extends ItemBauble
 		int meta = item.getItemDamage();
 		item.stackTagCompound.setInteger("Level", 0);
 		if (meta == 0) return;
-		else if (meta <= 5) InfuserRecipes.addUpgrade(item, new Upgrade("BeltCleave", meta));
-		else if (meta <= 10) InfuserRecipes.addUpgrade(item, new Upgrade("BeltKnockback", meta - 5));
-		else if (meta <= 15) InfuserRecipes.addUpgrade(item, new Upgrade("BeltHealth", meta - 10));
-		else if (meta == 16) InfuserRecipes.addUpgrade(item, new Upgrade("BeltMiningLimit", 1));
+		else if (meta <= 5) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltCleave.setLevel(meta));
+		else if (meta <= 10) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltKnockback.setLevel(meta - 5));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltHealthBoost.setLevel(meta - 10));
+		else if (meta == 16) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltMiningLimiter.setLevel(1));
 	}
 	
 	@Override
@@ -134,17 +135,14 @@ public class ItemBaseBelt extends ItemBauble
 		{
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-			if (belt != null && belt.getItem() instanceof ItemBaseBelt)
+			if (belt != null && belt.getItem() instanceof ItemBelt)
 			{
 				IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
 				if (attribute != null)
 				{
-					int level = UtilityHelper.getUpgradeLevel(belt, "BeltHealth");
-					if (level == 0) return;
-					double current = attribute.getAttributeValue();
-					double next = health.getAmount() * level * current * 0.1;
 					attribute.removeModifier(health);
-					attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + level, next, health.getOperation()));
+					int level = UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltHealthBoost);
+					attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + level, health.getAmount() * level, health.getOperation()));
 				}
 			}
 		}
@@ -155,9 +153,9 @@ public class ItemBaseBelt extends ItemBauble
 	{
 		EntityPlayer attacker = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(attacker).getStackInSlot(3);
-		if (belt != null && belt.getItem() instanceof ItemBaseBelt)
+		if (belt != null && belt.getItem() instanceof ItemBelt)
 		{
-			int level = UtilityHelper.getUpgradeLevel(belt, "BeltCleave");
+			int level = UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltCleave);
 			if (level != 0 && event.target instanceof EntityLivingBase)
 			{
 				EntityLivingBase target = (EntityLivingBase) event.target;
@@ -192,25 +190,25 @@ public class ItemBaseBelt extends ItemBauble
 		}
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BreakSpeed event)
 	{
 		EntityPlayer player = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-		if (belt != null && belt.getItem() instanceof ItemBaseBelt && UtilityHelper.getUpgradeLevel(belt, "BeltMiningLimit") != 0)
+		if (belt != null && belt.getItem() instanceof ItemBelt && UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltMiningLimiter) != 0)
 		{
 			float hardness = event.block.getBlockHardness(player.worldObj, event.x, event.y, event.z);
-			event.newSpeed *= Math.min(event.newSpeed, hardness * 30 / 2);
+			float blockHealth = hardness * 30;
+			event.newSpeed = Math.min(event.newSpeed, blockHealth - 1);
 		}
 	}
 	
 	public static void knockback(ItemStack item, EntityPlayer player, float fallDistance)
 	{
 		int cooldown = item.stackTagCompound.getInteger("Cooldown");
-		player.addChatMessage(new ChatComponentText("Cooldown: " + cooldown));
 		if (cooldown == 0)
 		{
-			int strength = UtilityHelper.getUpgradeLevel(item, "BeltKnockback");
+			int strength = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltKnockback);
 			float distance = (float) Math.pow(fallDistance, 0.625);
 			AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(player.posX - strength, player.posY, player.posZ - strength, player.posX + strength, player.posY + 1, player.posZ + strength);
 			List list = player.worldObj.getEntitiesWithinAABB(EntityMob.class, axis);
@@ -230,12 +228,24 @@ public class ItemBaseBelt extends ItemBauble
 	@Override
 	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
-		String info = "";
 		int level = 0;
+		int cooldown = 0;
 		if (item.stackTagCompound == null) onCreated(item, entityPlayer.worldObj, entityPlayer);
 
 		level = item.stackTagCompound.getInteger("Level");
-
-		list.add(info);
+		if (level != 0) list.add("Level " + UtilityHelper.toRoman(level));
+		
+		int cleave = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltCleave);
+		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltKnockback);
+		int miningLimit = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltMiningLimiter);
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltHealthBoost);
+		
+		if (knockback != 0) cooldown = item.stackTagCompound.getInteger("Cooldown");
+		
+		if (cleave != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltCleave.name) + " " + UtilityHelper.toRoman(cleave));
+		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltKnockback.name) + " " + UtilityHelper.toRoman(knockback));
+		if (knockback != 0) list.add("- Knockback Cooldown: " + cooldown / 20 + " seconds");
+		if (miningLimit != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltMiningLimiter.name));
+		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltHealthBoost.name) + " " + UtilityHelper.toRoman(healthBoost));
 	}
 }

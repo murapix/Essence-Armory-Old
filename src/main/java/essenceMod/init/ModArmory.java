@@ -10,12 +10,11 @@ import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModBow;
 import essenceMod.items.ItemModSword;
-import essenceMod.items.baubles.ItemBaseAmulet;
-import essenceMod.items.baubles.ItemBaseBelt;
-import essenceMod.items.baubles.ItemBaseRing;
-import essenceMod.items.travellersGear.ItemHealthyVambraces;
-import essenceMod.items.travellersGear.ItemImmunityPauldrons;
-import essenceMod.items.travellersGear.ItemMiningLimiterVambraces;
+import essenceMod.items.baubles.ItemAmulet;
+import essenceMod.items.baubles.ItemBelt;
+import essenceMod.items.baubles.ItemRing;
+import essenceMod.items.travellersGear.ItemPauldron;
+import essenceMod.items.travellersGear.ItemVambraces;
 import essenceMod.utility.RegisterHelper;
 
 public class ModArmory
@@ -34,13 +33,12 @@ public class ModArmory
 	public static Item infusedPants = new ItemModArmor(AINFUSED, 2).setUnlocalizedName("infusedPants");
 	public static Item infusedBoots = new ItemModArmor(AINFUSED, 3).setUnlocalizedName("infusedBoots");
 
-	public static Item infusedRing = new ItemBaseRing().setUnlocalizedName("infusedRing");
-	public static Item infusedBelt = new ItemBaseBelt().setUnlocalizedName("infusedBelt");
-	public static Item infusedAmulet = new ItemBaseAmulet().setUnlocalizedName("infusedAmulet");
+	public static Item infusedRing = new ItemRing().setUnlocalizedName("infusedRing");
+	public static Item infusedBelt = new ItemBelt().setUnlocalizedName("infusedBelt");
+	public static Item infusedAmulet = new ItemAmulet().setUnlocalizedName("infusedAmulet");
 
-	public static Item healthyVambraces;
-	public static Item immunityPauldrons;
-	public static Item miningLimiterVambraces;
+	public static Item infusedPauldrons;
+	public static Item infusedVambraces;
 
 	public static void init()
 	{
@@ -61,13 +59,11 @@ public class ModArmory
 		{
 			try
 			{
-				healthyVambraces = new ItemHealthyVambraces().setUnlocalizedName("infusedHealthyVambraces");
-				immunityPauldrons = new ItemImmunityPauldrons().setUnlocalizedName("infusedImmunityPauldrons");
-				miningLimiterVambraces = new ItemMiningLimiterVambraces().setUnlocalizedName("infusedMiningLimiterVambraces");
+				infusedPauldrons = new ItemPauldron().setUnlocalizedName("infusedPauldrons");
+				infusedVambraces = new ItemVambraces().setUnlocalizedName("infusedVambraces");
 
-				RegisterHelper.registerItem(healthyVambraces);
-				RegisterHelper.registerItem(immunityPauldrons);
-				RegisterHelper.registerItem(miningLimiterVambraces);
+				RegisterHelper.registerItem(infusedPauldrons);
+				RegisterHelper.registerItem(infusedVambraces);
 			}
 			catch (Exception e)
 			{}

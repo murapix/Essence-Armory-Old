@@ -16,7 +16,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import essenceMod.EssenceMod;
 import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.Upgrade;
+import essenceMod.crafting.upgrades.Upgrade;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.gui.GuiEssenceInfuser;
 import essenceMod.gui.GuiHandler;

@@ -3,8 +3,12 @@ package essenceMod.handlers;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
+import java.util.UUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
@@ -19,6 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import baubles.common.lib.PlayerHandler;
@@ -28,14 +33,15 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.crafting.upgrades.UpgradeRegistry;
 import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.TConstructHandler;
 import essenceMod.init.ModArmory;
 import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
-import essenceMod.items.baubles.ItemBaseAmulet;
-import essenceMod.items.baubles.ItemBaseBelt;
+import essenceMod.items.baubles.ItemAmulet;
+import essenceMod.items.baubles.ItemBelt;
 import essenceMod.utility.UtilityHelper;
 
 public class EssenceEventHandler
@@ -79,7 +85,7 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
 						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
@@ -107,7 +113,7 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
 						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
@@ -135,7 +141,7 @@ public class EssenceEventHandler
 				{
 					int amuletLevel = 0;
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
-					if (amulet != null && amulet.getItem() instanceof ItemBaseAmulet)
+					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
 						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
@@ -216,7 +222,7 @@ public class EssenceEventHandler
 	{
 		EntityPlayer player = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-		if (belt != null && belt.getItem() instanceof ItemBaseBelt) ItemBaseBelt.knockback(belt, player, event.distance);
+		if (belt != null && belt.getItem() instanceof ItemBelt) ItemBelt.knockback(belt, player, event.distance);
 	}
 
 	@SubscribeEvent
@@ -226,7 +232,7 @@ public class EssenceEventHandler
 		{
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-			if (belt != null && belt.getItem() instanceof ItemBaseBelt) ItemBaseBelt.knockback(belt, player, event.distance);
+			if (belt != null && belt.getItem() instanceof ItemBelt) ItemBelt.knockback(belt, player, event.distance);
 		}
 	}
 
@@ -245,23 +251,38 @@ public class EssenceEventHandler
 				{
 					iterator.previous();
 					float weaponDamage = event.itemStack.stackTagCompound.getFloat("weaponDamage");
-					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordFireDamage");
-					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordWitherDamage");
-					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordMagicDamage");
-					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordChaosDamage");
-					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, "SwordDivineDamage");
+					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordFireDamage);
+					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordWitherDamage);
+					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordMagicDamage);
+					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordChaosDamage);
+					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordDivineDamage);
+					float taintDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordTaintDamage);
+					float frostDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordFrostDamage);
+					float holyDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordHolyDamage);
+					float lightningDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordLightningDamage);
+					float windDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordWindDamage);
 					
 					fireDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.fireDamageMulti : ConfigHandler.fireDamageAmount;
-					witherDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;
-					magicDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.magicDamageMulti : ConfigHandler.magicDamageAmount;
-					chaosDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.chaosDamageMulti : ConfigHandler.chaosDamageAmount;
-					divineDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.divineDamageMulti : ConfigHandler.divineDamageAmount;
+					witherDamage *= ConfigHandler.isWitherDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;
+					magicDamage *= ConfigHandler.isMagicDamagePercent ? weaponDamage * ConfigHandler.magicDamageMulti : ConfigHandler.magicDamageAmount;
+					chaosDamage *= ConfigHandler.isChaosDamagePercent ? weaponDamage * ConfigHandler.chaosDamageMulti : ConfigHandler.chaosDamageAmount;
+					divineDamage *= ConfigHandler.isDivineDamagePercent ? weaponDamage * ConfigHandler.divineDamageMulti : ConfigHandler.divineDamageAmount;
+					taintDamage *= ConfigHandler.isTaintDamagePercent ? weaponDamage * ConfigHandler.taintDamageMulti : ConfigHandler.taintDamageAmount;
+					frostDamage *= ConfigHandler.isFrostDamagePercent ? weaponDamage * ConfigHandler.frostDamageMulti : ConfigHandler.frostDamageAmount;
+					holyDamage *= ConfigHandler.isHolyDamagePercent ? weaponDamage * ConfigHandler.holyDamageMulti : ConfigHandler.holyDamageAmount;
+					lightningDamage *= ConfigHandler.isLightningDamagePercent ? weaponDamage * ConfigHandler.lightningDamageMulti : ConfigHandler.lightningDamageAmount;
+					windDamage *= ConfigHandler.isWindDamagePercent ? weaponDamage * ConfigHandler.windDamageMulti : ConfigHandler.windDamageAmount;
 					
 					double fireText = Math.round(fireDamage * 4) / 4D;
 					double witherText = Math.round(witherDamage * 4) / 4D;
 					double magicText = Math.round(magicDamage * 4) / 4D;
 					double chaosText = Math.round(chaosDamage * 4) / 4D;
 					double divineText = Math.round(divineDamage * 4) / 4D;
+					double taintText = Math.round(taintDamage * 4) / 4D;
+					double frostText = Math.round(frostDamage * 4) / 4D;
+					double holyText = Math.round(holyDamage * 4) / 4D;
+					double lightningText = Math.round(lightningDamage * 4) / 4D;
+					double windText = Math.round(windDamage * 4) / 4D;
 
 					if (fireText != 0)
 					{
@@ -287,6 +308,31 @@ public class EssenceEventHandler
 					{
 						if (divineText == (int) divineText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) divineText) + " Divine Damage"); 
 						else iterator.add(EnumChatFormatting.BLUE + "+" + divineText + " Divine Damage");
+					}
+					if (taintText != 0)
+					{
+						if (taintText == (int) taintText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) taintText) + " Flux Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + taintText + " Flux Damage");
+					}
+					if (frostText != 0)
+					{
+						if (frostText == (int) frostText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) frostText) + " Frost Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + frostText + " Frost Damage");
+					}
+					if (holyText != 0)
+					{
+						if (holyText == (int) holyText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) holyText) + " Holy Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + holyText + " Holy Damage");
+					}
+					if (lightningText != 0)
+					{
+						if (lightningText == (int) lightningText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) lightningText) + " Lightning Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + lightningText + " Lightning Damage");
+					}
+					if (windText != 0)
+					{
+						if (windText == (int) windText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) windText) + " Wind Damage"); 
+						else iterator.add(EnumChatFormatting.BLUE + "+" + windText + " Wind Damage");
 					}
 					break;
 				}

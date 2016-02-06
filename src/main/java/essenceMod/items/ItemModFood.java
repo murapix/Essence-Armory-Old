@@ -1,12 +1,14 @@
 package essenceMod.items;
 
 import java.util.ArrayList;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import essenceMod.tabs.ModTabs;
+import essenceMod.utility.Reference;
 
 public class ItemModFood extends ItemFood 
 {
@@ -24,6 +26,12 @@ public class ItemModFood extends ItemFood
 		super(healAmount, saturationModifier, wolfFood);
 		setCreativeTab(ModTabs.tabEssence);
 		setAlwaysEdible();
+	}
+	
+	@Override
+	public void registerIcons(IIconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
 	}
 	
 	@Override
