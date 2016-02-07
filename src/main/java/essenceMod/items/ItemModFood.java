@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
-public class ItemModFood extends ItemFood 
+public class ItemModFood extends ItemFood implements IUpgradeable
 {
 	ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
 	

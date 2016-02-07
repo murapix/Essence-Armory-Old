@@ -3,27 +3,21 @@ package essenceMod.blocks;
 import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import essenceMod.EssenceMod;
-import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.upgrades.Upgrade;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
-import essenceMod.gui.GuiEssenceInfuser;
 import essenceMod.gui.GuiHandler;
+import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
-public class EssenceInfuser extends BlockContainer
+public class EssenceInfuser extends BlockContainer implements IUpgradeable
 {
 	public EssenceInfuser()
 	{

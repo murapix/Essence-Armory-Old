@@ -40,7 +40,7 @@ import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
 @Optional.InterfaceList(value = { @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRevealer"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRunicArmor"), @Interface(modid = "Botania", iface = "vaskii.botania.api.mana.IManaDiscountArmor") })
-public class ItemModArmor extends ItemArmor implements IModItem, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor, IManaDiscountArmor
+public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor, IManaDiscountArmor
 {
 	private static AttributeModifier health = new AttributeModifier(UUID.fromString("EE15F16D-AA48-45CE-8B72-BF5A1A1D5CFD"), "EssenceArmoryArmorHealth", ConfigHandler.healthBoostCount, 0);
 

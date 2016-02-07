@@ -14,10 +14,11 @@ import net.minecraft.world.World;
 import essenceMod.EssenceMod;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
 import essenceMod.gui.GuiHandler;
+import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
-public class EssencePylon extends BlockContainer
+public class EssencePylon extends BlockContainer implements IUpgradeable
 {
 	public EssencePylon()
 	{

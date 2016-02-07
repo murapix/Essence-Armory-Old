@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
-public class ItemMod extends Item implements IModItem
+public class ItemMod extends Item implements IUpgradeable
 {
 	public ItemMod()
 	{

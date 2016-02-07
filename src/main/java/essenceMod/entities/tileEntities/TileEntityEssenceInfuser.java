@@ -11,19 +11,17 @@ import net.minecraftforge.common.util.Constants.NBT;
 import scala.actors.threadpool.Arrays;
 import essenceMod.crafting.InfuserRecipes;
 import essenceMod.crafting.upgrades.Upgrade;
-import essenceMod.items.IModItem;
+import essenceMod.items.IUpgradeable;
 import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 {
 	public static final int InfuserSlotCount = 1;
-	public static final int InnerSlotCount = 4;
-	public static final int OuterSlotCount = 8;
-	public static final int TotalSlotCount = InfuserSlotCount + InnerSlotCount + OuterSlotCount;
+	public static final int PylonSlotCount = 120;
+	public static final int TotalSlotCount = InfuserSlotCount + PylonSlotCount;
 
 	public static final int InfuserSlot = 0;
 	public static final int FirstInnerSlot = InfuserSlot + InfuserSlotCount;
-	public static final int FirstOuterSlot = FirstInnerSlot + InnerSlotCount;
 
 	protected ItemStack[] slots = new ItemStack[TotalSlotCount];
 
@@ -58,17 +56,21 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	{
 		pylons = new ArrayList<TileEntity>();
 		
-		for (int xDiff = -5; xDiff < 5; xDiff++)
+		for (int xDiff = -5; xDiff <= 5; xDiff++)
 		{
-			for (int zDiff = -5; zDiff < 5; zDiff++)
+			for (int zDiff = -5; zDiff <= 5; zDiff++)
 			{
 				TileEntity entity = worldObj.getTileEntity(xCoord + xDiff, yCoord - 1, zCoord + zDiff);
 				if (entity != null && entity instanceof TileEntityEssencePylon) pylons.add(entity);
 			}
 		}
-		while (pylons.size() > 12)
+		for (int i = 0; i < pylons.size(); i++)
 		{
-			pylons.remove(12);
+			if (((TileEntityEssencePylon)pylons.get(i)).slots[0] == null)
+			{
+				pylons.remove(i);
+				i--;
+			}
 		}
 		return pylons.size() >= 1;
 	}
@@ -215,7 +217,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack item)
 	{
-		if (index == InfuserSlot) return item != null && item.getItem() instanceof IModItem;
+		if (index == InfuserSlot) return item != null && item.getItem() instanceof IUpgradeable;
 		return false;
 	}
 

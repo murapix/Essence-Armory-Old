@@ -2,14 +2,12 @@ package essenceMod.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
-public class ModBlock extends Block
+public class ModBlock extends Block implements IUpgradeable
 {
 	public ModBlock(String blockName)
 	{

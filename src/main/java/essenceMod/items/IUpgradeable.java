@@ -1,4 +1,4 @@
 package essenceMod.items;
 
-public interface IModItem
+public interface IUpgradeable
 {}

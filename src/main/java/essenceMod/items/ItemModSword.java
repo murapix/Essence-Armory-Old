@@ -34,7 +34,7 @@ import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
-public class ItemModSword extends ItemSword implements IModItem
+public class ItemModSword extends ItemSword implements IUpgradeable
 {
 	public final ToolMaterial toolMaterial;
 	protected float weaponDamage;
