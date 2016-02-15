@@ -1,8 +1,8 @@
 package essenceMod.handlers;
 
 import net.minecraftforge.oredict.OreDictionary;
-import essenceMod.init.ModBlocks;
-import essenceMod.init.ModItems;
+import essenceMod.registry.ModBlocks;
+import essenceMod.registry.ModItems;
 
 public class OreDictHandler
 {

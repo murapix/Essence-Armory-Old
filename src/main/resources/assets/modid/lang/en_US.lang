@@ -30,6 +30,7 @@ tile.infusedBlock.name=§6Block of Infused Metal
 tile.essenceInfuser.name=§6Essence Infuser
 tile.essencePylon.name=§6Essence Pylon
 tile.infusedStarmetal.name=§6Infused Starmetal
+tile.shardBlock.name=§6Block of Essence Shards
 
 itemGroup.tabEssence=§6Essence Armory
 
@@ -37,59 +38,40 @@ material.infusedstarmetal=§6Infused Starmetal
 
 enchantment.shardLoot=Essence Ripper
 
-SwordFireDoT=Burn
-SwordMagicDoT=Poison
-SwordWitherDoT=Decay
-SwordTaintDoT=Flux
-SwordArmorPiercing=Piercing
-SwordLifesteal=Leech
-SwordKnockback=Knockback
-SwordBlind=Blinding
-SwordSlow=Crippling
-SwordEntangled=Entangling
-SwordFrostSlow=Frozen
-SwordPhysicalDamage=Sharpness
-SwordFireDamage=Molten
-SwordMagicDamage=Ethereal
-SwordWitherDamage=Ruin
-SwordDivineDamage=Divine
-SwordChaosDamage=Entropy
-SwordTaintDamage=Tainted
-SwordFrostDamage=Frost
-SwordHolyDamage=Blessed
-SwordLightningDamage=Energized
-SwordWindDamage=Tempest
+WeaponFireDoT=Burn
+WeaponMagicDoT=Poison
+WeaponWitherDoT=Decay
+WeaponTaintDoT=Flux
+WeaponArmorPiercing=Piercing
+WeaponKnockback=Knockback
+WeaponBlind=Blinding
+WeaponSlow=Crippling
+WeaponEntangled=Entangling
+WeaponFrostSlow=Frozen
+WeaponPhysicalDamage=Sharpness
+WeaponFireDamage=Molten
+WeaponMagicDamage=Ethereal
+WeaponWitherDamage=Ruin
+WeaponDivineDamage=Divine
+WeaponChaosDamage=Entropy
+WeaponTaintDamage=Tainted
+WeaponFrostDamage=Frost
+WeaponHolyDamage=Blessed
+WeaponLightningDamage=Energized
+WeaponWindDamage=Tempest
 
-BowFireDoT=Burn
-BowMagicDoT=Poison
-BowWitherDoT=Decay
-BowTaintDoT=Flux
-BowArmorPiercing=Piercing
+SwordLifesteal=Leech
+
 BowArrowSpeed=Bow Length
 BowDrawSpeed=Recurve
-BowKnockback=Punch
-BowBlind=Blinding
-BowSlow=Crippling
-BowEntangled=Entangling
-BowFrostSlow=Frozen
-BowPhysicalDamage=Power
-BowFireDamage=Blaze
-BowMagicDamage=Ethereal
-BowWitherDamage=Ruin
-BowDivineDamage=Divine
-BowChaosDamage=Entropy
-BowTaintDamage=Tainted
-BowFrostDamage=Frost
-BowHolyDamage=Blessed
-BowLightningDamage=Energized
-BowWindDamage=Tempest
 
 AmuletFlight=Archangel's Wings
 AmuletLooting=Essence Extractor
-AmuletPoisonImmunity=Poison Infusion
-AmuletWitherImmunity=Wither Infusion
-AmuletFireImmunity=Flame Infusion
-AmuletTaintImmunity=Flux Infusion
+
+BaublePoisonImmunity=Poison Infusion
+BaubleWitherImmunity=Wither Infusion
+BaubleFireImmunity=Flame Infusion
+BaubleTaintImmunity=Flux Infusion
 
 RingPotionSwiftness1=Minor Swiftness
 RingPotionSwiftness2=Lesser Swiftness
@@ -112,16 +94,9 @@ RingPotionFireResistance1=Fire Resistance
 
 BeltCleave=Cleave
 BeltKnockback=Sweep
-BeltMiningLimiter=Haste Limiter
-BeltHealthBoost=Health Boost
 
-PauldronPoisonImmunity=Poison Infusion
-PauldronWitherImmunity=Wither Infusion
-PauldronFireImmunity=Flame Infusion
-PauldronTaintImmunity=Flux Infusion
-
-VambraceHealthBoost=Health Boost
-VambraceMiningLimiter=Haste Limiter
+BaubleMiningLimiter=Haste Limiter
+BaubleHealthBoost=Health Boost
 
 ArmorPhysicalThorns=Thorns
 ArmorMagicThorns=Poisonous

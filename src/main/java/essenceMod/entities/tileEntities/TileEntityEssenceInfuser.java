@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants.NBT;
 import scala.actors.threadpool.Arrays;
-import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.upgrades.Upgrade;
 import essenceMod.items.IUpgradeable;
+import essenceMod.items.Upgrade;
+import essenceMod.registry.InfuserRecipes;
 import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuser extends TileEntity implements IInventory
@@ -27,6 +27,8 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 
 	private ArrayList<TileEntity> pylons;
 
+	private boolean active;
+	
 	public int infuseTime;
 	public static final short TotalInfuseTime = 200;
 
@@ -39,7 +41,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		grabPylons();
 		
 		Upgrade upgrade = InfuserRecipes.checkRecipe(slots[InfuserSlot], getPylonItems());
-		if (upgrade != null)
+		if (upgrade != null && active)
 		{
 			infuseTime++;
 			if (infuseTime >= TotalInfuseTime)
@@ -47,9 +49,24 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 				updatePylons();
 				InfuserRecipes.addUpgrade(slots[InfuserSlot], upgrade);
 				infuseTime = 0;
+				active = false;
 			}
 		}
-		else infuseTime = 0;
+		else
+		{
+			infuseTime = 0;
+			active = false;
+		}
+	}
+	
+	public void activate()
+	{
+		active = true;
+	}
+	
+	public boolean isActive()
+	{
+		return active;
 	}
 
 	private boolean checkPylons()
@@ -101,7 +118,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 		}
 	}
 	
-	private ArrayList<ItemStack> getPylonItems()
+	public ArrayList<ItemStack> getPylonItems()
 	{
 		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 		for (int i = FirstInnerSlot; i < TotalSlotCount; i++)
@@ -215,9 +232,9 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack item)
+	public boolean isItemValidForSlot(int slot, ItemStack item)
 	{
-		if (index == InfuserSlot) return item != null && item.getItem() instanceof IUpgradeable;
+		if (slot == InfuserSlot) return item != null && item.getItem() instanceof IUpgradeable;
 		return false;
 	}
 

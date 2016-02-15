@@ -31,6 +31,6 @@ public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements 
 	
 	public void infuse()
 	{
-		if (slots[0] != null) slots[0] = null;
+		slots[0] = null;
 	}
 }

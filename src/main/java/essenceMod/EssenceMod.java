@@ -1,7 +1,5 @@
 package essenceMod;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -14,19 +12,17 @@ import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.Recipes;
-import essenceMod.gui.GuiHandler;
 import essenceMod.handlers.CommandUpgrade;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.EssenceEventHandler;
 import essenceMod.handlers.compatibility.TConstructHandler;
-import essenceMod.init.ModArmory;
-import essenceMod.init.ModBlocks;
-import essenceMod.init.ModEntities;
-import essenceMod.init.ModItems;
-import essenceMod.init.ModTileEntity;
+import essenceMod.registry.InfuserRecipes;
+import essenceMod.registry.ModArmory;
+import essenceMod.registry.ModBlocks;
+import essenceMod.registry.ModEntities;
+import essenceMod.registry.ModItems;
+import essenceMod.registry.ModTileEntity;
+import essenceMod.registry.Recipes;
 import essenceMod.utility.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
@@ -37,7 +33,8 @@ dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
 		"after:TravellersGear;" +
 		"after:extrautilities;" +
 		"after:Thaumcraft;" +
-		"after:arsmagica2;")
+		"after:arsmagica2;" +
+		"after:Botania;")
 public class EssenceMod
 {
 	@Instance
@@ -68,7 +65,7 @@ public class EssenceMod
 			}
 			catch (Exception e){}
 		}
-		NetworkRegistry.INSTANCE.registerGuiHandler(EssenceMod.instance, new GuiHandler());
+//		NetworkRegistry.INSTANCE.registerGuiHandler(EssenceMod.instance, new GuiHandler());
 	}
 
 	@Mod.EventHandler

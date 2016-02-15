@@ -11,9 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import essenceMod.EssenceMod;
+import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.gui.GuiHandler;
 import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
@@ -58,8 +57,33 @@ public class EssencePylon extends BlockContainer implements IUpgradeable
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
 		if (world.isRemote) return true;
-		
-		player.openGui(EssenceMod.instance, GuiHandler.EssencePylonGui, world, x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity == null || !(tileEntity instanceof TileEntityEssencePylon)) return true;
+		TileEntityEssenceInfuser infuserEntity = (TileEntityEssencePylon) tileEntity;
+		ItemStack item = infuserEntity.getStackInSlot(0);
+		ItemStack playerItem = player.getCurrentEquippedItem();
+		if (item != null && item.stackSize > 0)
+		{
+			Random rand = new Random();
+			EntityItem itemEntity = new EntityItem(world, player.posX, player.posY + player.getDefaultEyeHeight() / 2.0F, player.posZ, item.copy());
+			world.spawnEntityInWorld(itemEntity);
+			infuserEntity.setInventorySlotContents(0, null);
+			
+			world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
+			
+			return true;
+		}
+		else if (playerItem != null && playerItem.stackSize > 0 && infuserEntity.isItemValidForSlot(0, playerItem))
+		{
+			ItemStack tempItem = playerItem.splitStack(1);
+			infuserEntity.setInventorySlotContents(0, tempItem);
+			
+			if (playerItem.stackSize == 0) player.setCurrentItemOrArmor(0, null);
+			else player.setCurrentItemOrArmor(0, playerItem);
+			
+			return true;
+		}
+//		player.openGui(EssenceMod.instance, GuiHandler.EssencePylonGui, world, x, y, z);
 		return true;
 	}
 

@@ -29,8 +29,8 @@ import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.crafting.InfuserRecipes;
-import essenceMod.crafting.upgrades.UpgradeRegistry;
+import essenceMod.registry.InfuserRecipes;
+import essenceMod.registry.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
@@ -103,8 +103,8 @@ public class ItemBelt extends ItemBauble
 		if (meta == 0) return;
 		else if (meta <= 5) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltCleave.setLevel(meta));
 		else if (meta <= 10) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltKnockback.setLevel(meta - 5));
-		else if (meta <= 15) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltHealthBoost.setLevel(meta - 10));
-		else if (meta == 16) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BeltMiningLimiter.setLevel(1));
+		else if (meta <= 15) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BaubleHealthBoost.setLevel(meta - 10));
+		else if (meta == 16) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BaubleMiningLimiter.setLevel(1));
 	}
 	
 	@Override
@@ -141,7 +141,7 @@ public class ItemBelt extends ItemBauble
 				if (attribute != null)
 				{
 					attribute.removeModifier(health);
-					int level = UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltHealthBoost);
+					int level = UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BaubleHealthBoost);
 					attribute.applyModifier(new AttributeModifier(health.getID(), health.getName() + level, health.getAmount() * level, health.getOperation()));
 				}
 			}
@@ -195,7 +195,7 @@ public class ItemBelt extends ItemBauble
 	{
 		EntityPlayer player = event.entityPlayer;
 		ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
-		if (belt != null && belt.getItem() instanceof ItemBelt && UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltMiningLimiter) != 0)
+		if (belt != null && belt.getItem() instanceof ItemBelt && UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BaubleMiningLimiter) != 0)
 		{
 			float hardness = event.block.getBlockHardness(player.worldObj, event.x, event.y, event.z);
 			float blockHealth = hardness * 30;
@@ -237,15 +237,15 @@ public class ItemBelt extends ItemBauble
 		
 		int cleave = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltCleave);
 		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltKnockback);
-		int miningLimit = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltMiningLimiter);
-		int healthBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltHealthBoost);
+		int miningLimit = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BaubleMiningLimiter);
+		int healthBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BaubleHealthBoost);
 		
 		if (knockback != 0) cooldown = item.stackTagCompound.getInteger("Cooldown");
 		
 		if (cleave != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltCleave.name) + " " + UtilityHelper.toRoman(cleave));
 		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltKnockback.name) + " " + UtilityHelper.toRoman(knockback));
 		if (knockback != 0) list.add("- Knockback Cooldown: " + cooldown / 20 + " seconds");
-		if (miningLimit != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltMiningLimiter.name));
-		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltHealthBoost.name) + " " + UtilityHelper.toRoman(healthBoost));
+		if (miningLimit != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleMiningLimiter.name));
+		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleHealthBoost.name) + " " + UtilityHelper.toRoman(healthBoost));
 	}
 }

@@ -33,15 +33,15 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.crafting.upgrades.UpgradeRegistry;
 import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.TConstructHandler;
-import essenceMod.init.ModArmory;
-import essenceMod.init.ModItems;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemAmulet;
 import essenceMod.items.baubles.ItemBelt;
+import essenceMod.registry.ModArmory;
+import essenceMod.registry.ModItems;
+import essenceMod.registry.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class EssenceEventHandler
@@ -251,16 +251,16 @@ public class EssenceEventHandler
 				{
 					iterator.previous();
 					float weaponDamage = event.itemStack.stackTagCompound.getFloat("weaponDamage");
-					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordFireDamage);
-					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordWitherDamage);
-					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordMagicDamage);
-					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordChaosDamage);
-					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordDivineDamage);
-					float taintDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordTaintDamage);
-					float frostDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordFrostDamage);
-					float holyDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordHolyDamage);
-					float lightningDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordLightningDamage);
-					float windDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.SwordWindDamage);
+					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFireDamage);
+					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWitherDamage);
+					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponMagicDamage);
+					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponChaosDamage);
+					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponDivineDamage);
+					float taintDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponTaintDamage);
+					float frostDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFrostDamage);
+					float holyDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponHolyDamage);
+					float lightningDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponLightningDamage);
+					float windDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWindDamage);
 					
 					fireDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.fireDamageMulti : ConfigHandler.fireDamageAmount;
 					witherDamage *= ConfigHandler.isWitherDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;

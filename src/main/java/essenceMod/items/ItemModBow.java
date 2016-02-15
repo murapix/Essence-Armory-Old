@@ -21,10 +21,10 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import essenceMod.crafting.upgrades.UpgradeRegistry;
 import essenceMod.entities.EntityModArrow;
 import essenceMod.handlers.ConfigHandler;
-import essenceMod.init.ModArmory;
+import essenceMod.registry.ModArmory;
+import essenceMod.registry.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
@@ -90,17 +90,17 @@ public class ItemModBow extends ItemBow implements IUpgradeable
 		if (GuiScreen.isShiftKeyDown()) list.addAll(addShiftInfo(item));
 		else list.addAll(addNormalInfo(item));
 		
-		int phys = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowPhysicalDamage);
-		int fire = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDamage);
-		int magic = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDamage);
-		int wither = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDamage);
-		int divine = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDivineDamage);
-		int chaos = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowChaosDamage);
-		int taint = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDamage);
-		int frost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostDamage);
-		int holy = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowHolyDamage);
-		int lightning = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowLightningDamage);
-		int wind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWindDamage);
+		int phys = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponPhysicalDamage);
+		int fire = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFireDamage);
+		int magic = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponMagicDamage);
+		int wither = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWitherDamage);
+		int divine = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponDivineDamage);
+		int chaos = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponChaosDamage);
+		int taint = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponTaintDamage);
+		int frost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFrostDamage);
+		int holy = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponHolyDamage);
+		int lightning = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponLightningDamage);
+		int wind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWindDamage);
 		
 		list.add("Arrows deal up to:");
 		
@@ -205,56 +205,56 @@ public class ItemModBow extends ItemBow implements IUpgradeable
 	{
 		List list = new ArrayList();
 		
-		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDoT);
-		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDoT);
-		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDoT);
-		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDoT);
-		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArmorPiercing);
+		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFireDoT);
+		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponMagicDoT);
+		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWitherDoT);
+		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponTaintDoT);
+		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponArmorPiercing);
 		int arrowSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArrowSpeed);
 		int drawSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDrawSpeed);
-		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowKnockback);
-		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowBlind);
-		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowSlow);
-		int entangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowEntangled);
-		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostSlow);
-		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowPhysicalDamage);
-		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDamage);
-		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDamage);
-		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDamage);
-		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDivineDamage);
-		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowChaosDamage);
-		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDamage);
-		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostDamage);
-		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowHolyDamage);
-		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowLightningDamage);
-		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWindDamage);
+		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponKnockback);
+		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponBlind);
+		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponSlow);
+		int entangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponEntangled);
+		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFrostSlow);
+		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponPhysicalDamage);
+		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFireDamage);
+		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponMagicDamage);
+		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWitherDamage);
+		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponDivineDamage);
+		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponChaosDamage);
+		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponTaintDamage);
+		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFrostDamage);
+		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponHolyDamage);
+		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponLightningDamage);
+		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWindDamage);
 		
 		int level = getLevel(item);
 		if (level != 0) list.add("Level " + UtilityHelper.toRoman(level));
 		
-		if (fireDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFireDoT.name) + " " + UtilityHelper.toRoman(fireDot));
-		if (magicDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowMagicDoT.name) + " " + UtilityHelper.toRoman(magicDot));
-		if (witherDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWitherDoT.name) + " " + UtilityHelper.toRoman(witherDot));
-		if (taintDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowTaintDoT.name) + " " + UtilityHelper.toRoman(taintDot));
-		if (armorPierce != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowArmorPiercing.name) + " " + UtilityHelper.toRoman(armorPierce));
+		if (fireDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFireDoT.name) + " " + UtilityHelper.toRoman(fireDot));
+		if (magicDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponMagicDoT.name) + " " + UtilityHelper.toRoman(magicDot));
+		if (witherDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWitherDoT.name) + " " + UtilityHelper.toRoman(witherDot));
+		if (taintDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponTaintDoT.name) + " " + UtilityHelper.toRoman(taintDot));
+		if (armorPierce != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponArmorPiercing.name) + " " + UtilityHelper.toRoman(armorPierce));
 		if (arrowSpeed != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowArrowSpeed.name) + " " + UtilityHelper.toRoman(arrowSpeed));
 		if (drawSpeed != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowDrawSpeed.name) + " " + UtilityHelper.toRoman(drawSpeed));
-		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowKnockback.name) + " " + UtilityHelper.toRoman(knockback));
-		if (blind != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowBlind.name) + " " + UtilityHelper.toRoman(blind));
-		if (slow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowSlow.name) + " " + UtilityHelper.toRoman(slow));
-		if (entangled != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowEntangled.name) + " " + UtilityHelper.toRoman(entangled));
-		if (frostSlow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFrostSlow.name) + " " + UtilityHelper.toRoman(frostSlow));
-		if (physDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowPhysicalDamage.name) + " " + UtilityHelper.toRoman(physDamage));
-		if (fireDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFireDamage.name) + " " + UtilityHelper.toRoman(fireDamage));
-		if (magicDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowMagicDamage.name) + " " + UtilityHelper.toRoman(magicDamage));
-		if (witherDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWitherDamage.name) + " " + UtilityHelper.toRoman(witherDamage));
-		if (divineDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowDivineDamage.name) + " " + UtilityHelper.toRoman(divineDamage));
-		if (chaosDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowChaosDamage.name) + " " + UtilityHelper.toRoman(chaosDamage));
-		if (taintDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowTaintDamage.name) + " " + UtilityHelper.toRoman(taintDamage));
-		if (frostDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFrostDamage.name) + " " + UtilityHelper.toRoman(frostDamage));
-		if (holyDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowHolyDamage.name) + " " + UtilityHelper.toRoman(holyDamage));
-		if (lightningDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowLightningDamage.name) + " " + UtilityHelper.toRoman(lightningDamage));
-		if (windDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWindDamage.name) + " " + UtilityHelper.toRoman(windDamage));
+		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponKnockback.name) + " " + UtilityHelper.toRoman(knockback));
+		if (blind != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponBlind.name) + " " + UtilityHelper.toRoman(blind));
+		if (slow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponSlow.name) + " " + UtilityHelper.toRoman(slow));
+		if (entangled != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponEntangled.name) + " " + UtilityHelper.toRoman(entangled));
+		if (frostSlow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFrostSlow.name) + " " + UtilityHelper.toRoman(frostSlow));
+		if (physDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponPhysicalDamage.name) + " " + UtilityHelper.toRoman(physDamage));
+		if (fireDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFireDamage.name) + " " + UtilityHelper.toRoman(fireDamage));
+		if (magicDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponMagicDamage.name) + " " + UtilityHelper.toRoman(magicDamage));
+		if (witherDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWitherDamage.name) + " " + UtilityHelper.toRoman(witherDamage));
+		if (divineDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponDivineDamage.name) + " " + UtilityHelper.toRoman(divineDamage));
+		if (chaosDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponChaosDamage.name) + " " + UtilityHelper.toRoman(chaosDamage));
+		if (taintDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponTaintDamage.name) + " " + UtilityHelper.toRoman(taintDamage));
+		if (frostDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFrostDamage.name) + " " + UtilityHelper.toRoman(frostDamage));
+		if (holyDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponHolyDamage.name) + " " + UtilityHelper.toRoman(holyDamage));
+		if (lightningDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponLightningDamage.name) + " " + UtilityHelper.toRoman(lightningDamage));
+		if (windDamage != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWindDamage.name) + " " + UtilityHelper.toRoman(windDamage));
 		
 		return list;
 	}
@@ -263,99 +263,99 @@ public class ItemModBow extends ItemBow implements IUpgradeable
 	{
 		List list = new ArrayList();
 		
-		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDoT);
-		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDoT);
-		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDoT);
-		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDoT);
-		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArmorPiercing);
+		int fireDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFireDoT);
+		int magicDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponMagicDoT);
+		int witherDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWitherDoT);
+		int taintDot = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponTaintDoT);
+		int armorPierce = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponArmorPiercing);
 		int arrowSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArrowSpeed);
 		int drawSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDrawSpeed);
-		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowKnockback);
-		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowBlind);
-		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowSlow);
-		int entangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowEntangled);
-		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostSlow);
-		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowPhysicalDamage);
-		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFireDamage);
-		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowMagicDamage);
-		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWitherDamage);
-		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDivineDamage);
-		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowChaosDamage);
-		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowTaintDamage);
-		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowFrostDamage);
-		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowHolyDamage);
-		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowLightningDamage);
-		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowWindDamage);
+		int knockback = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponKnockback);
+		int blind = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponBlind);
+		int slow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponSlow);
+		int entangled = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponEntangled);
+		int frostSlow = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFrostSlow);
+		int physDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponPhysicalDamage);
+		int fireDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFireDamage);
+		int magicDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponMagicDamage);
+		int witherDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWitherDamage);
+		int divineDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponDivineDamage);
+		int chaosDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponChaosDamage);
+		int taintDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponTaintDamage);
+		int frostDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponFrostDamage);
+		int holyDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponHolyDamage);
+		int lightningDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponLightningDamage);
+		int windDamage = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.WeaponWindDamage);
 
 		int level = getLevel(item);
 		if (level != 0) list.add("Level " + UtilityHelper.toRoman(level));
 		
-		if (fireDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFireDoT.name) + ": Shots light enemies on fire for " + fireDot + " seconds.");
-		if (magicDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowMagicDoT.name) + ": Shots give Poison " + UtilityHelper.toRoman(magicDot) + " for 5 seconds.");
-		if (witherDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWitherDoT.name) + ": Shots give Wither " + UtilityHelper.toRoman(witherDot) + " for 5 seconds.");
-		if (taintDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowTaintDoT.name) + ": Shots taint enemies for " + taintDot + " seconds.");
-		if (armorPierce != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowArmorPiercing.name) + ": Shots ignore " + armorPierce * 20 + "% of armor.");
+		if (fireDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFireDoT.name) + ": Shots light enemies on fire for " + fireDot + " seconds.");
+		if (magicDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponMagicDoT.name) + ": Shots give Poison " + UtilityHelper.toRoman(magicDot) + " for 5 seconds.");
+		if (witherDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWitherDoT.name) + ": Shots give Wither " + UtilityHelper.toRoman(witherDot) + " for 5 seconds.");
+		if (taintDot != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponTaintDoT.name) + ": Shots taint enemies for " + taintDot + " seconds.");
+		if (armorPierce != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponArmorPiercing.name) + ": Shots ignore " + armorPierce * 20 + "% of armor.");
 		if (arrowSpeed != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowArrowSpeed.name) + ": Draw time and arrow speed increased by " + arrowSpeed * 5 + "%.");
 		if (drawSpeed != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowDrawSpeed.name) + ": Draw time decreased by " + drawSpeed * 5 + "%.");
-		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowKnockback.name) + ": Knock enemies away on hit.");
-		if (blind != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowBlind.name) + ": Shots blind enemies for " + blind + " seconds.");
-		if (slow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowSlow.name) + ": Shots slow enemies for " + slow + " seconds.");
-		if (entangled != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowEntangled.name) + ": Shots entangle enemies for " + entangled * 2 + " ticks.");
-		if (frostSlow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFrostSlow.name) + ": Shots heavily slow enemies for " + frostSlow + " seconds.");
+		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponKnockback.name) + ": Knock enemies away on hit.");
+		if (blind != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponBlind.name) + ": Shots blind enemies for " + blind + " seconds.");
+		if (slow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponSlow.name) + ": Shots slow enemies for " + slow + " seconds.");
+		if (entangled != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponEntangled.name) + ": Shots entangle enemies for " + entangled * 2 + " ticks.");
+		if (frostSlow != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFrostSlow.name) + ": Shots heavily slow enemies for " + frostSlow + " seconds.");
 		if (physDamage != 0)
 		{
-			if (ConfigHandler.isNormalDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowPhysicalDamage.name) + ": Shots deal " + physDamage * ConfigHandler.normalDamageMulti * ConfigHandler.normalBowMulti * 100 + "% increased damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowPhysicalDamage.name) + ": Shots deal " + physDamage * ConfigHandler.normalDamageAmount * ConfigHandler.normalBowMulti + " extra damage.");
+			if (ConfigHandler.isNormalDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponPhysicalDamage.name) + ": Shots deal " + physDamage * ConfigHandler.normalDamageMulti * ConfigHandler.normalBowMulti * 100 + "% increased damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponPhysicalDamage.name) + ": Shots deal " + physDamage * ConfigHandler.normalDamageAmount * ConfigHandler.normalBowMulti + " extra damage.");
 		}
 		if (fireDamage != 0)
 		{
-			if (ConfigHandler.isFireDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFireDamage.name) + ": Shots deal " + fireDamage * ConfigHandler.fireDamageMulti * ConfigHandler.fireBowMulti * 100 + "% more damage as fire damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFireDamage.name) + ": Shots deal " + fireDamage * ConfigHandler.fireDamageAmount * ConfigHandler.fireBowMulti + " extra damage as fire damage.");
+			if (ConfigHandler.isFireDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFireDamage.name) + ": Shots deal " + fireDamage * ConfigHandler.fireDamageMulti * ConfigHandler.fireBowMulti * 100 + "% more damage as fire damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFireDamage.name) + ": Shots deal " + fireDamage * ConfigHandler.fireDamageAmount * ConfigHandler.fireBowMulti + " extra damage as fire damage.");
 		}
 		if (magicDamage != 0)
 		{
-			if (ConfigHandler.isMagicDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowMagicDamage.name) + ": Shots deal " + magicDamage * ConfigHandler.magicDamageMulti * ConfigHandler.magicBowMulti * 100 + "% more damage as magic damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowMagicDamage.name) + ": Shots deal " + magicDamage * ConfigHandler.magicDamageAmount * ConfigHandler.magicBowMulti + " extra damage as magic damage.");
+			if (ConfigHandler.isMagicDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponMagicDamage.name) + ": Shots deal " + magicDamage * ConfigHandler.magicDamageMulti * ConfigHandler.magicBowMulti * 100 + "% more damage as magic damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponMagicDamage.name) + ": Shots deal " + magicDamage * ConfigHandler.magicDamageAmount * ConfigHandler.magicBowMulti + " extra damage as magic damage.");
 		}
 		if (witherDamage != 0)
 		{
-			if (ConfigHandler.isWitherDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWitherDamage.name) + ": Shots deal " + witherDamage * ConfigHandler.witherDamageMulti * ConfigHandler.witherBowMulti * 100 + "% more damage as wither damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWitherDamage.name) + ": Shots deal " + witherDamage * ConfigHandler.witherDamageAmount * ConfigHandler.witherBowMulti + " extra damage as wither damage.");
+			if (ConfigHandler.isWitherDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWitherDamage.name) + ": Shots deal " + witherDamage * ConfigHandler.witherDamageMulti * ConfigHandler.witherBowMulti * 100 + "% more damage as wither damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWitherDamage.name) + ": Shots deal " + witherDamage * ConfigHandler.witherDamageAmount * ConfigHandler.witherBowMulti + " extra damage as wither damage.");
 		}
 		if (divineDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowDivineDamage.name) + ": Shots deal " + divineDamage * ConfigHandler.divineDamageMulti * ConfigHandler.divineBowMulti * 100 + "% more damage as divine damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowDivineDamage.name) + ": Shots deal " + divineDamage * ConfigHandler.divineDamageAmount * ConfigHandler.divineBowMulti + " extra damage as divine damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponDivineDamage.name) + ": Shots deal " + divineDamage * ConfigHandler.divineDamageMulti * ConfigHandler.divineBowMulti * 100 + "% more damage as divine damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponDivineDamage.name) + ": Shots deal " + divineDamage * ConfigHandler.divineDamageAmount * ConfigHandler.divineBowMulti + " extra damage as divine damage.");
 		}
 		if (chaosDamage != 0)
 		{
-			if (ConfigHandler.isChaosDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowChaosDamage.name) + ": Shots deal " + chaosDamage * ConfigHandler.chaosDamageMulti * ConfigHandler.chaosBowMulti * 100 + "% more damage as chaos damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowChaosDamage.name) + ": Shots deal " + chaosDamage * ConfigHandler.chaosDamageAmount * ConfigHandler.chaosBowMulti + " extra damage as chaos damage.");
+			if (ConfigHandler.isChaosDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponChaosDamage.name) + ": Shots deal " + chaosDamage * ConfigHandler.chaosDamageMulti * ConfigHandler.chaosBowMulti * 100 + "% more damage as chaos damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponChaosDamage.name) + ": Shots deal " + chaosDamage * ConfigHandler.chaosDamageAmount * ConfigHandler.chaosBowMulti + " extra damage as chaos damage.");
 		}
 		if (taintDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowTaintDamage.name) + ": Shots deal " + taintDamage * ConfigHandler.taintDamageMulti * ConfigHandler.taintBowMulti * 100 + "% more damage as taint damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowTaintDamage.name) + ": Shots deal " + taintDamage * ConfigHandler.taintDamageAmount * ConfigHandler.taintBowMulti + " extra damage as taint damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponTaintDamage.name) + ": Shots deal " + taintDamage * ConfigHandler.taintDamageMulti * ConfigHandler.taintBowMulti * 100 + "% more damage as taint damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponTaintDamage.name) + ": Shots deal " + taintDamage * ConfigHandler.taintDamageAmount * ConfigHandler.taintBowMulti + " extra damage as taint damage.");
 		}
 		if (frostDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFrostDamage.name) + ": Shots deal " + frostDamage * ConfigHandler.frostDamageMulti * ConfigHandler.frostBowMulti * 100 + "% more damage as frost damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowFrostDamage.name) + ": Shots deal " + frostDamage * ConfigHandler.frostDamageAmount * ConfigHandler.frostBowMulti + " extra damage as frost damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFrostDamage.name) + ": Shots deal " + frostDamage * ConfigHandler.frostDamageMulti * ConfigHandler.frostBowMulti * 100 + "% more damage as frost damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponFrostDamage.name) + ": Shots deal " + frostDamage * ConfigHandler.frostDamageAmount * ConfigHandler.frostBowMulti + " extra damage as frost damage.");
 		}
 		if (holyDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowHolyDamage.name) + ": Shots deal " + holyDamage * ConfigHandler.holyDamageMulti * ConfigHandler.holyBowMulti * 100 + "% more damage as holy damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowHolyDamage.name) + ": Shots deal " + holyDamage * ConfigHandler.holyDamageAmount * ConfigHandler.holyBowMulti + " extra damage as holy damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponHolyDamage.name) + ": Shots deal " + holyDamage * ConfigHandler.holyDamageMulti * ConfigHandler.holyBowMulti * 100 + "% more damage as holy damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponHolyDamage.name) + ": Shots deal " + holyDamage * ConfigHandler.holyDamageAmount * ConfigHandler.holyBowMulti + " extra damage as holy damage.");
 		}
 		if (lightningDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowLightningDamage.name) + ": Shots deal " + lightningDamage * ConfigHandler.lightningDamageMulti * ConfigHandler.lightningBowMulti * 100 + "% more damage as lightning damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowLightningDamage.name) + ": Shots deal " + lightningDamage * ConfigHandler.lightningDamageAmount * ConfigHandler.lightningBowMulti + " extra damage as lightning damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponLightningDamage.name) + ": Shots deal " + lightningDamage * ConfigHandler.lightningDamageMulti * ConfigHandler.lightningBowMulti * 100 + "% more damage as lightning damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponLightningDamage.name) + ": Shots deal " + lightningDamage * ConfigHandler.lightningDamageAmount * ConfigHandler.lightningBowMulti + " extra damage as lightning damage.");
 		}
 		if (windDamage != 0)
 		{
-			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWindDamage.name) + ": Shots deal " + windDamage * ConfigHandler.windDamageMulti * ConfigHandler.windBowMulti * 100 + "% more damage as wind damage.");
-			else list.add(StatCollector.translateToLocal(UpgradeRegistry.BowWindDamage.name) + ": Shots deal " + windDamage * ConfigHandler.windDamageAmount * ConfigHandler.windBowMulti + " extra damage as wind damage.");
+			if (ConfigHandler.isDivineDamagePercent) list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWindDamage.name) + ": Shots deal " + windDamage * ConfigHandler.windDamageMulti * ConfigHandler.windBowMulti * 100 + "% more damage as wind damage.");
+			else list.add(StatCollector.translateToLocal(UpgradeRegistry.WeaponWindDamage.name) + ": Shots deal " + windDamage * ConfigHandler.windDamageAmount * ConfigHandler.windBowMulti + " extra damage as wind damage.");
 		}
 		
 		return list;

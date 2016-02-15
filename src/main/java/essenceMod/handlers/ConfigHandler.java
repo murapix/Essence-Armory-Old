@@ -79,6 +79,8 @@ public class ConfigHandler
 	public static float windDamageMulti = 0.05F;
 	public static int windDamageAmount = 1;
 	public static float windBowMulti = 1;
+	// Botania
+	public static boolean botaniaIntegration = true;
 	
 	//CATEGORY_ARMOR variables
 	public static float thornsDamage;
@@ -96,6 +98,7 @@ public class ConfigHandler
 	
 	//CATEGORY_TINKERS variables
 	public static boolean ticoIntegration;
+	public static int ticoMaterialId;
 	public static int ticoHarvestLevel;
 	public static int ticoDurability;
 	public static int ticoMiningSpeed;
@@ -164,6 +167,7 @@ public class ConfigHandler
 		maxProtectionValue = config.getFloat("maxProtectionValue", CATEGORY_ARMOR, 0.8F, 0, 1, "The percent of damage reduction gained from a full armor set with specialized protection. The protection upgrade gives 40% of this value, and the specialized protection upgrades give 60%.");
 		
 		ticoIntegration = config.getBoolean("ticoIntegration", CATEGORY_TINKERS, true, "If set to true, the Tinkers' Construct parts will be generated if possible. Default: true");
+		ticoMaterialId = config.getInt("ticoMaterialId", CATEGORY_TINKERS, 70, 1, 256, "The material id for Infused Starmetal. Must be unique from all other Tinkers' Construct materials. Default: 70");
 		ticoHarvestLevel = config.getInt("ticoHarvestLevel", CATEGORY_TINKERS, 4, 1, Integer.MAX_VALUE, "The harvest level given by Tinkers' Construct parts. Default: 4");
 		ticoDurability = config.getInt("ticoDurability", CATEGORY_TINKERS, 10000, 1, Integer.MAX_VALUE, "The durability of Tinkers' Construct parts. Default: 10000");
 		ticoMiningSpeed = config.getInt("ticoMiningSpeed", CATEGORY_TINKERS, 900, 1, Integer.MAX_VALUE, "The mining speed of Tinkers' Construct parts. Remember, a value of 100 is only a mining speed of 1. Default: 900");

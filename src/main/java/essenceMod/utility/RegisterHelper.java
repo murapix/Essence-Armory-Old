@@ -5,10 +5,10 @@ import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import essenceMod.blocks.models.InfuserRenderer;
+import essenceMod.blocks.models.PylonRenderer;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
-import essenceMod.handlers.TileEntityEssenceInfuserRenderer;
-import essenceMod.handlers.TileEntityEssencePylonRenderer;
 
 public class RegisterHelper
 {
@@ -24,8 +24,8 @@ public class RegisterHelper
 	
 	public static void registerRenderThings()
 	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, new TileEntityEssenceInfuserRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, new TileEntityEssencePylonRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, new InfuserRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, new PylonRenderer());
 		
 	}
 }

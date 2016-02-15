@@ -9,11 +9,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import essenceMod.EssenceMod;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
-import essenceMod.gui.GuiHandler;
 import essenceMod.items.IUpgradeable;
+import essenceMod.registry.InfuserRecipes;
+import essenceMod.registry.ModItems;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
@@ -57,7 +58,49 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
 		if (world.isRemote) return true;
-		player.openGui(EssenceMod.instance, GuiHandler.EssenceInfuserGui, world, x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity == null || !(tileEntity instanceof TileEntityEssenceInfuser)) return true;
+		TileEntityEssenceInfuser infuserEntity = (TileEntityEssenceInfuser) tileEntity;
+		if (infuserEntity.isActive())
+		{
+			int percent = infuserEntity.infuseTime / infuserEntity.TotalInfuseTime * 100;
+			player.addChatComponentMessage(new ChatComponentText("Infuser Progress: " + percent + "%"));
+			return true;
+		}
+		else
+		{
+			ItemStack item = infuserEntity.getStackInSlot(0);
+			ItemStack playerItem = player.getCurrentEquippedItem();
+			if (item != null && item.stackSize > 0)
+			{
+				if (playerItem != null && playerItem.stackSize > 0 && new ItemStack(ModItems.infusedWand).isItemEqual(playerItem))
+				{
+					player.addChatComponentMessage(new ChatComponentText("Infuser Activeted. Upgrade: " + InfuserRecipes.checkRecipe(item, infuserEntity.getPylonItems())));
+					infuserEntity.activate();
+				}
+				else
+				{
+					Random rand = new Random();
+					EntityItem itemEntity = new EntityItem(world, player.posX, player.posY + player.getDefaultEyeHeight() / 2.0F, player.posZ, item.copy());
+					world.spawnEntityInWorld(itemEntity);
+					infuserEntity.setInventorySlotContents(0, null);
+
+					world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
+				}
+				return true;
+			}
+			else if (playerItem != null && playerItem.stackSize > 0 && infuserEntity.isItemValidForSlot(0, playerItem))
+			{
+				ItemStack tempItem = playerItem.splitStack(1);
+				infuserEntity.setInventorySlotContents(0, tempItem);
+
+				if (playerItem.stackSize == 0) player.setCurrentItemOrArmor(0, null);
+				else player.setCurrentItemOrArmor(0, playerItem);
+
+				return true;
+			}
+		}
+		// player.openGui(EssenceMod.instance, GuiHandler.EssenceInfuserGui, world, x, y, z);
 		return true;
 	}
 
@@ -82,10 +125,10 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 			float rx = rand.nextFloat() * 0.8F + 0.1F;
 			float ry = rand.nextFloat() * 0.8F + 0.1F;
 			float rz = rand.nextFloat() * 0.8F + 0.1F;
-			
+
 			EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem()));
 			if (item.hasTagCompound()) entityItem.getEntityItem().setTagCompound(item.getTagCompound());
-			
+
 			float factor = 0.05F;
 			entityItem.motionX = rand.nextGaussian() * factor;
 			entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
