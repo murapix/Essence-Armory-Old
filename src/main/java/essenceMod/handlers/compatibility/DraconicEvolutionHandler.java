@@ -9,9 +9,9 @@ import com.brandon3055.draconicevolution.common.utills.DamageSourceChaos;
 import cpw.mods.fml.common.Optional;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.Upgrade;
-import essenceMod.registry.InfuserRecipes;
 import essenceMod.registry.ModBlocks;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class DraconicEvolutionHandler

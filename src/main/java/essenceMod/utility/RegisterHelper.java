@@ -24,8 +24,10 @@ public class RegisterHelper
 	
 	public static void registerRenderThings()
 	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, new InfuserRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, new PylonRenderer());
+		InfuserRenderer infuser = new InfuserRenderer();
+		PylonRenderer pylon = new PylonRenderer();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, infuser);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, pylon);
 		
 	}
 }

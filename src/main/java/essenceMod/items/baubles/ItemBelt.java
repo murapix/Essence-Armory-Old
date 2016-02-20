@@ -29,8 +29,8 @@ import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.registry.InfuserRecipes;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 

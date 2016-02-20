@@ -16,13 +16,13 @@ import essenceMod.handlers.CommandUpgrade;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.EssenceEventHandler;
 import essenceMod.handlers.compatibility.TConstructHandler;
-import essenceMod.registry.InfuserRecipes;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModEntities;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.ModTileEntity;
-import essenceMod.registry.Recipes;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.Recipes;
 import essenceMod.utility.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,

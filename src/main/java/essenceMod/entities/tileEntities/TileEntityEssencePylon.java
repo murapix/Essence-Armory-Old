@@ -15,7 +15,10 @@ public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements 
 	
 	@Override
 	public void updateEntity()
-	{}
+	{
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack)
@@ -32,5 +35,7 @@ public class TileEntityEssencePylon extends TileEntityEssenceInfuser implements 
 	public void infuse()
 	{
 		slots[0] = null;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
 	}
 }

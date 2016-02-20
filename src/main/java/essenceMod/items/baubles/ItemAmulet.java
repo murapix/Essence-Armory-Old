@@ -20,8 +20,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.Upgrade;
-import essenceMod.registry.InfuserRecipes;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 

@@ -1,4 +1,4 @@
-package essenceMod.registry;
+package essenceMod.registry.crafting;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import essenceMod.handlers.ConfigHandler;
+import essenceMod.registry.ModArmory;
+import essenceMod.registry.ModBlocks;
+import essenceMod.registry.ModItems;
 import essenceMod.enchantment.EnchantmentShard;
 
 public class Recipes

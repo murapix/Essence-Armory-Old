@@ -1,4 +1,4 @@
-package essenceMod.registry;
+package essenceMod.registry.crafting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +22,9 @@ import essenceMod.handlers.compatibility.ExUHandler;
 import essenceMod.handlers.compatibility.ThaumcraftHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.Upgrade;
+import essenceMod.registry.ModArmory;
+import essenceMod.registry.ModBlocks;
+import essenceMod.registry.ModItems;
 
 public class InfuserRecipes
 {

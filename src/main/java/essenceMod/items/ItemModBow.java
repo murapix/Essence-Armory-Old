@@ -24,7 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.entities.EntityModArrow;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
@@ -63,15 +63,15 @@ public class ItemModBow extends ItemBow implements IUpgradeable
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
-		itemIcon = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_standby");
-		icons = new IIcon[bowPullIconNameArray.length];
+		itemIcon = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_0");
+		icons = new IIcon[4];
 		
 		for (int i = 0; i < icons.length; ++i)
 		{
-			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_" + bowPullIconNameArray[i]);
+			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5) + "_" + i);
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public IIcon getItemIconForUseDuration(int duration)
 	{
@@ -374,8 +374,27 @@ public class ItemModBow extends ItemBow implements IUpgradeable
 	}
 	
 	@Override
+	public void onUsingTick(ItemStack item, EntityPlayer player, int count)
+	{
+		super.onUsingTick(item, player, count);
+		
+		count = this.getMaxItemUseDuration(item) - count;
+		
+		int arrowSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowArrowSpeed);
+		int drawSpeed = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BowDrawSpeed);
+		double maxCount = (Math.sqrt(1 + 3 * (1 + arrowSpeed * 0.05)) - 1) * 20 / (1 + drawSpeed * 0.05);
+		int countPercent = (int)(((double) count) * 100 / maxCount);
+		if (countPercent >= 90) itemIcon = icons[3];
+		else if (countPercent > 65) itemIcon = icons[2];
+		else if (countPercent > 0) itemIcon = icons[1];
+		else itemIcon = icons[0];
+	}
+	
+	@Override
 	public void onPlayerStoppedUsing(ItemStack item, World world, EntityPlayer player, int itemInUseCount)
 	{
+		itemIcon = icons[0];
+		
 		int bowCharge = getMaxItemUseDuration(item) - itemInUseCount;
 		
 		ArrowLooseEvent event = new ArrowLooseEvent(player, item, bowCharge);

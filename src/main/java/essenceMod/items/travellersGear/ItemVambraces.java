@@ -19,8 +19,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import travellersgear.api.TravellersGearAPI;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.registry.InfuserRecipes;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 

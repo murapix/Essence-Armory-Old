@@ -13,8 +13,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.items.IUpgradeable;
-import essenceMod.registry.InfuserRecipes;
 import essenceMod.registry.ModItems;
+import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 
@@ -61,6 +61,10 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityEssenceInfuser)) return true;
 		TileEntityEssenceInfuser infuserEntity = (TileEntityEssenceInfuser) tileEntity;
+		
+		world.markBlockForUpdate(x, y, z);
+		infuserEntity.markDirty();
+		
 		if (infuserEntity.isActive())
 		{
 			int percent = infuserEntity.infuseTime / infuserEntity.TotalInfuseTime * 100;
@@ -91,6 +95,7 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 			}
 			else if (playerItem != null && playerItem.stackSize > 0 && infuserEntity.isItemValidForSlot(0, playerItem))
 			{
+				if (new ItemStack(ModItems.infusedWand).isItemEqual(playerItem)) return true;
 				ItemStack tempItem = playerItem.splitStack(1);
 				infuserEntity.setInventorySlotContents(0, tempItem);
 

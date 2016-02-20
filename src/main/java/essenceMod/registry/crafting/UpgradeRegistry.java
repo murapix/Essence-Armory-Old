@@ -1,4 +1,4 @@
-package essenceMod.registry;
+package essenceMod.registry.crafting;
 
 import essenceMod.items.Upgrade;
 

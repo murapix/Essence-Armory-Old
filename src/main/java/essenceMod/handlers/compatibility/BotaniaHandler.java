@@ -2,10 +2,10 @@ package essenceMod.handlers.compatibility;
 
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Optional;
-import essenceMod.registry.InfuserRecipes;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 
 public class BotaniaHandler
 {

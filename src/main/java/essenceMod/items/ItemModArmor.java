@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;

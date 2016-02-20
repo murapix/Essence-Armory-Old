@@ -41,7 +41,7 @@ import essenceMod.items.baubles.ItemAmulet;
 import essenceMod.items.baubles.ItemBelt;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModItems;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class EssenceEventHandler

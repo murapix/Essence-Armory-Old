@@ -24,7 +24,14 @@ item.infusedRing.name=§6Infused Ring
 item.infusedBelt.name=§6Infused Belt
 item.infusedAmulet.name=§6Infused Amulet
 
+item.infusedPauldrons.name=§6Infused Pauldrons
+item.infusedVambraces.name=§6Infused Vambraces
+
+item.wandInfused.name=§6Infuser Activation Stick
+
 item.appleInfused.name=§6Essence Infused Apple
+item.appleCrystallized.name=§6Crystallized Essence Apple
+item.applePlated.name=§6Essence Plated Apple
 
 tile.infusedBlock.name=§6Block of Infused Metal
 tile.essenceInfuser.name=§6Essence Infuser

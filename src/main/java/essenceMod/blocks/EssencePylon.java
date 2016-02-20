@@ -59,24 +59,28 @@ public class EssencePylon extends BlockContainer implements IUpgradeable
 		if (world.isRemote) return true;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityEssencePylon)) return true;
-		TileEntityEssenceInfuser infuserEntity = (TileEntityEssencePylon) tileEntity;
-		ItemStack item = infuserEntity.getStackInSlot(0);
+		TileEntityEssencePylon pylonEntity = (TileEntityEssencePylon) tileEntity;
+		
+		world.markBlockForUpdate(x, y, z);
+		pylonEntity.markDirty();
+		
+		ItemStack item = pylonEntity.getStackInSlot(0);
 		ItemStack playerItem = player.getCurrentEquippedItem();
 		if (item != null && item.stackSize > 0)
 		{
 			Random rand = new Random();
 			EntityItem itemEntity = new EntityItem(world, player.posX, player.posY + player.getDefaultEyeHeight() / 2.0F, player.posZ, item.copy());
 			world.spawnEntityInWorld(itemEntity);
-			infuserEntity.setInventorySlotContents(0, null);
+			pylonEntity.setInventorySlotContents(0, null);
 			
 			world.playSoundEffect(x, y, z, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 1.5F);
 			
 			return true;
 		}
-		else if (playerItem != null && playerItem.stackSize > 0 && infuserEntity.isItemValidForSlot(0, playerItem))
+		else if (playerItem != null && playerItem.stackSize > 0 && pylonEntity.isItemValidForSlot(0, playerItem))
 		{
 			ItemStack tempItem = playerItem.splitStack(1);
-			infuserEntity.setInventorySlotContents(0, tempItem);
+			pylonEntity.setInventorySlotContents(0, tempItem);
 			
 			if (playerItem.stackSize == 0) player.setCurrentItemOrArmor(0, null);
 			else player.setCurrentItemOrArmor(0, playerItem);

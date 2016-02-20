@@ -9,10 +9,10 @@ import com.rwtema.extrautils.ExtraUtils;
 import com.rwtema.extrautils.item.ItemLawSword.DamageSourceEvil;
 import cpw.mods.fml.common.Optional;
 import essenceMod.handlers.ConfigHandler;
-import essenceMod.registry.InfuserRecipes;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.registry.UpgradeRegistry;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class ExUHandler
