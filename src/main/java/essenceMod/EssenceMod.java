@@ -23,6 +23,7 @@ import essenceMod.registry.ModItems;
 import essenceMod.registry.ModTileEntity;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.Recipes;
+import essenceMod.utility.LogHelper;
 import essenceMod.utility.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
@@ -59,6 +60,7 @@ public class EssenceMod
 		InfuserRecipes.init();
 		if (Loader.isModLoaded("TConstruct") && ConfigHandler.ticoIntegration)
 		{
+			LogHelper.info("Tinkers' Construct detected");
 			try
 			{
 				TConstructHandler.init();

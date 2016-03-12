@@ -48,17 +48,12 @@ public class EntityBoss extends EntityMob implements IBossDisplayData, IRangedAt
 	protected void entityInit()
 	{
 		super.entityInit();
-		dataWatcher.addObject(17, new Integer(0));
-		dataWatcher.addObject(18, new Integer(0));
-		dataWatcher.addObject(19, new Integer(0));
-		dataWatcher.addObject(20, new Integer(0));
 	}
 	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound tag)
 	{
 		super.writeEntityToNBT(tag);
-		tag.setInteger("Invul", 0);
 	}
 	
 	@Override
@@ -71,25 +66,25 @@ public class EntityBoss extends EntityMob implements IBossDisplayData, IRangedAt
 	@SideOnly(Side.CLIENT)
 	public float getShadowSize()
 	{
-		return height / 8.0F;
+		return 0;
 	}
 	
 	@Override
 	public String getLivingSound()
 	{
-		return "mob.enderman.idle";
+		return "";
 	}
 	
 	@Override
 	public String getHurtSound()
 	{
-		return "mob.enderman.hurt";
+		return "";
 	}
 	
 	@Override
 	public String getDeathSound()
 	{
-		return "mob.enderman.death";
+		return "";
 	}
 	
 	@Override
@@ -135,33 +130,18 @@ public class EntityBoss extends EntityMob implements IBossDisplayData, IRangedAt
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float damage)
 	{
-		EntityWitherSkull entityWitherSkull = new EntityWitherSkull(worldObj, this, posX, posY, posZ);
-		
-		entityWitherSkull.setInvulnerable(true);
-		double dx = target.posX - posX;
-		double dy = target.posY - posY;
-		double dz = target.posZ - posZ;
-		double rt = Math.sqrt(dx*dx + dy*dy + dz*dz);
-		entityWitherSkull.posX = posX + (dx / rt);
-		entityWitherSkull.posY = posY + (dy / rt);
-		entityWitherSkull.posZ = posZ + (dz / rt);
-		
-		worldObj.spawnEntityInWorld(entityWitherSkull);
 	}
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount)
 	{
 		if (isEntityInvulnerable()) return false;
-		else if (source == DamageSource.drown) return false;
+		if (!(source == DamageSource.wither || source.isFireDamage() || source.isMagicDamage())) return false;
 		else
 		{
+			if (source.isProjectile()) return false;
+		
 			Entity entity;
-			
-			entity = source.getSourceOfDamage();
-			if (entity instanceof EntityArrow) return false;
-//			else if (entity instanceof tconstruct.weaponry.entity.ArrowEntity) return false;
-			
 			entity = source.getEntity();
 			if (entity != null && !(entity instanceof EntityPlayer)) return false;
 			else return super.attackEntityFrom(source, amount);

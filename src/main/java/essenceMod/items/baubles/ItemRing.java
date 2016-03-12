@@ -3,7 +3,7 @@ package essenceMod.items.baubles;
 import java.util.List;
 import java.util.UUID;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.items.Upgrade;
+import essenceMod.items.upgrades.Upgrade;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;

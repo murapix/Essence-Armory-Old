@@ -1,8 +1,5 @@
 package essenceMod.registry.crafting;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,7 +9,7 @@ import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.enchantment.EnchantmentShard;
+import essenceMod.utility.LogHelper;
 
 public class Recipes
 {
@@ -61,6 +58,8 @@ public class Recipes
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedAmulet), new Object[] { " A ", "A A", " B ", 'A', Items.string, 'B', ModItems.crystalDiamond });
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedBelt), new Object[] { " A ", "A A", " B ", 'A', Items.leather, 'B', ModItems.crystalDiamond });
 
+		LogHelper.info("Registered mod recipes");
+		
 		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 		{
 			GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedPauldrons), new Object[] { "AA ", "BCA", " BA", 'A', Items.leather, 'B', Items.string, 'C', ModItems.crystalDiamond });

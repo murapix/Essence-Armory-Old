@@ -23,6 +23,8 @@ public class PylonRenderer extends TileEntitySpecialRenderer
 	private final IModelCustom model = AdvancedModelLoader.loadModel(pylonModel);
 	private RenderItem itemRenderer;
 	
+	public static PylonRenderer instance = new PylonRenderer();
+	
 	public PylonRenderer()
 	{
 		itemRenderer = new RenderItem();

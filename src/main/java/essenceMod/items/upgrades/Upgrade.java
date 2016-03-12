@@ -1,10 +1,12 @@
-package essenceMod.items;
+package essenceMod.items.upgrades;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import essenceMod.registry.crafting.UpgradeRegistry;
 
 public class Upgrade
 {
-	public ArrayList<String> incompatibleUpgrades;
+	public HashSet<String> incompatibleUpgrades;
 	public String name;
 	public int level;
 
@@ -12,9 +14,12 @@ public class Upgrade
 	{
 		this.name = name;
 		this.level = level;
-		incompatibleUpgrades = new ArrayList<String>();
+		incompatibleUpgrades = new HashSet<String>();
 		for (Upgrade upgrade : upgrades)
+		{
 			incompatibleUpgrades.add(upgrade.name);
+			UpgradeRegistry.upgradeRegister.get(upgrade.name).addIncompatibleUpgrade(this.name);
+		}
 	}
 	
 	public Upgrade(String name, Upgrade... upgrades)
@@ -26,9 +31,12 @@ public class Upgrade
 	{
 		this.name = name;
 		this.level = level;
-		incompatibleUpgrades = new ArrayList<String>();
+		incompatibleUpgrades = new HashSet<String>();
 		for (String str : upgrades)
+		{
 			incompatibleUpgrades.add(str);
+			UpgradeRegistry.upgradeRegister.get(str).addIncompatibleUpgrade(this.name);
+		}
 	}
 	
 	public Upgrade(String name, String... upgrades)
@@ -66,15 +74,24 @@ public class Upgrade
 		return (name.hashCode() * 5) + level;
 	}
 
-	public ArrayList<String> getIncompatibleUpgrades()
+	public HashSet<String> getIncompatibleUpgrades()
 	{
 		return incompatibleUpgrades;
 	}
 	
 	public Upgrade addIncompatibleUpgrade(String... upgrades)
 	{
+		return addIncompatibleUpgrade(true, upgrades);
+	}
+	
+	public Upgrade addIncompatibleUpgrade(boolean initial, String... upgrades)
+	{
 		for (String upgrade : upgrades)
+		{
 			incompatibleUpgrades.add(upgrade);
+			if (initial && UpgradeRegistry.upgradeRegister.containsKey(upgrade))
+				UpgradeRegistry.upgradeRegister.get(upgrade).addIncompatibleUpgrade(false, this.name);
+		}
 		return this;
 	}
 	

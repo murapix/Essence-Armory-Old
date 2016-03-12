@@ -39,13 +39,12 @@ import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
-@Optional.InterfaceList(value = { @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRevealer"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRunicArmor"), @Interface(modid = "Botania", iface = "vaskii.botania.api.mana.IManaDiscountArmor") })
-public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor, IManaDiscountArmor
+@Optional.InterfaceList(value = { @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRevealer"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRunicArmor")/*, @Interface(modid = "Botania", iface = "vaskii.botania.api.mana.IManaDiscountArmor")*/ })
+public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor//, IManaDiscountArmor
 {
 	private static AttributeModifier health = new AttributeModifier(UUID.fromString("EE15F16D-AA48-45CE-8B72-BF5A1A1D5CFD"), "EssenceArmoryArmorHealth", ConfigHandler.healthBoostCount, 0);
 
 	private int level;
-	public int armorType;
 	private int absorptionDelay;
 	private float absorptionRemaining;
 
@@ -57,7 +56,6 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		MinecraftForge.EVENT_BUS.register(this);
 
 		level = 0;
-		armorType = ArmorType;
 	}
 
 	@Override
@@ -172,7 +170,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		if (revealing != 0) list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal(UpgradeRegistry.ArmorRevealing.name));
 
 		int manaDiscount = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorManaDiscount);
-		if (manaDiscount != 0) list.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(UpgradeRegistry.ArmorManaDiscount.name) + ": " + manaDiscount + "%");
+		if (manaDiscount != 0) list.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(UpgradeRegistry.ArmorManaDiscount.name) + ": " + manaDiscount + "% - Currently Disabled");
 
 		int invisible = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorInvisible);
 		if (invisible != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorInvisible.name));
@@ -308,10 +306,10 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		return UtilityHelper.getUpgradeLevel(item, "ArmorRunicShielding");
 	}
 
-	@Override
-	@Optional.Method(modid = "Botania")
-	public float getDiscount(ItemStack item, int slot, EntityPlayer player)
-	{
-		return UtilityHelper.getUpgradeLevel(item, "ArmorManaDiscount") * 0.01F;
-	}
+//	@Override
+//	@Optional.Method(modid = "Botania")
+//	public float getDiscount(ItemStack item, int slot, EntityPlayer player)
+//	{
+//		return UtilityHelper.getUpgradeLevel(item, "ArmorManaDiscount") * 0.01F;
+//	}
 }

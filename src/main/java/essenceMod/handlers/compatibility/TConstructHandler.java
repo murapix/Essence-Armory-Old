@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModBlocks;
+import essenceMod.utility.LogHelper;
 import essenceMod.utility.Reference;
 
 public class TConstructHandler
@@ -53,6 +54,8 @@ public class TConstructHandler
 		
 		//int materialID, String texturePath, boolean customTexture
 		TConstructClientRegistry.addMaterialRenderMapping(infusedStarmetalId, Reference.MODID, "infusedstarmetal", true);
+		
+		LogHelper.info("Created Tinkers' Construct tool parts");
 	}
 
 	@SubscribeEvent

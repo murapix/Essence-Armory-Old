@@ -2,10 +2,12 @@ package essenceMod.handlers;
 
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
+import essenceMod.utility.LogHelper;
 
 public class ConfigHandler
 {
 	//Config Categories
+	public static final String CATEGORY_BASIC = "Essence Shard Basic Settings";
 	public static final String CATEGORY_DROPS = "Essence Shard Drop Settings";
 	public static final String CATEGORY_WEAPON = "Essence Infused Weapon Upgrade Settings";
 	public static final String CATEGORY_ARMOR = "Essence Infused Armor Upgrade Setting";
@@ -13,6 +15,9 @@ public class ConfigHandler
 	public static final String CATEGORY_BAUBLES = "Essence Infused Trinkets Settings";
 	public static final String CATEGORY_TRAVELGEAR = "Essence Infused Traveller's Gear Settings";
 	public static final String CATEGORY_TINKERS = "Tinkers' Construct Compatibility Settings";
+	
+	//CATEGORY_BASIC variables
+	public static int shardEnchantID = 70;
 	
 	//CATEGORY_DROPS variables
 	public static boolean useWhiteList;
@@ -120,6 +125,8 @@ public class ConfigHandler
 		Configuration config = new Configuration(location);
 		config.load();
 		
+		LogHelper.info("Config file loaded");
+		
 		useWhiteList = config.getBoolean("useWhiteList", CATEGORY_DROPS, false, "If set to true, only the listed mobs will drop Essence Shards. Default: false");
 		whiteList = config.getStringList("whiteList", CATEGORY_DROPS, new String[]{""}, "The array of mobs that can drop Essence Shards, separated with a ,");
 		useBlackList = config.getBoolean("useBlackList", CATEGORY_DROPS, false, "If set to true, the following listed mobs will NOT drop Essence Shards. Default: false");
@@ -184,5 +191,7 @@ public class ConfigHandler
 		travellersgearIntegration = config.getBoolean("travellersgearIntegration", CATEGORY_TRAVELGEAR, true, "If set to true, the Traveller's Gear versions of baubles will be used if possible. Default: true");
 		
 		config.save();
+		
+		LogHelper.info("Configs loaded");
 	}
 }

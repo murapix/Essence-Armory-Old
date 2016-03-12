@@ -2,6 +2,7 @@ package essenceMod.registry;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Loader;
@@ -15,13 +16,14 @@ import essenceMod.items.baubles.ItemBelt;
 import essenceMod.items.baubles.ItemRing;
 import essenceMod.items.travellersGear.ItemPauldron;
 import essenceMod.items.travellersGear.ItemVambraces;
+import essenceMod.utility.LogHelper;
 import essenceMod.utility.RegisterHelper;
 
 public class ModArmory
 {
-	public static final Enchantment shardLooter = new EnchantmentShard(70, 5);
+	public static final Enchantment shardLooter = new EnchantmentShard(ConfigHandler.shardEnchantID, 5);
 	
-	public static Item.ToolMaterial INFUSED = EnumHelper.addToolMaterial("INFUSED", 6, 1500, 10.0F, 6.0F, 20);
+	public static ToolMaterial INFUSED = EnumHelper.addToolMaterial("INFUSED", 6, 1500, 10.0F, 6.0F, 20);
 	public static ArmorMaterial AINFUSED = EnumHelper.addArmorMaterial("AINFUSED", 1500, new int[] { 5, 8, 7, 4 }, 20);
 
 	public static Item infusedSword = new ItemModSword(INFUSED).setUnlocalizedName("infusedSword");
@@ -68,5 +70,7 @@ public class ModArmory
 			catch (Exception e)
 			{}
 		}
+		
+		LogHelper.info("Registered mod equipment");
 	}
 }

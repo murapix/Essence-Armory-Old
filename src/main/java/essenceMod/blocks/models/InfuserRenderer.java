@@ -19,6 +19,8 @@ public class InfuserRenderer extends TileEntitySpecialRenderer
 	private final IModelCustom model = AdvancedModelLoader.loadModel(infuserModel);
 	private RenderItem itemRenderer;
 	
+	public static InfuserRenderer instance = new InfuserRenderer();
+	
 	public InfuserRenderer()
 	{
 		itemRenderer = new RenderItem();

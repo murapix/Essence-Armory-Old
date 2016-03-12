@@ -1,6 +1,7 @@
 package essenceMod.entities.tileEntities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -11,11 +12,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants.NBT;
-import scala.actors.threadpool.Arrays;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.items.IUpgradeable;
-import essenceMod.items.Upgrade;
+import essenceMod.items.upgrades.Upgrade;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.utility.Reference;
 

@@ -1,9 +1,14 @@
 package essenceMod.registry.crafting;
 
-import essenceMod.items.Upgrade;
+import java.util.HashMap;
+import essenceMod.items.upgrades.Upgrade;
 
 public class UpgradeRegistry
 {
+	public static HashMap<String, Upgrade> upgradeRegister = new HashMap<String, Upgrade>();
+	
+	public static Upgrade BaseUpgrade; // Fake Upgrade, use this to have a 'no upgrade' requirement
+	
 	public static Upgrade WeaponFireDoT;
 	public static Upgrade WeaponMagicDoT;
 	public static Upgrade WeaponWitherDoT;
@@ -75,82 +80,84 @@ public class UpgradeRegistry
 
 	public static void init()
 	{
+		upgradeRegister.put("BaseUpgrade", BaseUpgrade = new Upgrade("BaseUpgrade"));
+		
 		// Weapon Upgrades
-		WeaponFireDoT = new Upgrade("WeaponFireDoT").addIncompatibleUpgrade("WeaponMagicDoT", "WeaponWitherDoT", "WeaponTaintDoT");
-		WeaponMagicDoT = new Upgrade("WeaponMagicDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponWitherDoT", "WeaponTaintDoT");
-		WeaponWitherDoT = new Upgrade("WeaponWitherDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponMagicDoT", "WeaponTaintDoT");
-		WeaponTaintDoT = new Upgrade("WeaponTaintDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponMagicDoT", "WeaponWitherDoT");
-		WeaponArmorPiercing = new Upgrade("WeaponArmorPiercing").addIncompatibleUpgrade("WeaponKnockback", "WeaponBlind", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow", "SwordLifesteal", "BowArrowSpeed", "BowDrawSpeed");
-		WeaponKnockback = new Upgrade("WeaponKnockback").addIncompatibleUpgrade("WeaponArmorPiercing", "SwordLifesteal");
-		WeaponBlind = new Upgrade("WeaponBlind").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow");
-		WeaponSlow = new Upgrade("WeaponSlow").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow");
-		WeaponEntangled = new Upgrade("WeaponEntangled").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponBlind", "WeaponSlow", "WeaponFrostSlow");
-		WeaponFrostSlow = new Upgrade("WeaponFrostSlow").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponBlind", "WeaponSlow", "WeaponEntangled");
-		WeaponPhysicalDamage = new Upgrade("WeaponPhysicalDamage").addIncompatibleUpgrade("WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage");
-		WeaponFireDamage = new Upgrade("WeaponFireDamage").addIncompatibleUpgrade("WeaponPhysicalDamage");
-		WeaponMagicDamage = new Upgrade("WeaponMagicDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponWitherDamage = new Upgrade("WeaponWitherDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponDivineDamage = new Upgrade("WeaponDivineDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponChaosDamage = new Upgrade("WeaponChaosDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponTaintDamage = new Upgrade("WeaponTaintDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponFrostDamage = new Upgrade("WeaponFrostDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponHolyDamage = new Upgrade("WeaponHolyDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponLightningDamage", "WeaponWindDamage");
-		WeaponLightningDamage = new Upgrade("WeaponLightningDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponWindDamage");
-		WeaponWindDamage = new Upgrade("WeaponWindDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage");
+		upgradeRegister.put("WeaponFireDoT", WeaponFireDoT = new Upgrade("WeaponFireDoT").addIncompatibleUpgrade("WeaponMagicDoT", "WeaponWitherDoT", "WeaponTaintDoT"));
+		upgradeRegister.put("WeaponMagicDoT", WeaponMagicDoT = new Upgrade("WeaponMagicDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponWitherDoT", "WeaponTaintDoT"));
+		upgradeRegister.put("WeaponWitherDoT", WeaponWitherDoT = new Upgrade("WeaponWitherDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponMagicDoT", "WeaponTaintDoT"));
+		upgradeRegister.put("WeaponTaintDoT", WeaponTaintDoT = new Upgrade("WeaponTaintDoT").addIncompatibleUpgrade("WeaponFireDoT", "WeaponMagicDoT", "WeaponWitherDoT"));
+		upgradeRegister.put("WeaponArmorPiercing", WeaponArmorPiercing = new Upgrade("WeaponArmorPiercing").addIncompatibleUpgrade("WeaponKnockback", "WeaponBlind", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow", "SwordLifesteal", "BowArrowSpeed", "BowDrawSpeed"));
+		upgradeRegister.put("WeaponKnockback", WeaponKnockback = new Upgrade("WeaponKnockback").addIncompatibleUpgrade("WeaponArmorPiercing", "SwordLifesteal"));
+		upgradeRegister.put("WeaponBlind", WeaponBlind = new Upgrade("WeaponBlind").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow"));
+		upgradeRegister.put("WeaponSlow", WeaponSlow = new Upgrade("WeaponSlow").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponSlow", "WeaponEntangled", "WeaponFrostSlow"));
+		upgradeRegister.put("WeaponEntangled", WeaponEntangled = new Upgrade("WeaponEntangled").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponBlind", "WeaponSlow", "WeaponFrostSlow"));
+		upgradeRegister.put("WeaponFrostSlow", WeaponFrostSlow = new Upgrade("WeaponFrostSlow").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponBlind", "WeaponSlow", "WeaponEntangled"));
+		upgradeRegister.put("WeaponPhysicalDamage", WeaponPhysicalDamage = new Upgrade("WeaponPhysicalDamage").addIncompatibleUpgrade("WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage"));
+		upgradeRegister.put("WeaponFireDamage", WeaponFireDamage = new Upgrade("WeaponFireDamage").addIncompatibleUpgrade("WeaponPhysicalDamage"));
+		upgradeRegister.put("WeaponMagicDamage", WeaponMagicDamage = new Upgrade("WeaponMagicDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponWitherDamage", WeaponWitherDamage = new Upgrade("WeaponWitherDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponDivineDamage", WeaponDivineDamage = new Upgrade("WeaponDivineDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponChaosDamage", WeaponChaosDamage = new Upgrade("WeaponChaosDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponTaintDamage", WeaponTaintDamage = new Upgrade("WeaponTaintDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponFrostDamage", WeaponFrostDamage = new Upgrade("WeaponFrostDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponHolyDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponHolyDamage", WeaponHolyDamage = new Upgrade("WeaponHolyDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponLightningDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponLightningDamage", WeaponLightningDamage = new Upgrade("WeaponLightningDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponWindDamage"));
+		upgradeRegister.put("WeaponWindDamage", WeaponWindDamage = new Upgrade("WeaponWindDamage").addIncompatibleUpgrade("WeaponPhysicalDamage", "WeaponFireDamage", "WeaponMagicDamage", "WeaponWitherDamage", "WeaponDivineDamage", "WeaponChaosDamage", "WeaponTaintDamage", "WeaponFrostDamage", "WeaponHolyDamage", "WeaponLightningDamage"));
 		
 		// Sword Upgrades
-		SwordLifesteal = new Upgrade("SwordLifesteal").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponKnockback");
+		upgradeRegister.put("SwordLifesteal", SwordLifesteal = new Upgrade("SwordLifesteal").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponKnockback"));
 		
 		// Bow Upgrades
-		BowArrowSpeed = new Upgrade("BowArrowSpeed").addIncompatibleUpgrade("WeaponArmorPiercing", "BowDrawSpeed");
-		BowDrawSpeed = new Upgrade("BowDrawSpeed").addIncompatibleUpgrade("WeaponArmorPiercing", "BowArrowSpeed");
+		upgradeRegister.put("BowArrowSpeed", BowArrowSpeed = new Upgrade("BowArrowSpeed").addIncompatibleUpgrade("WeaponArmorPiercing", "BowDrawSpeed"));
+		upgradeRegister.put("BowDrawSpeed", BowDrawSpeed = new Upgrade("BowDrawSpeed").addIncompatibleUpgrade("WeaponArmorPiercing", "BowArrowSpeed"));
 
 		// Amulet Upgrades
-		AmuletFlight = new Upgrade("AmuletFlight");
-		AmuletLooting = new Upgrade("AmuletLooting");
+		upgradeRegister.put("AmuletFlight", AmuletFlight = new Upgrade("AmuletFlight"));
+		upgradeRegister.put("AmuletLooting", AmuletLooting = new Upgrade("AmuletLooting"));
 		
 		// Amulet + Pauldron Upgrades
-		BaublePoisonImmunity = new Upgrade("BaublePoisonImmunity").addIncompatibleUpgrade("BaubleWitherImmunity", "BaubleFireImmunity", "BaubleTaintImmunity");
-		BaubleWitherImmunity = new Upgrade("BaubleWitherImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleFireImmunity", "BaubleTaintImmunity");
-		BaubleFireImmunity = new Upgrade("BaubleFireImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleWitherImmunity", "BaubleTaintImmunity");
-		BaubleTaintImmunity = new Upgrade("BaubleTaintImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleWitherImmunity", "BaubleFireImmunity");
+		upgradeRegister.put("BaublePoisonImmunity", BaublePoisonImmunity = new Upgrade("BaublePoisonImmunity").addIncompatibleUpgrade("BaubleWitherImmunity", "BaubleFireImmunity", "BaubleTaintImmunity"));
+		upgradeRegister.put("BaubleWitherImmunity", BaubleWitherImmunity = new Upgrade("BaubleWitherImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleFireImmunity", "BaubleTaintImmunity"));
+		upgradeRegister.put("BaubleFireImmunity", BaubleFireImmunity = new Upgrade("BaubleFireImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleWitherImmunity", "BaubleTaintImmunity"));
+		upgradeRegister.put("BaubleTaintImmunity", BaubleTaintImmunity = new Upgrade("BaubleTaintImmunity").addIncompatibleUpgrade("BaublePoisonImmunity", "BaubleWitherImmunity", "BaubleFireImmunity"));
 
 		// Ring Upgrades
-		RingPotionSwiftness = new Upgrade("RingPotionSwiftness").addIncompatibleUpgrade("RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionHaste = new Upgrade("RingPotionHaste").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionStrength = new Upgrade("RingPotionStrength").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionJumpBoost = new Upgrade("RingPotionJumpBoost").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionRegeneration = new Upgrade("RingPotionRegeneration").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionNightVision = new Upgrade("RingPotionNightVision").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionWaterBreathing", "RingPotionFireResistance");
-		RingPotionWaterBreathing = new Upgrade("RingPotionWaterBreathing").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionFireResistance");
-		RingPotionFireResistance = new Upgrade("RingPotionFireResistance").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing");
+		upgradeRegister.put("RingPotionSwiftness", RingPotionSwiftness = new Upgrade("RingPotionSwiftness").addIncompatibleUpgrade("RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionHaste", RingPotionHaste = new Upgrade("RingPotionHaste").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionStrength", RingPotionStrength = new Upgrade("RingPotionStrength").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionJumpBoost", RingPotionJumpBoost = new Upgrade("RingPotionJumpBoost").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionRegeneration", RingPotionRegeneration = new Upgrade("RingPotionRegeneration").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionNightVision", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionNightVision", RingPotionNightVision = new Upgrade("RingPotionNightVision").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionWaterBreathing", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionWaterBreathing", RingPotionWaterBreathing = new Upgrade("RingPotionWaterBreathing").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionFireResistance"));
+		upgradeRegister.put("RingPotionFireResistance", RingPotionFireResistance = new Upgrade("RingPotionFireResistance").addIncompatibleUpgrade("RingPotionSwiftness", "RingPotionHaste", "RingPotionStrength", "RingPotionJumpBoost", "RingPotionRegeneration", "RingPotionNightVision", "RingPotionWaterBreathing"));
 
 		// Belt Upgrades
-		BeltCleave = new Upgrade("BeltCleave").addIncompatibleUpgrade("BeltKnockback", "BaubleHealthBoost");
-		BeltKnockback = new Upgrade("BeltKnockback").addIncompatibleUpgrade("BeltCleave", "BaubleHealthBoost");
+		upgradeRegister.put("BeltCleave", BeltCleave = new Upgrade("BeltCleave").addIncompatibleUpgrade("BeltKnockback", "BaubleHealthBoost"));
+		upgradeRegister.put("BeltKnockback", BeltKnockback = new Upgrade("BeltKnockback").addIncompatibleUpgrade("BeltCleave", "BaubleHealthBoost"));
 		
 		// Belt + Vambrace Upgrades
-		BaubleMiningLimiter = new Upgrade("BaubleMiningLimiter");
-		BaubleHealthBoost = new Upgrade("BaubleHealthBoost").addIncompatibleUpgrade("BeltCleave", "BeltKnockback");
+		upgradeRegister.put("BaubleMiningLimiter", BaubleMiningLimiter = new Upgrade("BaubleMiningLimiter"));
+		upgradeRegister.put("BaubleHealthBoost", BaubleHealthBoost = new Upgrade("BaubleHealthBoost").addIncompatibleUpgrade("BeltCleave", "BeltKnockback"));
 
 		// Armor Upgrades
-		ArmorPhysicalThorns = new Upgrade("ArmorPhysicalThorns").addIncompatibleUpgrade("ArmorMagicThorns", "ArmorBlindThorns");
-		ArmorMagicThorns = new Upgrade("ArmorMagicThorns").addIncompatibleUpgrade("ArmorPhysicalThorns", "ArmorBlindThorns");
-		ArmorBlindThorns = new Upgrade("ArmorBlindThorns").addIncompatibleUpgrade("ArmorPhysicalThorns", "ArmorMagicThorns");
-		ArmorAbsorption = new Upgrade("ArmorAbsorption").addIncompatibleUpgrade("ArmorHealthBoost", "ArmorResistance", "ArmorRunicShielding");
-		ArmorHealthBoost = new Upgrade("ArmorHealthBoost").addIncompatibleUpgrade("ArmorAbsorption", "ArmorResistance", "ArmorRunicShielding");
-		ArmorResistance = new Upgrade("ArmorResistance").addIncompatibleUpgrade("ArmorAbsorption", "ArmorHealthBoost", "ArmorRunicShielding");
-		ArmorPhysicalProtection = new Upgrade("ArmorPhysicalProtection");
-		ArmorFireProtection = new Upgrade("ArmorFireProtection").addIncompatibleUpgrade("ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection");
-		ArmorWitherProtection = new Upgrade("ArmorWitherProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection");
-		ArmorMagicProtection = new Upgrade("ArmorMagicProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection");
-		ArmorBlastProtection = new Upgrade("ArmorBlastProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorProjectileProtection", "ArmorChaosProtection");
-		ArmorProjectileProtection = new Upgrade("ArmorProjectileProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorChaosProtection");
-		ArmorChaosProtection = new Upgrade("ArmorChaosProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection");
-		ArmorInvisible = new Upgrade("ArmorInvisible");
-		ArmorRevealing = new Upgrade("ArmorRevealing");
-		ArmorVisDiscount = new Upgrade("ArmorVisDiscount");
-		ArmorRunicShielding = new Upgrade("ArmorRunicShielding").addIncompatibleUpgrade("ArmorAbsorption", "ArmorHealthBoost", "ArmorResistance");
-		ArmorManaDiscount = new Upgrade("ArmorManaDiscount");
+		upgradeRegister.put("ArmorPhysicalThorns", ArmorPhysicalThorns = new Upgrade("ArmorPhysicalThorns").addIncompatibleUpgrade("ArmorMagicThorns", "ArmorBlindThorns"));
+		upgradeRegister.put("ArmorMagicThorns", ArmorMagicThorns = new Upgrade("ArmorMagicThorns").addIncompatibleUpgrade("ArmorPhysicalThorns", "ArmorBlindThorns"));
+		upgradeRegister.put("ArmorBlindThorns", ArmorBlindThorns = new Upgrade("ArmorBlindThorns").addIncompatibleUpgrade("ArmorPhysicalThorns", "ArmorMagicThorns"));
+		upgradeRegister.put("ArmorAbsorption", ArmorAbsorption = new Upgrade("ArmorAbsorption").addIncompatibleUpgrade("ArmorHealthBoost", "ArmorResistance", "ArmorRunicShielding"));
+		upgradeRegister.put("ArmorHealthBoost", ArmorHealthBoost = new Upgrade("ArmorHealthBoost").addIncompatibleUpgrade("ArmorAbsorption", "ArmorResistance", "ArmorRunicShielding"));
+		upgradeRegister.put("ArmorResistance", ArmorResistance = new Upgrade("ArmorResistance").addIncompatibleUpgrade("ArmorAbsorption", "ArmorHealthBoost", "ArmorRunicShielding"));
+		upgradeRegister.put("ArmorPhysicalProtection", ArmorPhysicalProtection = new Upgrade("ArmorPhysicalProtection"));
+		upgradeRegister.put("ArmorFireProtection", ArmorFireProtection = new Upgrade("ArmorFireProtection").addIncompatibleUpgrade("ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection"));
+		upgradeRegister.put("ArmorWitherProtection", ArmorWitherProtection = new Upgrade("ArmorWitherProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection"));
+		upgradeRegister.put("ArmorMagicProtection", ArmorMagicProtection = new Upgrade("ArmorMagicProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorBlastProtection", "ArmorProjectileProtection", "ArmorChaosProtection"));
+		upgradeRegister.put("ArmorBlastProtection", ArmorBlastProtection = new Upgrade("ArmorBlastProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorProjectileProtection", "ArmorChaosProtection"));
+		upgradeRegister.put("ArmorProjectileProtection", ArmorProjectileProtection = new Upgrade("ArmorProjectileProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorChaosProtection"));
+		upgradeRegister.put("ArmorChaosProtection", ArmorChaosProtection = new Upgrade("ArmorChaosProtection").addIncompatibleUpgrade("ArmorFireProtection", "ArmorWitherProtection", "ArmorMagicProtection", "ArmorBlastProtection", "ArmorProjectileProtection"));
+		upgradeRegister.put("ArmorInvisible", ArmorInvisible = new Upgrade("ArmorInvisible"));
+		upgradeRegister.put("ArmorRevealing", ArmorRevealing = new Upgrade("ArmorRevealing"));
+		upgradeRegister.put("ArmorVisDiscount", ArmorVisDiscount = new Upgrade("ArmorVisDiscount"));
+		upgradeRegister.put("ArmorRunicShielding", ArmorRunicShielding = new Upgrade("ArmorRunicShielding").addIncompatibleUpgrade("ArmorAbsorption", "ArmorHealthBoost", "ArmorResistance"));
+		upgradeRegister.put("ArmorManaDiscount", ArmorManaDiscount = new Upgrade("ArmorManaDiscount"));
 	}
 }
