@@ -5,6 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.blocks.models.BlockItemRenderer;
 import essenceMod.blocks.models.InfuserRenderer;
 import essenceMod.blocks.models.PylonRenderer;
@@ -32,7 +34,5 @@ public class RegisterHelper
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, pylon);
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essenceInfuser), new BlockItemRenderer());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essencePylon), new BlockItemRenderer());
-		
-		LogHelper.info("Registered mod renderers");
 	}
 }

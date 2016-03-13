@@ -2,7 +2,6 @@ package essenceMod.handlers;
 
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
-import essenceMod.utility.LogHelper;
 
 public class ConfigHandler
 {
@@ -125,8 +124,6 @@ public class ConfigHandler
 		Configuration config = new Configuration(location);
 		config.load();
 		
-		LogHelper.info("Config file loaded");
-		
 		useWhiteList = config.getBoolean("useWhiteList", CATEGORY_DROPS, false, "If set to true, only the listed mobs will drop Essence Shards. Default: false");
 		whiteList = config.getStringList("whiteList", CATEGORY_DROPS, new String[]{""}, "The array of mobs that can drop Essence Shards, separated with a ,");
 		useBlackList = config.getBoolean("useBlackList", CATEGORY_DROPS, false, "If set to true, the following listed mobs will NOT drop Essence Shards. Default: false");
@@ -191,7 +188,5 @@ public class ConfigHandler
 		travellersgearIntegration = config.getBoolean("travellersgearIntegration", CATEGORY_TRAVELGEAR, true, "If set to true, the Traveller's Gear versions of baubles will be used if possible. Default: true");
 		
 		config.save();
-		
-		LogHelper.info("Configs loaded");
 	}
 }

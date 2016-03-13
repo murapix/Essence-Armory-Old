@@ -22,7 +22,6 @@ import essenceMod.items.upgrades.UpgradeRecipe;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.utility.LogHelper;
 
 public class InfuserRecipes
 {
@@ -35,22 +34,14 @@ public class InfuserRecipes
 		upgradeRecipes = new HashMap<Class, ArrayList<UpgradeRecipe>>();
 
 		swordRecipes();
-		LogHelper.info("Registered sword upgrade recipes");
 		bowRecipes();
-		LogHelper.info("Registered bow upgrade recipes");
 		armorRecipes();
-		LogHelper.info("Registered armor upgrade recipes");
 		amuletRecipes();
-		LogHelper.info("Registered amulet upgrade recipes");
 		ringRecipes();
-		LogHelper.info("Registered ring upgrade recipes");
 		beltRecipes();
-		LogHelper.info("Registered belt upgrade recipes");
 		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 		{
-			LogHelper.info("Travellers Gear detected");
 			pauldronRecipes();
-			LogHelper.info("Registered paudlron upgrade recipes");
 			vambraceRecipes();
 		}
 	}

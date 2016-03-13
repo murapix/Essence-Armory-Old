@@ -16,7 +16,6 @@ import essenceMod.items.baubles.ItemBelt;
 import essenceMod.items.baubles.ItemRing;
 import essenceMod.items.travellersGear.ItemPauldron;
 import essenceMod.items.travellersGear.ItemVambraces;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.RegisterHelper;
 
 public class ModArmory
@@ -70,7 +69,5 @@ public class ModArmory
 			catch (Exception e)
 			{}
 		}
-		
-		LogHelper.info("Registered mod equipment");
 	}
 }

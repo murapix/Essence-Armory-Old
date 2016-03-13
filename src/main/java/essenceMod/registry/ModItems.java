@@ -4,7 +4,6 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import essenceMod.items.ItemMod;
 import essenceMod.items.ItemModFood;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.RegisterHelper;
 
 public class ModItems
@@ -48,7 +47,5 @@ public class ModItems
 		RegisterHelper.registerItem(platedApple);
 		
 		RegisterHelper.registerItem(infusedWand);
-		
-		LogHelper.info("Registered mod items");
 	}
 }

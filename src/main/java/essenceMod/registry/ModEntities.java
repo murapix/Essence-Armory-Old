@@ -2,10 +2,7 @@ package essenceMod.registry;
 
 import net.minecraft.entity.EntityList;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import essenceMod.EssenceMod;
-import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
-import essenceMod.utility.LogHelper;
 
 public class ModEntities
 {
@@ -17,13 +14,11 @@ public class ModEntities
 	public static void registerModProjectile(Class entityClass, String name)
 	{
 		EntityRegistry.registerModEntity(entityClass, name, ++startEntityID, EssenceMod.instance, 64, 10, true);
-		LogHelper.info("Registering mod projectile " + name + " with ID = " + startEntityID);
 	}
 
 	public static void registerModEntity(Class entityClass, String name)
 	{
 		EntityRegistry.registerModEntity(entityClass, name, ++startEntityID, EssenceMod.instance, 80, 3, false);
-		LogHelper.info("Registering mod entity " + name + " with ID = " + startEntityID);
 	}
 
 	public static void registerModEntityEgg(Class entityClass, String name, int primary, int secondary)

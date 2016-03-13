@@ -20,7 +20,6 @@ import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.UtilityHelper;
 
 public class ArsMagicaHandler
@@ -135,7 +134,5 @@ public class ArsMagicaHandler
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponWindDamage.setLevel(3), UpgradeRegistry.WeaponWindDamage.setLevel(2), tarmaRoot, tarmaRoot, Items.feather, Items.feather, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponWindDamage.setLevel(4), UpgradeRegistry.WeaponWindDamage.setLevel(3), tarmaRoot, tarmaRoot, Items.feather, Items.feather, ModItems.platedDiamond, ModItems.platedDiamond);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponWindDamage.setLevel(5), UpgradeRegistry.WeaponWindDamage.setLevel(4), tarmaRoot, tarmaRoot, Items.feather, Items.feather, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-		
-		LogHelper.info("Registered Ars Magica 2 upgrades");
 	}
 }

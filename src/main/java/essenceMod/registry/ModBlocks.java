@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import essenceMod.blocks.EssenceInfuser;
 import essenceMod.blocks.EssencePylon;
 import essenceMod.blocks.ModBlock;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.RegisterHelper;
 
 public class ModBlocks
@@ -22,7 +21,5 @@ public class ModBlocks
 		RegisterHelper.registerBlock(shardBlock);
 		RegisterHelper.registerBlock(essencePylon);
 		RegisterHelper.registerBlock(infusedStarmetal);
-		
-		LogHelper.info("Registered mod blocks");
 	}
 }

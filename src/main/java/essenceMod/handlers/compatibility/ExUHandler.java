@@ -13,7 +13,6 @@ import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.UtilityHelper;
 
 public class ExUHandler
@@ -46,7 +45,5 @@ public class ExUHandler
 
 		ItemStack dietySoul = new ItemStack(ExtraUtils.soul, 1, 3);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponDivineDamage.setLevel(5), UpgradeRegistry.BaseUpgrade, stableIngot, stableIngot, stableIngot, dietySoul, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
-		
-		LogHelper.info("Registered Extra Utilities upgrade recipes");
 	}
 }

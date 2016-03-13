@@ -9,7 +9,6 @@ import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.utility.LogHelper;
 
 public class Recipes
 {
@@ -57,8 +56,6 @@ public class Recipes
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedRing), new Object[] { " A ", "A A", " B ", 'A', Items.gold_nugget, 'B', ModItems.crystalDiamond });
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedAmulet), new Object[] { " A ", "A A", " B ", 'A', Items.string, 'B', ModItems.crystalDiamond });
 		GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedBelt), new Object[] { " A ", "A A", " B ", 'A', Items.leather, 'B', ModItems.crystalDiamond });
-
-		LogHelper.info("Registered mod recipes");
 		
 		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 		{

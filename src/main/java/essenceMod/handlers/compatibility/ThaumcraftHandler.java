@@ -15,7 +15,6 @@ import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
-import essenceMod.utility.LogHelper;
 import essenceMod.utility.UtilityHelper;
 
 public class ThaumcraftHandler
@@ -57,8 +56,6 @@ public class ThaumcraftHandler
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponTaintDamage.setLevel(3), UpgradeRegistry.WeaponTaintDamage.setLevel(2), thaumium, thaumium, thaumium, ModItems.infusedIngot, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponTaintDamage.setLevel(4), UpgradeRegistry.WeaponTaintDamage.setLevel(3), voidmetal, voidmetal, voidmetal, ModItems.platedStar, ModItems.platedStar, ModItems.platedStar);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponTaintDamage.setLevel(5), UpgradeRegistry.WeaponTaintDamage.setLevel(4), voidmetal, voidmetal, voidmetal, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
-		
-		LogHelper.info("Registered Thaumcraft weapon upgrade recipes");
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")
@@ -83,8 +80,6 @@ public class ThaumcraftHandler
 		InfuserRecipes.addRecipe(armor, UpgradeRegistry.ArmorVisDiscount.setLevel(3), UpgradeRegistry.ArmorVisDiscount.setLevel(2), thaumium, thaumium, silverwood, silverwood, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(armor, UpgradeRegistry.ArmorVisDiscount.setLevel(4), UpgradeRegistry.ArmorVisDiscount.setLevel(3), voidmetal, voidmetal, greatwood, greatwood, ModItems.platedDiamond, ModItems.platedDiamond);
 		InfuserRecipes.addRecipe(armor, UpgradeRegistry.ArmorVisDiscount.setLevel(5), UpgradeRegistry.ArmorVisDiscount.setLevel(4), voidmetal, voidmetal, silverwood, silverwood, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-		
-		LogHelper.info("Registered Thaumcraft armor upgrade recipes");
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")
@@ -97,7 +92,5 @@ public class ThaumcraftHandler
 		InfuserRecipes.addRecipe(bauble, UpgradeRegistry.BaubleTaintImmunity.setLevel(3), UpgradeRegistry.BaubleTaintImmunity.setLevel(2), taintGoo, taintGoo, taintTendril, taintTendril, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(bauble, UpgradeRegistry.BaubleTaintImmunity.setLevel(4), UpgradeRegistry.BaubleTaintImmunity.setLevel(3), taintGoo, taintGoo, taintTendril, taintTendril, ModItems.platedDiamond, ModItems.platedDiamond);
 		InfuserRecipes.addRecipe(bauble, UpgradeRegistry.BaubleTaintImmunity.setLevel(5), UpgradeRegistry.BaubleTaintImmunity.setLevel(4), taintGoo, taintGoo, taintTendril, taintTendril, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-		
-		LogHelper.info("Registered Thaumcraft bauble upgrade recipes");
 	}
 }
