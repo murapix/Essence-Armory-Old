@@ -19,6 +19,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import travellersgear.api.TravellersGearAPI;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
@@ -46,6 +48,7 @@ public class ItemVambraces extends ItemTravellersGear
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));

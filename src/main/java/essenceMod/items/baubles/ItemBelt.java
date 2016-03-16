@@ -29,6 +29,8 @@ import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
@@ -56,6 +58,7 @@ public class ItemBelt extends ItemBauble
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
@@ -209,6 +212,7 @@ public class ItemBelt extends ItemBauble
 		if (cooldown == 0)
 		{
 			int strength = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltKnockback);
+			if (strength <= 0) return;
 			float distance = (float) Math.pow(fallDistance, 0.625);
 			AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(player.posX - strength, player.posY, player.posZ - strength, player.posX + strength, player.posY + 1, player.posZ + strength);
 			List list = player.worldObj.getEntitiesWithinAABB(EntityMob.class, axis);
@@ -218,7 +222,6 @@ public class ItemBelt extends ItemBauble
 			{
 				float angle = (float) Math.atan2(mob.posZ - player.posZ, mob.posX - player.posX);
 				mob.moveEntity(mob.motionX, mob.motionY, mob.motionZ);
-				mob.setVelocity(distance * MathHelper.cos(angle), 0, distance * MathHelper.sin(angle));
 				mob.knockBack(player, 0, player.posX - mob.posX, player.posZ - mob.posZ);
 				item.stackTagCompound.setInteger("Cooldown", 600);
 			}

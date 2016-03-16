@@ -473,11 +473,11 @@ public class InfuserRecipes
 		addRecipe(belt, UpgradeRegistry.BeltCleave.setLevel(4), UpgradeRegistry.BeltCleave.setLevel(3), Items.gunpowder, Items.gunpowder, Items.gunpowder, Items.iron_sword, ModItems.platedStar, ModItems.platedStar);
 		addRecipe(belt, UpgradeRegistry.BeltCleave.setLevel(5), UpgradeRegistry.BeltCleave.setLevel(4), Items.gunpowder, Items.gunpowder, Items.gunpowder, Items.iron_sword, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
 
-		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedDiamond, ModItems.infusedDiamond);
-		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(2), UpgradeRegistry.BeltKnockback.setLevel(1), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(3), UpgradeRegistry.BeltKnockback.setLevel(2), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(4), UpgradeRegistry.BeltKnockback.setLevel(3), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(5), UpgradeRegistry.BeltKnockback.setLevel(4), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedDiamond, ModItems.infusedDiamond);
+//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(2), UpgradeRegistry.BeltKnockback.setLevel(1), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.crystalDiamond, ModItems.crystalDiamond);
+//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(3), UpgradeRegistry.BeltKnockback.setLevel(2), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedIngot, ModItems.infusedIngot);
+//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(4), UpgradeRegistry.BeltKnockback.setLevel(3), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.platedDiamond, ModItems.platedDiamond);
+//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(5), UpgradeRegistry.BeltKnockback.setLevel(4), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
 		if (!Loader.isModLoaded("TravellersGear"))
 		{
@@ -677,7 +677,10 @@ public class InfuserRecipes
 	public static ArrayList<Upgrade> getCurrentUpgrades(ItemStack item)
 	{
 		ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
-		NBTTagList upgradeList = item.stackTagCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);
+		if (!item.hasTagCompound()) return upgrades;
+		NBTTagCompound itemCompound = item.stackTagCompound;
+		if (!itemCompound.hasKey("Upgrades")) return upgrades;
+		NBTTagList upgradeList = itemCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);
 
 		// Go through the upgradeList tag to figure out what upgrades the item
 		// has
@@ -707,6 +710,8 @@ public class InfuserRecipes
 	{
 		// If the upgrade is blank, change nothing
 		if (upgrade == null) return item;
+		
+		if (!item.hasTagCompound()) item.setTagCompound(new NBTTagCompound());
 
 		// Get the TagList holding the upgrade data
 		NBTTagList upgradeList = item.stackTagCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);

@@ -13,6 +13,8 @@ item.stringInfused.name=§6Essence Infused String
 
 item.infusedSword.name=§6Essence Infused Sword
 
+item.lootSword.name=§6Essence Blade
+
 item.infusedBow.name=§6Essence Infused Bow
 
 item.infusedHelm.name=§6Essence Infused Helm
@@ -100,7 +102,7 @@ RingPotionWaterBreathing1=Water Breathing
 RingPotionFireResistance1=Fire Resistance
 
 BeltCleave=Cleave
-BeltKnockback=Sweep
+BeltKnockback=(Currently Disabled) Sweep
 
 BaubleMiningLimiter=Haste Limiter
 BaubleHealthBoost=Health Boost
@@ -120,4 +122,4 @@ ArmorProjectileProtection=Projectile Protection
 ArmorChaosProtection=Chaos Protection
 ArmorInvisible=Invisible
 ArmorRevealing=Revealing
-ArmorManaDiscount=Mana discount
+ArmorManaDiscount=(Currently Disabled) Mana discount

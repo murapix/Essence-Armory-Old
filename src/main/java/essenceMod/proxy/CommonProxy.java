@@ -37,8 +37,8 @@ public class CommonProxy
 	
 	public void Init(FMLInitializationEvent event)
 	{
-		Recipes.init();
 		InfuserRecipes.init();
+		Recipes.init();
 		if (Loader.isModLoaded("TConstruct") && ConfigHandler.ticoIntegration)
 		{
 			try

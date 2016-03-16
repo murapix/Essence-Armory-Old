@@ -87,8 +87,9 @@ public class EssenceEventHandler
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
 					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
-						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
+						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, UpgradeRegistry.AmuletLooting);
 					}
+					amuletLevel = Math.max(amuletLevel, UtilityHelper.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					if (rand.nextInt(30) < (5 * (1 + amuletLevel)))
 					{
 						int amount;
@@ -115,8 +116,9 @@ public class EssenceEventHandler
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
 					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
-						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
+						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, UpgradeRegistry.AmuletLooting);
 					}
+					amuletLevel = Math.max(amuletLevel, UtilityHelper.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					shardCount *= (1 + amuletLevel);
 				}
 			}
@@ -145,6 +147,7 @@ public class EssenceEventHandler
 					{
 						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
 					}
+					amuletLevel = Math.max(amuletLevel, UtilityHelper.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					shardCount *= (1 + amuletLevel);
 				}
 			}
@@ -177,21 +180,21 @@ public class EssenceEventHandler
 				if (armor != null && armor.getItem() instanceof ItemModArmor)
 				{
 					armor.stackTagCompound.setInteger("Absorption Delay", ConfigHandler.absorptionDelay);
-					protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorPhysicalProtection") * 2;
-					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorFireProtection") * 3;
-					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorBlastProtection") * 3;
-					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorMagicProtection") * 3;
-					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorProjectileProtection") * 3;
-					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorWitherProtection") * 3;
+					protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorPhysicalProtection) * 2;
+					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorFireProtection) * 3;
+					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorBlastProtection) * 3;
+					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorMagicProtection) * 3;
+					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorProjectileProtection) * 3;
+					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorWitherProtection) * 3;
 					if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration) protValue += DraconicEvolutionHandler.getChaosDamageProtection(armor, source);
-					resValue += UtilityHelper.getUpgradeLevel(armor, "ArmorResistance");
-					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorMagicThorns");
+					resValue += UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorResistance);
+					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorMagicThorns);
 					if (poisonTemp != 0)
 					{
 						poisonThorns += poisonTemp;
 						poisonCount++;
 					}
-					int blindTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorBlindThorns");
+					int blindTemp = UtilityHelper.getUpgradeLevel(armor, UpgradeRegistry.ArmorBlindThorns);
 					if (blindTemp != 0)
 					{
 						blindThorns += blindTemp;

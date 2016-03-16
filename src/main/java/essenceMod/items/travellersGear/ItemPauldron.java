@@ -16,6 +16,8 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
 import travellersgear.api.TravellersGearAPI;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
@@ -43,6 +45,7 @@ public class ItemPauldron extends ItemTravellersGear
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));

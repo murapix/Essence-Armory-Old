@@ -18,8 +18,9 @@ import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
-import essenceMod.items.upgrades.Upgrade;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.utility.Reference;
@@ -46,6 +47,7 @@ public class ItemAmulet extends ItemBauble
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));

@@ -25,14 +25,4 @@ public class RegisterHelper
 	{
 		GameRegistry.registerItem(item, Reference.MODID + item.getUnlocalizedName().substring(5));
 	}
-	
-	public static void registerRenderThings()
-	{
-		InfuserRenderer infuser = new InfuserRenderer();
-		PylonRenderer pylon = new PylonRenderer();
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, infuser);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, pylon);
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essenceInfuser), new BlockItemRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essencePylon), new BlockItemRenderer());
-	}
 }

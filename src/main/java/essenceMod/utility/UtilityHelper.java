@@ -1,6 +1,10 @@
 package essenceMod.utility;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -32,7 +36,7 @@ public class UtilityHelper
 		int mult = (int) Math.pow(10, places);
 		return ((int) (number * mult)) / (float) mult;
 	}
-	
+
 	/**
 	 * Returns the level of the upgrade with the given name found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
 	 * 
@@ -44,6 +48,8 @@ public class UtilityHelper
 	 */
 	public static int getUpgradeLevel(ItemStack item, String name)
 	{
+		if (!item.hasTagCompound()) return 0;
+		if (!item.stackTagCompound.hasKey("Upgrades")) return 0;
 		NBTTagList upgradeList = item.stackTagCompound.getTagList("Upgrades", NBT.TAG_COMPOUND);
 		for (int i = 0; i < upgradeList.tagCount(); i++)
 		{

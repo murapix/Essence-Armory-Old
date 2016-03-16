@@ -16,8 +16,8 @@ public class ItemMod extends Item implements IUpgradeable
 		setCreativeTab(ModTabs.tabEssence);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
 		itemIcon = icon.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));

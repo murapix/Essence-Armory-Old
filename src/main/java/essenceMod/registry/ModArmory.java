@@ -10,6 +10,7 @@ import essenceMod.enchantment.EnchantmentShard;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModBow;
+import essenceMod.items.ItemModLootSword;
 import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemAmulet;
 import essenceMod.items.baubles.ItemBelt;
@@ -26,6 +27,8 @@ public class ModArmory
 	public static ArmorMaterial AINFUSED = EnumHelper.addArmorMaterial("AINFUSED", 1500, new int[] { 5, 8, 7, 4 }, 20);
 
 	public static Item infusedSword = new ItemModSword(INFUSED).setUnlocalizedName("infusedSword");
+	
+	public static Item lootSword = new ItemModLootSword(INFUSED).setUnlocalizedName("lootSword");
 
 	public static Item infusedBow = new ItemModBow().setUnlocalizedName("infusedBow");
 
@@ -44,6 +47,8 @@ public class ModArmory
 	public static void init()
 	{
 		RegisterHelper.registerItem(infusedSword);
+		
+		RegisterHelper.registerItem(lootSword);
 
 		RegisterHelper.registerItem(infusedBow);
 

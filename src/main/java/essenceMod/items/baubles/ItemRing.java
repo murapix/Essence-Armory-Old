@@ -2,13 +2,6 @@ package essenceMod.items.baubles;
 
 import java.util.List;
 import java.util.UUID;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import essenceMod.items.upgrades.Upgrade;
-import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
-import essenceMod.utility.Reference;
-import essenceMod.utility.UtilityHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -25,12 +18,19 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.utility.Reference;
+import essenceMod.utility.UtilityHelper;
 
 public class ItemRing extends ItemBauble
 {
@@ -54,6 +54,7 @@ public class ItemRing extends ItemBauble
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		icons[0] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5));
@@ -74,12 +75,6 @@ public class ItemRing extends ItemBauble
 		for (int i = 0; i < icons.length; i++)
 			list.add(new ItemStack(item, 1, i));
 	}
-	
-//	@Override
-//	public String getUnlocalizedName(ItemStack item)
-//	{
-//		return this.getUnlocalizedName() + ":" + item.getItemDamage();
-//	}
 	
 	@Override
 	public BaubleType getBaubleType(ItemStack itemstack)

@@ -33,6 +33,8 @@ public class UpgradeRegistry
 	
 	public static Upgrade SwordLifesteal;
 	
+	public static Upgrade ShardSwordLooting;
+	
 	public static Upgrade BowArrowSpeed;
 	public static Upgrade BowDrawSpeed;
 
@@ -107,6 +109,8 @@ public class UpgradeRegistry
 		
 		// Sword Upgrades
 		upgradeRegister.put("SwordLifesteal", SwordLifesteal = new Upgrade("SwordLifesteal").addIncompatibleUpgrade("WeaponArmorPiercing", "WeaponKnockback"));
+		
+		upgradeRegister.put("ShardSwordLooting", ShardSwordLooting = new Upgrade("ShardSwordLooting"));
 		
 		// Bow Upgrades
 		upgradeRegister.put("BowArrowSpeed", BowArrowSpeed = new Upgrade("BowArrowSpeed").addIncompatibleUpgrade("WeaponArmorPiercing", "BowDrawSpeed"));

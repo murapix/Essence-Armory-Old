@@ -64,7 +64,6 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		if (!item.hasTagCompound()) item.setTagCompound(new NBTTagCompound());
 		item.stackTagCompound.setInteger("Level", level);
 		item.stackTagCompound.setInteger("Absorption Delay", 0);
-
 	}
 
 	@Override
@@ -170,7 +169,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		if (revealing != 0) list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal(UpgradeRegistry.ArmorRevealing.name));
 
 		int manaDiscount = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorManaDiscount);
-		if (manaDiscount != 0) list.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(UpgradeRegistry.ArmorManaDiscount.name) + ": " + manaDiscount + "% - Currently Disabled");
+		if (manaDiscount != 0) list.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(UpgradeRegistry.ArmorManaDiscount.name) + ": " + manaDiscount + "%");
 
 		int invisible = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorInvisible);
 		if (invisible != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorInvisible.name));

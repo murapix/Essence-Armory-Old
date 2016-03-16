@@ -1,6 +1,5 @@
 package essenceMod.handlers;
 
-import com.brandon3055.draconicevolution.common.utills.LogHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
@@ -13,7 +12,5 @@ public class OreDictHandler
 		OreDictionary.registerOre("ingotEssenceInfused", ModItems.infusedIngot);
 		OreDictionary.registerOre("blockEssenceInfused", ModBlocks.infusedBlock);
 		OreDictionary.registerOre("blockInfusedStarmetal", ModBlocks.infusedStarmetal);
-		
-		LogHelper.info("Registered OreDict values");
 	}
 }
