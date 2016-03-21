@@ -29,7 +29,7 @@ import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.ExUHandler;
 import essenceMod.handlers.compatibility.ThaumcraftHandler;
 import essenceMod.registry.ModArmory;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;

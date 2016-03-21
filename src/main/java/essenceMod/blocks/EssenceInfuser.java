@@ -10,13 +10,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.items.IUpgradeable;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
+import essenceMod.utility.UtilityHelper;
 
 public class EssenceInfuser extends BlockContainer implements IUpgradeable
 {
@@ -79,7 +82,11 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 			{
 				if (playerItem != null && playerItem.stackSize > 0 && new ItemStack(ModItems.infusedWand).isItemEqual(playerItem))
 				{
-					player.addChatComponentMessage(new ChatComponentText("Infuser Activeted. Upgrade: " + InfuserRecipes.checkRecipe(item, infuserEntity.getPylonItems())));
+					Upgrade upgrade = InfuserRecipes.checkRecipe(item, infuserEntity.getPylonItems());
+					String str;
+					if (upgrade == null) str = "Infuser Activation Failed: Invalid Upgrade Recipe";
+					else str = "Infuser Activated. Upgrade: " + StatCollector.translateToLocal(upgrade.name) + " " + UtilityHelper.toRoman(upgrade.level);
+					player.addChatComponentMessage(new ChatComponentText(str));
 					infuserEntity.activate();
 				}
 				else
@@ -105,7 +112,6 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 				return true;
 			}
 		}
-		// player.openGui(EssenceMod.instance, GuiHandler.EssenceInfuserGui, world, x, y, z);
 		return true;
 	}
 

@@ -13,8 +13,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants.NBT;
 import essenceMod.items.IUpgradeable;
-import essenceMod.items.upgrades.Upgrade;
 import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.utility.Reference;
 
 public class TileEntityEssenceInfuser extends TileEntity implements IInventory

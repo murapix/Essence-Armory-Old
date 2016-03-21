@@ -5,7 +5,7 @@ import cpw.mods.fml.common.Optional;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class BotaniaHandler
 {

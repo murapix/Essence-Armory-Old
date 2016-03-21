@@ -28,7 +28,7 @@ import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.ExUHandler;
 import essenceMod.handlers.compatibility.ThaumcraftHandler;
 import essenceMod.items.ItemModBow;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class EntityModArrow extends EntityArrow

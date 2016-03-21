@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 

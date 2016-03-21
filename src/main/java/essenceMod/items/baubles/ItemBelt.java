@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -32,7 +33,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
@@ -42,6 +43,7 @@ public class ItemBelt extends ItemBauble
 	public IIcon[] icons = new IIcon[17];
 	
 	private final AttributeModifier health = new AttributeModifier(UUID.fromString("BD4FE64C-9E37-4391-9D21-88F273020B0F"), "EssenceArmoryHealthBoost", 0.5D, 2);
+	private final AttributeModifier knockbackRes = new AttributeModifier(UUID.randomUUID(), "EssenceArmoryKnockbackResistance", 0.2, 0);
 	
 	public ItemBelt()
 	{
@@ -128,6 +130,9 @@ public class ItemBelt extends ItemBauble
 			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
 			if (attribute != null)
 				attribute.removeModifier(health);
+			attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.knockbackResistance);
+			if (attribute != null)
+				attribute.removeModifier(knockbackRes);
 		}
 	}
 	
@@ -206,24 +211,22 @@ public class ItemBelt extends ItemBauble
 		}
 	}
 	
-	public static void knockback(ItemStack item, EntityPlayer player, float fallDistance)
+	@SubscribeEvent
+	public void updateKnockbackRes(LivingUpdateEvent event)
 	{
-		int cooldown = item.stackTagCompound.getInteger("Cooldown");
-		if (cooldown == 0)
+		if (event.entityLiving instanceof EntityPlayer)
 		{
-			int strength = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BeltKnockback);
-			if (strength <= 0) return;
-			float distance = (float) Math.pow(fallDistance, 0.625);
-			AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(player.posX - strength, player.posY, player.posZ - strength, player.posX + strength, player.posY + 1, player.posZ + strength);
-			List list = player.worldObj.getEntitiesWithinAABB(EntityMob.class, axis);
-			ArrayList<EntityMob> mobs = new ArrayList<EntityMob>();
-			mobs.addAll(list);
-			for (EntityMob mob : mobs)
+			EntityPlayer player = (EntityPlayer) event.entityLiving;
+			ItemStack belt = PlayerHandler.getPlayerBaubles(player).getStackInSlot(3);
+			if (belt != null && belt.getItem() instanceof ItemBelt)
 			{
-				float angle = (float) Math.atan2(mob.posZ - player.posZ, mob.posX - player.posX);
-				mob.moveEntity(mob.motionX, mob.motionY, mob.motionZ);
-				mob.knockBack(player, 0, player.posX - mob.posX, player.posZ - mob.posZ);
-				item.stackTagCompound.setInteger("Cooldown", 600);
+				IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.knockbackResistance);
+				if (attribute != null)
+				{
+					attribute.removeModifier(knockbackRes);
+					int level = UtilityHelper.getUpgradeLevel(belt, UpgradeRegistry.BeltKnockback);
+					attribute.applyModifier(new AttributeModifier(knockbackRes.getID(), knockbackRes.getName() + level, knockbackRes.getAmount() * level, knockbackRes.getOperation()));
+				}
 			}
 		}
 	}
@@ -232,7 +235,6 @@ public class ItemBelt extends ItemBauble
 	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
 		int level = 0;
-		int cooldown = 0;
 		if (item.stackTagCompound == null) onCreated(item, entityPlayer.worldObj, entityPlayer);
 
 		level = item.stackTagCompound.getInteger("Level");
@@ -243,12 +245,10 @@ public class ItemBelt extends ItemBauble
 		int miningLimit = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BaubleMiningLimiter);
 		int healthBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BaubleHealthBoost);
 		
-		if (knockback != 0) cooldown = item.stackTagCompound.getInteger("Cooldown");
-		
 		if (cleave != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltCleave.name) + " " + UtilityHelper.toRoman(cleave));
 		if (knockback != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BeltKnockback.name) + " " + UtilityHelper.toRoman(knockback));
-		if (knockback != 0) list.add("- Knockback Cooldown: " + cooldown / 20 + " seconds");
 		if (miningLimit != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleMiningLimiter.name));
 		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleHealthBoost.name) + " " + UtilityHelper.toRoman(healthBoost));
+		if (knockback != 0) list.add(EnumChatFormatting.BLUE + "+" + UtilityHelper.round(knockback * 0.2F, 1) + " Knockback Resistance");
 	}
 }

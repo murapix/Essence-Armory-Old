@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
@@ -170,6 +170,8 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 
 		int manaDiscount = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorManaDiscount);
 		if (manaDiscount != 0) list.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(UpgradeRegistry.ArmorManaDiscount.name) + ": " + manaDiscount + "%");
+		
+		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorStepAssist) != 0) list.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal(UpgradeRegistry.ArmorStepAssist.name));
 
 		int invisible = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorInvisible);
 		if (invisible != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorInvisible.name));
@@ -196,6 +198,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		int thorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorPhysicalThorns);
 		int poisonThorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorMagicThorns);
 		int blindThorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorBlindThorns);
+		int speedBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorRunSpeed);
 
 		if (level != 0)
 		{
@@ -215,6 +218,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		if (thorns != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorPhysicalThorns.name) + " " + UtilityHelper.toRoman(thorns));
 		if (poisonThorns != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorMagicThorns.name) + " " + UtilityHelper.toRoman(poisonThorns));
 		if (blindThorns != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorBlindThorns.name) + " " + UtilityHelper.toRoman(blindThorns));
+		if (speedBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.ArmorRunSpeed.name) + " " + UtilityHelper.toRoman(speedBoost));
 
 		return list;
 	}
@@ -237,6 +241,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		int thorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorPhysicalThorns);
 		int poisonThorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorMagicThorns);
 		int blindThorns = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorBlindThorns);
+		int speedBoost = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorRunSpeed);
 
 		if (level != 0)
 		{
@@ -266,6 +271,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		if (thorns != 0) list.add("Deals " + (thorns * 0.25F) + " damage to any who attack you");
 		if (poisonThorns != 0) list.add("Poisons any who attack you for " + poisonThorns * ConfigHandler.poisonThornsDuration / 20 + " seconds");
 		if (blindThorns != 0) list.add("Gives a chance to blind any who attack you for " + blindThorns * ConfigHandler.blindThornsDuration / 20 + " seconds");
+		if (speedBoost != 0) list.add("Run " + (speedBoost * 20) + "% faster");
 
 		return list;
 	}

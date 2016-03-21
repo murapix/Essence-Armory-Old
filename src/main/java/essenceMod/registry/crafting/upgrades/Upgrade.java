@@ -1,8 +1,7 @@
-package essenceMod.items.upgrades;
+package essenceMod.registry.crafting.upgrades;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import essenceMod.registry.crafting.UpgradeRegistry;
 
 public class Upgrade
 {

@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 import cpw.mods.fml.common.Loader;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.handlers.compatibility.ArsMagicaHandler;
@@ -17,11 +19,13 @@ import essenceMod.handlers.compatibility.BotaniaHandler;
 import essenceMod.handlers.compatibility.DraconicEvolutionHandler;
 import essenceMod.handlers.compatibility.ExUHandler;
 import essenceMod.handlers.compatibility.ThaumcraftHandler;
-import essenceMod.items.upgrades.Upgrade;
-import essenceMod.items.upgrades.UpgradeRecipe;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
+import essenceMod.registry.crafting.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.UpgradeCraftingRecipe;
+import essenceMod.registry.crafting.upgrades.UpgradeRecipe;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class InfuserRecipes
 {
@@ -30,6 +34,7 @@ public class InfuserRecipes
 	public static void init()
 	{
 		UpgradeRegistry.init();
+		RecipeSorter.register("essenceArmory:upgradeShaped", UpgradeCraftingRecipe.class, Category.SHAPED, "after:minecraft:shapeless");
 
 		upgradeRecipes = new HashMap<Class, ArrayList<UpgradeRecipe>>();
 
@@ -99,7 +104,7 @@ public class InfuserRecipes
 		addRecipe(sword, UpgradeRegistry.WeaponSlow.setLevel(4), UpgradeRegistry.WeaponSlow.setLevel(3), Blocks.web, Blocks.web, Blocks.soul_sand, Blocks.soul_sand, ModItems.platedDiamond, ModItems.platedDiamond);
 		addRecipe(sword, UpgradeRegistry.WeaponSlow.setLevel(5), UpgradeRegistry.WeaponSlow.setLevel(4), Blocks.web, Blocks.web, Blocks.soul_sand, Blocks.soul_sand, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
-		addRecipe(sword, UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedDiamond, ModItems.infusedDiamond, ModItems.infusedDiamond);// Quartz
+		addRecipe(sword, UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedDiamond, ModItems.infusedDiamond);// Quartz
 		addRecipe(sword, UpgradeRegistry.WeaponPhysicalDamage.setLevel(2), UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.crystalDiamond, ModItems.crystalDiamond);
 		addRecipe(sword, UpgradeRegistry.WeaponPhysicalDamage.setLevel(3), UpgradeRegistry.WeaponPhysicalDamage.setLevel(2), Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedIngot, ModItems.infusedIngot);
 		addRecipe(sword, UpgradeRegistry.WeaponPhysicalDamage.setLevel(4), UpgradeRegistry.WeaponPhysicalDamage.setLevel(3), Blocks.quartz_block, Blocks.quartz_block, Blocks.quartz_block, Blocks.quartz_block, ModItems.platedDiamond, ModItems.platedDiamond);
@@ -226,7 +231,7 @@ public class InfuserRecipes
 		addRecipe(bow, UpgradeRegistry.WeaponSlow.setLevel(4), UpgradeRegistry.WeaponSlow.setLevel(3), Blocks.web, Blocks.web, Blocks.soul_sand, Blocks.soul_sand, ModItems.platedDiamond, ModItems.platedDiamond);
 		addRecipe(bow, UpgradeRegistry.WeaponSlow.setLevel(5), UpgradeRegistry.WeaponSlow.setLevel(4), Blocks.web, Blocks.web, Blocks.soul_sand, Blocks.soul_sand, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
-		addRecipe(bow, UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedDiamond, ModItems.infusedDiamond, ModItems.infusedDiamond);// Quartz
+		addRecipe(bow, UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedDiamond, ModItems.infusedDiamond);// Quartz
 		addRecipe(bow, UpgradeRegistry.WeaponPhysicalDamage.setLevel(2), UpgradeRegistry.WeaponPhysicalDamage.setLevel(1), Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.crystalDiamond, ModItems.crystalDiamond);
 		addRecipe(bow, UpgradeRegistry.WeaponPhysicalDamage.setLevel(3), UpgradeRegistry.WeaponPhysicalDamage.setLevel(2), Items.quartz, Items.quartz, Items.quartz, Items.quartz, ModItems.infusedIngot, ModItems.infusedIngot);
 		addRecipe(bow, UpgradeRegistry.WeaponPhysicalDamage.setLevel(4), UpgradeRegistry.WeaponPhysicalDamage.setLevel(3), Blocks.quartz_block, Blocks.quartz_block, Blocks.quartz_block, Blocks.quartz_block, ModItems.platedDiamond, ModItems.platedDiamond);
@@ -296,100 +301,113 @@ public class InfuserRecipes
 
 	private static void armorRecipes()
 	{
-		ItemStack armor = new ItemStack(ModArmory.infusedHelm);
+		ArrayList<ItemStack> armorSet = new ArrayList<ItemStack>();
+		armorSet.add(new ItemStack(ModArmory.infusedHelm));
+		armorSet.add(new ItemStack(ModArmory.infusedPlate));
+		armorSet.add(new ItemStack(ModArmory.infusedPants));
+		armorSet.add(new ItemStack(ModArmory.infusedBoots));
 
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.cactus, Blocks.cactus, ModItems.infusedDiamond, ModItems.infusedDiamond); // Cactus
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(2), UpgradeRegistry.ArmorPhysicalThorns.setLevel(1), Blocks.cactus, Blocks.cactus, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(3), UpgradeRegistry.ArmorPhysicalThorns.setLevel(2), Blocks.cactus, Blocks.cactus, ModItems.platedDiamond, ModItems.platedDiamond);
-
-		ItemStack poisonPotion = new ItemStack(Items.potionitem, 1, 8260);
-		addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, poisonPotion, poisonPotion, ModItems.infusedDiamond, ModItems.infusedDiamond); // Potion of Poison
-		addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(2), UpgradeRegistry.ArmorMagicThorns.setLevel(1), poisonPotion, poisonPotion, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(3), UpgradeRegistry.ArmorMagicThorns.setLevel(2), poisonPotion, poisonPotion, ModItems.platedDiamond, ModItems.platedDiamond);
-
-		addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.soul_sand, Blocks.soul_sand, ModItems.infusedStar, ModItems.infusedStar); // Soul Sand
-		addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(2), UpgradeRegistry.ArmorBlindThorns.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, ModItems.crystalStar, ModItems.crystalStar);
-		addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(3), UpgradeRegistry.ArmorBlindThorns.setLevel(2), Blocks.soul_sand, Blocks.soul_sand, ModItems.platedStar, ModItems.platedStar);
-
-		ItemStack notchApple = new ItemStack(Items.golden_apple, 1, 1);
-		addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(1), UpgradeRegistry.BaseUpgrade, notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.infusedDiamond, ModItems.infusedDiamond); // Notch Apple + Glowstone
-		addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(2), UpgradeRegistry.ArmorAbsorption.setLevel(1), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(3), UpgradeRegistry.ArmorAbsorption.setLevel(2), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(4), UpgradeRegistry.ArmorAbsorption.setLevel(3), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(5), UpgradeRegistry.ArmorAbsorption.setLevel(4), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-
-		addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(1), UpgradeRegistry.BaseUpgrade, notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.infusedDiamond, ModItems.infusedDiamond); // Notch Apple + Milk Bucket
-		addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(2), UpgradeRegistry.ArmorHealthBoost.setLevel(1), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(3), UpgradeRegistry.ArmorHealthBoost.setLevel(2), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(4), UpgradeRegistry.ArmorHealthBoost.setLevel(3), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(5), UpgradeRegistry.ArmorHealthBoost.setLevel(4), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModBlocks.infusedStarmetal, ModBlocks.infusedBlock);
-
-		addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.infusedStar, ModItems.infusedStar); // Diamond
-		addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(2), UpgradeRegistry.ArmorResistance.setLevel(1), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.crystalStar, ModItems.crystalStar);
-		addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(3), UpgradeRegistry.ArmorResistance.setLevel(2), Items.diamond, Items.diamond, Items.nether_star, Items.nether_star, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(4), UpgradeRegistry.ArmorResistance.setLevel(3), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.platedStar, ModItems.platedStar);
-		addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(5), UpgradeRegistry.ArmorResistance.setLevel(4), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
-
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.infusedDiamond, ModItems.infusedDiamond);// Iron
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(2), UpgradeRegistry.ArmorPhysicalProtection.setLevel(1), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(3), UpgradeRegistry.ArmorPhysicalProtection.setLevel(2), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(4), UpgradeRegistry.ArmorPhysicalProtection.setLevel(3), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-
-		addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.infusedDiamond, ModItems.infusedDiamond);// Magma Cream
-		addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(2), UpgradeRegistry.ArmorFireProtection.setLevel(1), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(3), UpgradeRegistry.ArmorFireProtection.setLevel(2), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(4), UpgradeRegistry.ArmorFireProtection.setLevel(3), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-
-		addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.infusedDiamond, ModItems.infusedDiamond);// Obsidian
-		addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(2), UpgradeRegistry.ArmorBlastProtection.setLevel(1), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(3), UpgradeRegistry.ArmorBlastProtection.setLevel(2), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(4), UpgradeRegistry.ArmorBlastProtection.setLevel(3), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-
-		addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.infusedDiamond, ModItems.infusedDiamond);// Arrow
-		addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(2), UpgradeRegistry.ArmorProjectileProtection.setLevel(1), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(3), UpgradeRegistry.ArmorProjectileProtection.setLevel(2), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(4), UpgradeRegistry.ArmorProjectileProtection.setLevel(3), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
-
-		ItemStack witherSkull = new ItemStack(Items.skull, 1, 1);
-		addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, witherSkull, witherSkull, witherSkull, witherSkull, ModItems.infusedStar, ModItems.infusedStar);// Wither Skeleton Skull
-		addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(2), UpgradeRegistry.ArmorWitherProtection.setLevel(1), witherSkull, witherSkull, witherSkull, witherSkull, ModItems.crystalStar, ModItems.crystalStar);
-		addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(3), UpgradeRegistry.ArmorWitherProtection.setLevel(2), witherSkull, witherSkull, witherSkull, witherSkull, ModItems.platedStar, ModItems.platedStar);
-		addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(4), UpgradeRegistry.ArmorWitherProtection.setLevel(3), witherSkull, witherSkull, witherSkull, witherSkull, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
-
-		ItemStack potionHealth = new ItemStack(Items.potionitem, 1, 8197);
-		addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, potionHealth, potionHealth, potionHealth, potionHealth, ModItems.infusedStar, ModItems.infusedStar);// Potion of Instant Health
-		addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(2), UpgradeRegistry.ArmorMagicProtection.setLevel(1), potionHealth, potionHealth, potionHealth, potionHealth, ModItems.crystalStar, ModItems.crystalStar);
-		addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(3), UpgradeRegistry.ArmorMagicProtection.setLevel(2), potionHealth, potionHealth, potionHealth, potionHealth, ModItems.platedStar, ModItems.platedStar);
-		addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(4), UpgradeRegistry.ArmorMagicProtection.setLevel(3), potionHealth, potionHealth, potionHealth, potionHealth, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
-
-		if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration)
+		for (ItemStack armor : armorSet)
 		{
-			try
-			{
-				DraconicEvolutionHandler.addChaosProtectionRecipes(armor);
-			}
-			catch (Exception e)
-			{}
-		}
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.cactus, Blocks.cactus, ModItems.infusedDiamond, ModItems.infusedDiamond); // Cactus
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(2), UpgradeRegistry.ArmorPhysicalThorns.setLevel(1), Blocks.cactus, Blocks.cactus, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalThorns.setLevel(3), UpgradeRegistry.ArmorPhysicalThorns.setLevel(2), Blocks.cactus, Blocks.cactus, ModItems.platedDiamond, ModItems.platedDiamond);
 
-		if (Loader.isModLoaded("Botania") && ConfigHandler.botaniaIntegration)
-		{
-			try
-			{
-				BotaniaHandler.addManaDiscountRecipes(armor);
-			}
-			catch (Exception e)
-			{}
-		}
+			ItemStack poisonPotion = new ItemStack(Items.potionitem, 1, 8260);
+			addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, poisonPotion, poisonPotion, ModItems.infusedDiamond, ModItems.infusedDiamond); // Potion of Poison
+			addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(2), UpgradeRegistry.ArmorMagicThorns.setLevel(1), poisonPotion, poisonPotion, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorMagicThorns.setLevel(3), UpgradeRegistry.ArmorMagicThorns.setLevel(2), poisonPotion, poisonPotion, ModItems.platedDiamond, ModItems.platedDiamond);
 
-		if (Loader.isModLoaded("Thaumcraft") && ConfigHandler.thaumcraftIntegration)
-		{
-			try
+			addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.soul_sand, Blocks.soul_sand, ModItems.infusedStar, ModItems.infusedStar); // Soul Sand
+			addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(2), UpgradeRegistry.ArmorBlindThorns.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, ModItems.crystalStar, ModItems.crystalStar);
+			addRecipe(armor, UpgradeRegistry.ArmorBlindThorns.setLevel(3), UpgradeRegistry.ArmorBlindThorns.setLevel(2), Blocks.soul_sand, Blocks.soul_sand, ModItems.platedStar, ModItems.platedStar);
+
+			ItemStack notchApple = new ItemStack(Items.golden_apple, 1, 1);
+			addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(1), UpgradeRegistry.BaseUpgrade, notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.infusedDiamond, ModItems.infusedDiamond); // Notch Apple + Glowstone
+			addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(2), UpgradeRegistry.ArmorAbsorption.setLevel(1), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(3), UpgradeRegistry.ArmorAbsorption.setLevel(2), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.infusedIngot, ModItems.infusedIngot);
+			addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(4), UpgradeRegistry.ArmorAbsorption.setLevel(3), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorAbsorption.setLevel(5), UpgradeRegistry.ArmorAbsorption.setLevel(4), notchApple, notchApple, Items.glowstone_dust, Items.glowstone_dust, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+
+			addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(1), UpgradeRegistry.BaseUpgrade, notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.infusedDiamond, ModItems.infusedDiamond); // Notch Apple + Milk Bucket
+			addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(2), UpgradeRegistry.ArmorHealthBoost.setLevel(1), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(3), UpgradeRegistry.ArmorHealthBoost.setLevel(2), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.infusedIngot, ModItems.infusedIngot);
+			addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(4), UpgradeRegistry.ArmorHealthBoost.setLevel(3), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorHealthBoost.setLevel(5), UpgradeRegistry.ArmorHealthBoost.setLevel(4), notchApple, notchApple, Items.milk_bucket, Items.milk_bucket, ModBlocks.infusedStarmetal, ModBlocks.infusedBlock);
+
+			addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.infusedStar, ModItems.infusedStar); // Diamond
+			addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(2), UpgradeRegistry.ArmorResistance.setLevel(1), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.crystalStar, ModItems.crystalStar);
+			addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(3), UpgradeRegistry.ArmorResistance.setLevel(2), Items.diamond, Items.diamond, Items.nether_star, Items.nether_star, ModItems.infusedIngot, ModItems.infusedIngot);
+			addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(4), UpgradeRegistry.ArmorResistance.setLevel(3), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModItems.platedStar, ModItems.platedStar);
+			addRecipe(armor, UpgradeRegistry.ArmorResistance.setLevel(5), UpgradeRegistry.ArmorResistance.setLevel(4), Items.diamond, Items.diamond, Items.diamond, Items.diamond, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
+
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.infusedDiamond, ModItems.infusedDiamond);// Iron
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(2), UpgradeRegistry.ArmorPhysicalProtection.setLevel(1), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(3), UpgradeRegistry.ArmorPhysicalProtection.setLevel(2), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorPhysicalProtection.setLevel(4), UpgradeRegistry.ArmorPhysicalProtection.setLevel(3), Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+
+			addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.infusedDiamond, ModItems.infusedDiamond);// Magma Cream
+			addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(2), UpgradeRegistry.ArmorFireProtection.setLevel(1), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(3), UpgradeRegistry.ArmorFireProtection.setLevel(2), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorFireProtection.setLevel(4), UpgradeRegistry.ArmorFireProtection.setLevel(3), Items.magma_cream, Items.magma_cream, Items.magma_cream, Items.magma_cream, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+
+			addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.infusedDiamond, ModItems.infusedDiamond);// Obsidian
+			addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(2), UpgradeRegistry.ArmorBlastProtection.setLevel(1), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(3), UpgradeRegistry.ArmorBlastProtection.setLevel(2), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorBlastProtection.setLevel(4), UpgradeRegistry.ArmorBlastProtection.setLevel(3), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+
+			addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.infusedDiamond, ModItems.infusedDiamond);// Arrow
+			addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(2), UpgradeRegistry.ArmorProjectileProtection.setLevel(1), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(3), UpgradeRegistry.ArmorProjectileProtection.setLevel(2), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModItems.platedDiamond, ModItems.platedDiamond);
+			addRecipe(armor, UpgradeRegistry.ArmorProjectileProtection.setLevel(4), UpgradeRegistry.ArmorProjectileProtection.setLevel(3), Items.arrow, Items.arrow, Items.arrow, Items.arrow, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+
+			ItemStack witherSkull = new ItemStack(Items.skull, 1, 1);
+			addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, witherSkull, witherSkull, witherSkull, witherSkull, ModItems.infusedStar, ModItems.infusedStar);// Wither Skeleton Skull
+			addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(2), UpgradeRegistry.ArmorWitherProtection.setLevel(1), witherSkull, witherSkull, witherSkull, witherSkull, ModItems.crystalStar, ModItems.crystalStar);
+			addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(3), UpgradeRegistry.ArmorWitherProtection.setLevel(2), witherSkull, witherSkull, witherSkull, witherSkull, ModItems.platedStar, ModItems.platedStar);
+			addRecipe(armor, UpgradeRegistry.ArmorWitherProtection.setLevel(4), UpgradeRegistry.ArmorWitherProtection.setLevel(3), witherSkull, witherSkull, witherSkull, witherSkull, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
+
+			ItemStack potionHealth = new ItemStack(Items.potionitem, 1, 8197);
+			addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(1), UpgradeRegistry.BaseUpgrade, potionHealth, potionHealth, potionHealth, potionHealth, ModItems.infusedStar, ModItems.infusedStar);// Potion of Instant Health
+			addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(2), UpgradeRegistry.ArmorMagicProtection.setLevel(1), potionHealth, potionHealth, potionHealth, potionHealth, ModItems.crystalStar, ModItems.crystalStar);
+			addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(3), UpgradeRegistry.ArmorMagicProtection.setLevel(2), potionHealth, potionHealth, potionHealth, potionHealth, ModItems.platedStar, ModItems.platedStar);
+			addRecipe(armor, UpgradeRegistry.ArmorMagicProtection.setLevel(4), UpgradeRegistry.ArmorMagicProtection.setLevel(3), potionHealth, potionHealth, potionHealth, potionHealth, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
+			
+			addRecipe(armor, 2, UpgradeRegistry.ArmorStepAssist.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.leather, Items.leather, Items.slime_ball, Items.slime_ball, Items.string, Items.string, ModItems.infusedIngot, ModItems.infusedIngot);
+			
+			addRecipe(armor, 3, UpgradeRegistry.ArmorRunSpeed.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.sugar, Items.sugar, Items.glowstone_dust, Items.glowstone_dust, ModItems.infusedDiamond, ModItems.infusedDiamond);
+			addRecipe(armor, 3, UpgradeRegistry.ArmorRunSpeed.setLevel(2), UpgradeRegistry.ArmorRunSpeed.setLevel(1), Items.sugar, Items.sugar, Blocks.glowstone, Blocks.glowstone, ModItems.crystalDiamond, ModItems.crystalDiamond);
+			addRecipe(armor, 3, UpgradeRegistry.ArmorRunSpeed.setLevel(3), UpgradeRegistry.ArmorRunSpeed.setLevel(2), Items.sugar, Items.sugar, Blocks.ice, Blocks.ice, ModItems.platedDiamond, ModItems.platedDiamond);
+
+			if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration)
 			{
-				ThaumcraftHandler.addTCArmorRecipes(armor);
+				try
+				{
+					DraconicEvolutionHandler.addChaosProtectionRecipes(armor);
+				}
+				catch (Exception e)
+				{}
 			}
-			catch (Exception e)
-			{}
+
+			if (Loader.isModLoaded("Botania") && ConfigHandler.botaniaIntegration)
+			{
+				try
+				{
+					BotaniaHandler.addManaDiscountRecipes(armor);
+				}
+				catch (Exception e)
+				{}
+			}
+
+			if (Loader.isModLoaded("Thaumcraft") && ConfigHandler.thaumcraftIntegration)
+			{
+				try
+				{
+					ThaumcraftHandler.addTCArmorRecipes(armor);
+				}
+				catch (Exception e)
+				{}
+			}
 		}
 	}
 
@@ -473,11 +491,11 @@ public class InfuserRecipes
 		addRecipe(belt, UpgradeRegistry.BeltCleave.setLevel(4), UpgradeRegistry.BeltCleave.setLevel(3), Items.gunpowder, Items.gunpowder, Items.gunpowder, Items.iron_sword, ModItems.platedStar, ModItems.platedStar);
 		addRecipe(belt, UpgradeRegistry.BeltCleave.setLevel(5), UpgradeRegistry.BeltCleave.setLevel(4), Items.gunpowder, Items.gunpowder, Items.gunpowder, Items.iron_sword, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
 
-//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedDiamond, ModItems.infusedDiamond);
-//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(2), UpgradeRegistry.BeltKnockback.setLevel(1), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.crystalDiamond, ModItems.crystalDiamond);
-//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(3), UpgradeRegistry.BeltKnockback.setLevel(2), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedIngot, ModItems.infusedIngot);
-//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(4), UpgradeRegistry.BeltKnockback.setLevel(3), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.platedDiamond, ModItems.platedDiamond);
-//		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(5), UpgradeRegistry.BeltKnockback.setLevel(4), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedDiamond, ModItems.infusedDiamond);
+		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(2), UpgradeRegistry.BeltKnockback.setLevel(1), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.crystalDiamond, ModItems.crystalDiamond);
+		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(3), UpgradeRegistry.BeltKnockback.setLevel(2), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.infusedIngot, ModItems.infusedIngot);
+		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(4), UpgradeRegistry.BeltKnockback.setLevel(3), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModItems.platedDiamond, ModItems.platedDiamond);
+		addRecipe(belt, UpgradeRegistry.BeltKnockback.setLevel(5), UpgradeRegistry.BeltKnockback.setLevel(4), Blocks.obsidian, Blocks.piston, Blocks.piston, Blocks.piston, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
 		if (!Loader.isModLoaded("TravellersGear"))
 		{
@@ -497,23 +515,23 @@ public class InfuserRecipes
 		ItemStack pauldron = new ItemStack(ModArmory.infusedPauldrons);
 
 		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.infusedDiamond, ModItems.infusedDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(1), UpgradeRegistry.BaubleFireImmunity.setLevel(1), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(1), UpgradeRegistry.BaubleFireImmunity.setLevel(1), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(1), UpgradeRegistry.BaubleFireImmunity.setLevel(1), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(1), UpgradeRegistry.BaubleFireImmunity.setLevel(1), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(2), UpgradeRegistry.BaubleFireImmunity.setLevel(1), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.crystalDiamond, ModItems.crystalDiamond);
+		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(3), UpgradeRegistry.BaubleFireImmunity.setLevel(2), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.infusedIngot, ModItems.infusedIngot);
+		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(4), UpgradeRegistry.BaubleFireImmunity.setLevel(3), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModItems.platedDiamond, ModItems.platedDiamond);
+		addRecipe(pauldron, UpgradeRegistry.BaubleFireImmunity.setLevel(5), UpgradeRegistry.BaubleFireImmunity.setLevel(4), Items.blaze_powder, Items.blaze_powder, Items.gunpowder, Items.gunpowder, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
 		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.infusedDiamond, ModItems.infusedDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(1), UpgradeRegistry.BaublePoisonImmunity.setLevel(1), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(1), UpgradeRegistry.BaublePoisonImmunity.setLevel(1), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.infusedIngot, ModItems.infusedIngot);
-		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(1), UpgradeRegistry.BaublePoisonImmunity.setLevel(1), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.platedDiamond, ModItems.platedDiamond);
-		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(1), UpgradeRegistry.BaublePoisonImmunity.setLevel(1), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(2), UpgradeRegistry.BaublePoisonImmunity.setLevel(1), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.crystalDiamond, ModItems.crystalDiamond);
+		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(3), UpgradeRegistry.BaublePoisonImmunity.setLevel(2), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.infusedIngot, ModItems.infusedIngot);
+		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(4), UpgradeRegistry.BaublePoisonImmunity.setLevel(3), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModItems.platedDiamond, ModItems.platedDiamond);
+		addRecipe(pauldron, UpgradeRegistry.BaublePoisonImmunity.setLevel(5), UpgradeRegistry.BaublePoisonImmunity.setLevel(4), Items.fermented_spider_eye, Items.fermented_spider_eye, Items.nether_wart, Items.nether_wart, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 
 		ItemStack witherSkull = new ItemStack(Items.skull, 1, 1);
 		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, ModItems.infusedStar, ModItems.infusedStar);
-		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(1), UpgradeRegistry.BaubleWitherImmunity.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.infusedStar, ModItems.infusedStar);
-		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(1), UpgradeRegistry.BaubleWitherImmunity.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.crystalStar, ModItems.crystalStar);
-		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(1), UpgradeRegistry.BaubleWitherImmunity.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.platedStar, ModItems.platedStar);
-		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(1), UpgradeRegistry.BaubleWitherImmunity.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
+		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(2), UpgradeRegistry.BaubleWitherImmunity.setLevel(1), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.infusedStar, ModItems.infusedStar);
+		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(3), UpgradeRegistry.BaubleWitherImmunity.setLevel(2), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.crystalStar, ModItems.crystalStar);
+		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(4), UpgradeRegistry.BaubleWitherImmunity.setLevel(3), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModItems.platedStar, ModItems.platedStar);
+		addRecipe(pauldron, UpgradeRegistry.BaubleWitherImmunity.setLevel(5), UpgradeRegistry.BaubleWitherImmunity.setLevel(4), Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand, witherSkull, witherSkull, witherSkull, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
 
 		if (Loader.isModLoaded("Thaumcraft")) ThaumcraftHandler.addTaintInfusionRecipes(pauldron);
 	}
@@ -614,6 +632,7 @@ public class InfuserRecipes
 			}
 			if (hasBetter) continue;
 
+			currentUpgrades.add(UpgradeRegistry.BaseUpgrade);
 			int reqsMet = 0;
 			for (int i = 0; i < currentUpgrades.size(); i++)
 			{
@@ -710,7 +729,7 @@ public class InfuserRecipes
 	{
 		// If the upgrade is blank, change nothing
 		if (upgrade == null) return item;
-		
+
 		if (!item.hasTagCompound()) item.setTagCompound(new NBTTagCompound());
 
 		// Get the TagList holding the upgrade data

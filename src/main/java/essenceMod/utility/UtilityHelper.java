@@ -1,14 +1,12 @@
 package essenceMod.utility;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.lang.reflect.Field;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
-import essenceMod.items.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 
 public class UtilityHelper
 {

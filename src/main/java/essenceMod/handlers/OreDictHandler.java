@@ -6,7 +6,7 @@ import essenceMod.registry.ModItems;
 
 public class OreDictHandler
 {
-	public OreDictHandler()
+	public static void preInit()
 	{
 		OreDictionary.registerOre("nuggetEssenceInfused", ModItems.infusedNugget);
 		OreDictionary.registerOre("ingotEssenceInfused", ModItems.infusedIngot);

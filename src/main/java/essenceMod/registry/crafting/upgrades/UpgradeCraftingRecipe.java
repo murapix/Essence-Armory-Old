@@ -1,4 +1,4 @@
-package essenceMod.registry.crafting;
+package essenceMod.registry.crafting.upgrades;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import essenceMod.items.upgrades.Upgrade;
+import essenceMod.registry.crafting.InfuserRecipes;
 
 public class UpgradeCraftingRecipe implements IRecipe
 {

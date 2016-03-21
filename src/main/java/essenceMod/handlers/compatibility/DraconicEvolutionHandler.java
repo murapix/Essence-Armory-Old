@@ -10,7 +10,7 @@ import cpw.mods.fml.common.Optional;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class DraconicEvolutionHandler

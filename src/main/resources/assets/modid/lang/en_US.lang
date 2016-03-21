@@ -47,6 +47,8 @@ material.infusedstarmetal=§6Infused Starmetal
 
 enchantment.shardLoot=Essence Ripper
 
+EssenceArmory.nei.infuser=Essence Infuser
+
 WeaponFireDoT=Burn
 WeaponMagicDoT=Poison
 WeaponWitherDoT=Decay
@@ -102,7 +104,7 @@ RingPotionWaterBreathing1=Water Breathing
 RingPotionFireResistance1=Fire Resistance
 
 BeltCleave=Cleave
-BeltKnockback=(Currently Disabled) Sweep
+BeltKnockback=Knockback Resistance
 
 BaubleMiningLimiter=Haste Limiter
 BaubleHealthBoost=Health Boost
@@ -123,3 +125,5 @@ ArmorChaosProtection=Chaos Protection
 ArmorInvisible=Invisible
 ArmorRevealing=Revealing
 ArmorManaDiscount=(Currently Disabled) Mana discount
+ArmorStepAssist=Step Assist
+ArmorRunSpeed=Haste

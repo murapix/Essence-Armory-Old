@@ -19,7 +19,7 @@ import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.UtilityHelper;
 
 public class ArsMagicaHandler
@@ -105,23 +105,23 @@ public class ArsMagicaHandler
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostSlow.setLevel(4), UpgradeRegistry.WeaponFrostSlow.setLevel(3), blueRune, blueRune, Blocks.snow, Blocks.snow, ModItems.platedStar, ModItems.platedStar);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostSlow.setLevel(5), UpgradeRegistry.WeaponFrostSlow.setLevel(4), blueRune, blueRune, Blocks.snow, Blocks.snow, ModBlocks.infusedStarmetal, ModBlocks.infusedStarmetal);
 		
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily); // Nature Essence
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, ModItems.infusedDiamond, ModItems.infusedDiamond); // Nature Essence
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(2), UpgradeRegistry.WeaponEntangled.setLevel(1), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(3), UpgradeRegistry.WeaponEntangled.setLevel(2), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, Items.redstone, ModItems.infusedIngot, ModItems.infusedIngot);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(3), UpgradeRegistry.WeaponEntangled.setLevel(2), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(4), UpgradeRegistry.WeaponEntangled.setLevel(3), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, ModItems.platedDiamond, ModItems.platedDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(5), UpgradeRegistry.WeaponEntangled.setLevel(4), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, Items.redstone, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponEntangled.setLevel(5), UpgradeRegistry.WeaponEntangled.setLevel(4), Blocks.leaves, Blocks.vine, Blocks.cactus, Blocks.waterlily, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 		
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow); // Ice Essence
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, ModItems.infusedDiamond, ModItems.infusedDiamond); // Ice Essence
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(2), UpgradeRegistry.WeaponFrostDamage.setLevel(1), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(3), UpgradeRegistry.WeaponFrostDamage.setLevel(2), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, Items.redstone, ModItems.infusedIngot, ModItems.infusedIngot);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(3), UpgradeRegistry.WeaponFrostDamage.setLevel(2), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(4), UpgradeRegistry.WeaponFrostDamage.setLevel(3), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, ModItems.platedDiamond, ModItems.platedDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(5), UpgradeRegistry.WeaponFrostDamage.setLevel(4), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, Items.redstone, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponFrostDamage.setLevel(5), UpgradeRegistry.WeaponFrostDamage.setLevel(4), Blocks.ice, Blocks.ice, Blocks.snow, Blocks.snow, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 		
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.golden_apple, Items.golden_apple, Items.egg, Items.egg); // Life Essence
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, ModItems.infusedDiamond, ModItems.infusedDiamond); // Life Essence
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(2), UpgradeRegistry.WeaponHolyDamage.setLevel(1), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, ModItems.crystalDiamond, ModItems.crystalDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(3), UpgradeRegistry.WeaponHolyDamage.setLevel(2), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, Items.redstone, ModItems.infusedIngot, ModItems.infusedIngot);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(3), UpgradeRegistry.WeaponHolyDamage.setLevel(2), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, ModItems.infusedIngot, ModItems.infusedIngot);
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(4), UpgradeRegistry.WeaponHolyDamage.setLevel(3), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, ModItems.platedDiamond, ModItems.platedDiamond);
-		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(5), UpgradeRegistry.WeaponHolyDamage.setLevel(4), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, Items.redstone, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
+		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponHolyDamage.setLevel(5), UpgradeRegistry.WeaponHolyDamage.setLevel(4), Items.golden_apple, Items.golden_apple, Items.egg, Items.egg, ModBlocks.infusedBlock, ModBlocks.infusedBlock);
 		
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponLightningDamage.setLevel(1), UpgradeRegistry.BaseUpgrade, Items.glowstone_dust, Items.glowstone_dust, Items.redstone, Items.redstone, ModItems.infusedDiamond, ModItems.infusedDiamond); // Lightning Essence
 		InfuserRecipes.addRecipe(weapon, UpgradeRegistry.WeaponLightningDamage.setLevel(2), UpgradeRegistry.WeaponLightningDamage.setLevel(1), Items.glowstone_dust, Items.glowstone_dust, Items.redstone, Items.redstone, ModItems.crystalDiamond, ModItems.crystalDiamond);

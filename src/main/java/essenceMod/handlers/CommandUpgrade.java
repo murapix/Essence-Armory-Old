@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import essenceMod.items.IUpgradeable;
-import essenceMod.items.upgrades.Upgrade;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class CommandUpgrade implements ICommand
 {

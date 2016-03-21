@@ -1,4 +1,4 @@
-package essenceMod.items.upgrades;
+package essenceMod.registry.crafting.upgrades;
 
 import java.util.ArrayList;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ public class UpgradeRecipe
 	
 	public UpgradeRecipe(ItemStack item, int itemSlot, Upgrade upgrade, Upgrade[] requirements, Object... recipeItems)
 	{
-		this.item = item;
+		this.item = item.copy();
 		this.slot = itemSlot;
 		this.upgrade = upgrade;
 		for (Upgrade requirement : requirements)
@@ -28,7 +28,7 @@ public class UpgradeRecipe
 		for (Object stack : recipeItems)
 		{
 			if (stack == null) continue;
-			else if (stack instanceof ItemStack) this.recipeItems.add((ItemStack) stack);
+			else if (stack instanceof ItemStack) this.recipeItems.add(((ItemStack) stack).copy());
 			else if (stack instanceof Item) this.recipeItems.add(new ItemStack((Item) stack));
 			else if (stack instanceof Block) this.recipeItems.add(new ItemStack((Block) stack));
 		}

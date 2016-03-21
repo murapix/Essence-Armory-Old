@@ -28,7 +28,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
@@ -161,13 +161,12 @@ public class ItemRing extends ItemBauble
 		super.onWornTick(item, player);
 
 		int level = item.stackTagCompound.getInteger("Level");
-		int type = item.stackTagCompound.getInteger("Type");
 		if (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.RingPotionRegeneration) != 0)
 		{
 			if (cooldown != 0) cooldown--;
 			else if (cooldown == 0)
 			{
-				player.heal(1);
+				player.heal(player.getMaxHealth() * 0.05F);
 				cooldown = 60 / ((ItemRing) item.getItem()).getLevel(item);
 			}
 		}
@@ -214,8 +213,8 @@ public class ItemRing extends ItemBauble
 			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int jumpLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
-			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
+			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, UpgradeRegistry.RingPotionJumpBoost);
+			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, UpgradeRegistry.RingPotionJumpBoost));
 			event.ammount -= jumpLevel / 20;
 		}
 	}
@@ -232,15 +231,14 @@ public class ItemRing extends ItemBauble
 			int strengthLevel = 0;
 			if (ring1 != null && ring1.getItem() instanceof ItemRing)
 			{
-				swiftnessLevel = UtilityHelper.getUpgradeLevel(ring1, "Swiftness");
-				strengthLevel = UtilityHelper.getUpgradeLevel(ring1, "Strength");
+				swiftnessLevel = UtilityHelper.getUpgradeLevel(ring1, UpgradeRegistry.RingPotionSwiftness);
+				strengthLevel = UtilityHelper.getUpgradeLevel(ring1, UpgradeRegistry.RingPotionStrength);
 			}
 			if (ring2 != null && ring2.getItem() instanceof ItemRing)
 			{
-				swiftnessLevel = Math.max(swiftnessLevel, UtilityHelper.getUpgradeLevel(ring2, "Swiftness"));
-				strengthLevel = Math.max(strengthLevel, UtilityHelper.getUpgradeLevel(ring2, "Strength"));
+				swiftnessLevel = Math.max(swiftnessLevel, UtilityHelper.getUpgradeLevel(ring2, UpgradeRegistry.RingPotionSwiftness));
+				strengthLevel = Math.max(strengthLevel, UtilityHelper.getUpgradeLevel(ring2, UpgradeRegistry.RingPotionStrength));
 			}
-			UUID playerID = player.getGameProfile().getId();
 			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
 			if (attribute != null)
 			{
@@ -269,8 +267,8 @@ public class ItemRing extends ItemBauble
 		ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 		ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 		int hasteLevel = 0;
-		if (ring1 != null && ring1.getItem() instanceof ItemRing) hasteLevel = UtilityHelper.getUpgradeLevel(ring1, "Haste");
-		if (ring2 != null && ring2.getItem() instanceof ItemRing) hasteLevel = Math.max(hasteLevel, UtilityHelper.getUpgradeLevel(ring2, "Haste"));
+		if (ring1 != null && ring1.getItem() instanceof ItemRing) hasteLevel = UtilityHelper.getUpgradeLevel(ring1, UpgradeRegistry.RingPotionHaste);
+		if (ring2 != null && ring2.getItem() instanceof ItemRing) hasteLevel = Math.max(hasteLevel, UtilityHelper.getUpgradeLevel(ring2, UpgradeRegistry.RingPotionHaste));
 		event.newSpeed *= (1 + 0.01F * hasteLevel);
 	}
 
@@ -283,8 +281,8 @@ public class ItemRing extends ItemBauble
 			ItemStack ring1 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(1);
 			ItemStack ring2 = PlayerHandler.getPlayerBaubles(player).getStackInSlot(2);
 			int jumpLevel = 0;
-			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, "JumpBoost");
-			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, "JumpBoost"));
+			if (ring1 != null && ring1.getItem() instanceof ItemRing) jumpLevel = UtilityHelper.getUpgradeLevel(ring1, UpgradeRegistry.RingPotionJumpBoost);
+			if (ring2 != null && ring2.getItem() instanceof ItemRing) jumpLevel = Math.max(jumpLevel, UtilityHelper.getUpgradeLevel(ring2, UpgradeRegistry.RingPotionJumpBoost));
 			switch (jumpLevel)
 			{
 				case 1:

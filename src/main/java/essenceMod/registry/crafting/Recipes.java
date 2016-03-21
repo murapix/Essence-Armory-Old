@@ -11,6 +11,8 @@ import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
+import essenceMod.registry.crafting.upgrades.UpgradeCraftingRecipe;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class Recipes
 {
