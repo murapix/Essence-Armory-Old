@@ -29,15 +29,15 @@ import essenceMod.utility.UtilityHelper;
 public class ItemVambraces extends ItemTravellersGear
 {
 	private final AttributeModifier health = new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "EssenceArmoryVambraceHealth", 0.5D, 2);
-	
+
 	public int level;
 	public IIcon[] icons = new IIcon[7];
-	
+
 	public ItemVambraces()
 	{
 		this(0);
 	}
-	
+
 	public ItemVambraces(int level)
 	{
 		super();
@@ -46,7 +46,7 @@ public class ItemVambraces extends ItemTravellersGear
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
@@ -55,27 +55,27 @@ public class ItemVambraces extends ItemTravellersGear
 		for (int i = 1; i < icons.length; i++)
 			icons[i] = iconRegister.registerIcon(Reference.MODID + ":" + getUnlocalizedName().substring(5)/* + "-" + i */);
 	}
-	
+
 	@Override
 	public IIcon getIconFromDamage(int meta)
 	{
 		if (meta >= icons.length) meta = 0;
 		return icons[meta];
 	}
-	
+
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
 		for (int i = 0; i < icons.length; i++)
 			list.add(new ItemStack(item, 1, i));
 	}
-	
-//	@Override
-//	public String getUnlocalizedName(ItemStack item)
-//	{
-//		return this.getUnlocalizedName() + ":" + item.getItemDamage();
-//	}
-	
+
+	// @Override
+	// public String getUnlocalizedName(ItemStack item)
+	// {
+	// return this.getUnlocalizedName() + ":" + item.getItemDamage();
+	// }
+
 	@Override
 	public void onCreated(ItemStack item, World world, EntityPlayer player)
 	{
@@ -86,13 +86,13 @@ public class ItemVambraces extends ItemTravellersGear
 		else if (meta <= 5) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BaubleHealthBoost.setLevel(meta));
 		else if (meta <= 6) InfuserRecipes.addUpgrade(item, UpgradeRegistry.BaubleMiningLimiter.setLevel(meta - 5));
 	}
-	
+
 	@Override
 	public int getSlot(ItemStack item)
 	{
 		return 2;
 	}
-	
+
 	public static int getLevel(ItemStack item)
 	{
 		return item.stackTagCompound.getInteger("Level");
@@ -102,14 +102,11 @@ public class ItemVambraces extends ItemTravellersGear
 	public void onTravelGearUnequip(EntityPlayer player, ItemStack item)
 	{
 		super.onTravelGearUnequip(player, item);
-		
+
 		IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
-		if (attribute != null)
-		{
-			attribute.removeModifier(health);
-		}
+		if (attribute != null) attribute.removeModifier(health);
 	}
-	
+
 	@SubscribeEvent
 	public void updatePlayerHealth(LivingUpdateEvent event)
 	{
@@ -129,7 +126,7 @@ public class ItemVambraces extends ItemTravellersGear
 			}
 		}
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BreakSpeed event)
 	{
@@ -143,7 +140,7 @@ public class ItemVambraces extends ItemTravellersGear
 			event.newSpeed = Math.min(event.newSpeed, blockHealth - 1);
 		}
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
@@ -157,6 +154,6 @@ public class ItemVambraces extends ItemTravellersGear
 		int miningLimiter = UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.BaubleMiningLimiter);
 
 		if (miningLimiter != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleMiningLimiter.name));
-		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleHealthBoost.name)+ " " + UtilityHelper.toRoman(healthBoost));
+		if (healthBoost != 0) list.add(StatCollector.translateToLocal(UpgradeRegistry.BaubleHealthBoost.name) + " " + UtilityHelper.toRoman(healthBoost));
 	}
 }

@@ -1,7 +1,6 @@
 package essenceMod.handlers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Random;
 import java.util.UUID;
@@ -21,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -356,6 +356,23 @@ public class EssenceEventHandler
 				attribute.removeModifier(this.speed);
 				if (speed != 0) attribute.applyModifier(new AttributeModifier(this.speed.getID(), this.speed.getName() + speed, this.speed.getAmount() * speed, this.speed.getOperation()));
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerLogin(EntityJoinWorldEvent event)
+	{
+		if (event.entity instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer) event.entity;
+			IAttributeInstance attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed);
+			if (attribute != null) attribute.removeAllModifiers();
+			attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage);
+			if (attribute != null) attribute.removeAllModifiers();
+			attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.knockbackResistance);
+			if (attribute != null) attribute.removeAllModifiers();
+			attribute = player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
+			if (attribute != null) attribute.removeAllModifiers();
 		}
 	}
 
