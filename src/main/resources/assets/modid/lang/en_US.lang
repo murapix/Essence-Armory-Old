@@ -1,0 +1,129 @@
+item.shardInfused.name=§6Shard of Essence
+item.gemInfused.name=§6Essence Infused Diamond
+item.nuggetInfused.name=§6Essence Infused Nugget
+item.starInfused.name=§6Essence Infused Star
+item.gemCrystallized.name=§6Crystallized Essence Diamond
+item.starCrystallized.name=§6Crystallized Essence Star
+item.ingotInfused.name=§6Essence Infused Ingot
+item.gemPlated.name=§6Essence Plated Diamond
+item.starPlated.name=§6Essence Plated Star
+
+item.stickInfused.name=§6Essence Infused Stick
+item.stringInfused.name=§6Essence Infused String
+
+item.infusedSword.name=§6Essence Infused Sword
+
+item.lootSword.name=§6Essence Blade
+
+item.infusedBow.name=§6Essence Infused Bow
+
+item.infusedHelm.name=§6Essence Infused Helm
+item.infusedPlate.name=§6Essence Infused Chestplate
+item.infusedPants.name=§6Essence Infused Leggings
+item.infusedBoots.name=§6Essence Infused Boots
+
+item.infusedRing.name=§6Infused Ring
+item.infusedBelt.name=§6Infused Belt
+item.infusedAmulet.name=§6Infused Amulet
+
+item.infusedPauldrons.name=§6Infused Pauldrons
+item.infusedVambraces.name=§6Infused Vambraces
+
+item.wandInfused.name=§6Infuser Activation Stick
+
+item.appleInfused.name=§6Essence Infused Apple
+item.appleCrystallized.name=§6Crystallized Essence Apple
+item.applePlated.name=§6Essence Plated Apple
+
+tile.infusedBlock.name=§6Block of Infused Metal
+tile.essenceInfuser.name=§6Essence Infuser
+tile.essencePylon.name=§6Essence Pylon
+tile.infusedStarmetal.name=§6Infused Starmetal
+tile.shardBlock.name=§6Block of Essence Shards
+
+itemGroup.tabEssence=§6Essence Armory
+
+material.infusedstarmetal=§6Infused Starmetal
+
+enchantment.shardLoot=Essence Ripper
+
+EssenceArmory.nei.infuser=Essence Infuser
+
+WeaponFireDoT=Burn
+WeaponMagicDoT=Poison
+WeaponWitherDoT=Decay
+WeaponTaintDoT=Flux
+WeaponArmorPiercing=Piercing
+WeaponKnockback=Knockback
+WeaponBlind=Blinding
+WeaponSlow=Crippling
+WeaponEntangled=Entangling
+WeaponFrostSlow=Frozen
+WeaponPhysicalDamage=Sharpness
+WeaponFireDamage=Molten
+WeaponMagicDamage=Ethereal
+WeaponWitherDamage=Ruin
+WeaponDivineDamage=Divine
+WeaponChaosDamage=Entropy
+WeaponTaintDamage=Tainted
+WeaponFrostDamage=Frost
+WeaponHolyDamage=Blessed
+WeaponLightningDamage=Energized
+WeaponWindDamage=Tempest
+
+SwordLifesteal=Leech
+
+BowArrowSpeed=Bow Length
+BowDrawSpeed=Recurve
+
+AmuletFlight=Archangel's Wings
+AmuletLooting=Essence Extractor
+
+BaublePoisonImmunity=Poison Infusion
+BaubleWitherImmunity=Wither Infusion
+BaubleFireImmunity=Flame Infusion
+BaubleTaintImmunity=Flux Infusion
+
+RingPotionSwiftness1=Minor Swiftness
+RingPotionSwiftness2=Lesser Swiftness
+RingPotionSwiftness3=Greater Swiftness
+RingPotionHaste1=Minor Haste
+RingPotionHaste2=Lesser Haste
+RingPotionHaste3=Greater Haste
+RingPotionStrength1=Minor Strength
+RingPotionStrength2=Lesser Strength
+RingPotionStrength3=Greater Strength
+RingPotionJumpBoost1=Minor Jump Boost
+RingPotionJumpBoost2=Lesser Jump Boost
+RingPotionJumpBoost3=Greater Jump Boost
+RingPotionRegeneration1=Minor Regeneration
+RingPotionRegeneration2=Lesser Regeneration
+RingPotionRegeneration3=Greater Regeneration
+RingPotionNightVision1=Night Vision
+RingPotionWaterBreathing1=Water Breathing
+RingPotionFireResistance1=Fire Resistance
+
+BeltCleave=Cleave
+BeltKnockback=Knockback Resistance
+
+BaubleMiningLimiter=Haste Limiter
+BaubleHealthBoost=Health Boost
+
+ArmorPhysicalThorns=Thorns
+ArmorMagicThorns=Poisonous
+ArmorBlindThorns=Blinding
+ArmorAbsorption=Absorption
+ArmorHealthBoost=Health Boost
+ArmorResistance=Resistance
+ArmorPhysicalProtection=Protection
+ArmorFireProtection=Fire Protection
+ArmorWitherProtection=Wither Protection
+ArmorMagicProtection=Magic Protection
+ArmorBlastProtection=Blast Protection
+ArmorProjectileProtection=Projectile Protection
+ArmorChaosProtection=Chaos Protection
+ArmorInvisible=Invisible
+ArmorRevealing=Revealing
+ArmorManaDiscount=(Currently Disabled) Mana discount
+ArmorStepAssist=Step Assist
+ArmorRunSpeed=Haste
