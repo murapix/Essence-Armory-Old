@@ -2,7 +2,7 @@
   "parent": "builtin/generated",
   "textures":
   {
-    "layer0": "essencearmory:items/wandInfused"
+    "layer0": "essencearmory:items/infusedSword"
   },
   "display":
   {

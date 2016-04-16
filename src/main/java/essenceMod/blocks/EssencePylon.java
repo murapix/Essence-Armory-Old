@@ -16,13 +16,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import essenceMod.entities.tileEntities.TileEntityEssencePylon;
 import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
-import essenceMod.utility.Reference;
 
 public class EssencePylon extends BlockContainer implements IUpgradeable, ITileEntityProvider
 {
@@ -39,24 +40,25 @@ public class EssencePylon extends BlockContainer implements IUpgradeable, ITileE
 	{
 		return new TileEntityEssencePylon();
 	}
-
+	
 	@Override
 	public int getRenderType()
 	{
-		return 2;
+		return 3;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void initModel()
+	{
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IBlockState getStateForEntityRender(IBlockState state)
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
 	{
-		return getDefaultState();
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public void initModel()
-	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(Reference.MODID + ":" + getRegistryName(), "inventory"));
+		return false;
 	}
 
 	@Override
@@ -80,7 +82,6 @@ public class EssencePylon extends BlockContainer implements IUpgradeable, ITileE
 		ItemStack playerItem = player.getCurrentEquippedItem();
 		if (item != null && item.stackSize > 0)
 		{
-			Random rand = new Random();
 			EntityItem itemEntity = new EntityItem(world, player.posX, player.posY + player.getDefaultEyeHeight() / 2.0F, player.posZ, item.copy());
 			world.spawnEntityInWorld(itemEntity);
 			pylonEntity.setInventorySlotContents(0, null);
@@ -99,7 +100,6 @@ public class EssencePylon extends BlockContainer implements IUpgradeable, ITileE
 			
 			return true;
 		}
-//		player.openGui(EssenceMod.instance, GuiHandler.EssencePylonGui, world, x, y, z);
 		return true;
 	}
 

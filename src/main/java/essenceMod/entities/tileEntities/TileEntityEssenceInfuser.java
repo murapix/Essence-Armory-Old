@@ -2,6 +2,7 @@ package essenceMod.entities.tileEntities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -36,7 +37,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 	private boolean active;
 
 	public int infuseTime;
-	public static final short TotalInfuseTime = 200;
+	public final short TotalInfuseTime = 200;
 
 	@Override
 	public void update()
@@ -233,6 +234,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 	}
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public Packet getDescriptionPacket()
 	{
 		NBTTagCompound syncData = new NBTTagCompound();

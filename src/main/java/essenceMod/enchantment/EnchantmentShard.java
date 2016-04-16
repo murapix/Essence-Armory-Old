@@ -1,9 +1,9 @@
 package essenceMod.enchantment;
 
-import essenceMod.utility.Reference;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.util.ResourceLocation;
+import essenceMod.utility.Reference;
 
 public class EnchantmentShard extends Enchantment
 {
@@ -11,6 +11,7 @@ public class EnchantmentShard extends Enchantment
 	{
 		super(id, new ResourceLocation(Reference.MODID + ":shardLoot"), rarity, EnumEnchantmentType.WEAPON);
 		this.setName("shardLoot");
+		this.addToBookList(this);
 	}
 	
 	public int getMinEnchantability(int level)

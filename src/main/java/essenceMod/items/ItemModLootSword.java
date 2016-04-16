@@ -18,10 +18,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.tabs.ModTabs;
-import essenceMod.utility.Reference;
-import essenceMod.utility.UtilityHelper;
 
 public class ItemModLootSword extends ItemSword
 {
@@ -61,13 +60,13 @@ public class ItemModLootSword extends ItemSword
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(Reference.MODID + ":" + getRegistryName(), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override
 	public void addInformation(ItemStack item, EntityPlayer entityPlayer, List list, boolean bool)
 	{
-		list.add("Increases shard drop chance to " + ((UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ShardSwordLooting) + 1) * 100 / 6) + "%");
-		list.add("Multiplies shard drop amount by " + (UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ShardSwordLooting) + 1)); 
+		list.add("Increases shard drop chance to " + ((Upgrade.getUpgradeLevel(item, UpgradeRegistry.ShardSwordLooting) + 1) * 100 / 6) + "%");
+		list.add("Multiplies shard drop amount by " + (Upgrade.getUpgradeLevel(item, UpgradeRegistry.ShardSwordLooting) + 1)); 
 	}
 }

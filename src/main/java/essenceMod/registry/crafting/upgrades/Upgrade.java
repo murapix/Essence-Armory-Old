@@ -1,7 +1,10 @@
 package essenceMod.registry.crafting.upgrades;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants.NBT;
 
 public class Upgrade
 {
@@ -104,5 +107,42 @@ public class Upgrade
 	{
 		this.name = name;
 		return this;
+	}
+	
+	/**
+	 * Returns the level of the upgrade with the given name found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
+	 * 
+	 * @param item
+	 *            The item being checked for the upgrade.
+	 * @param name
+	 *            The name of the upgrade.
+	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
+	 */
+	public static int getUpgradeLevel(ItemStack item, String name)
+	{
+		if (!item.hasTagCompound()) return 0;
+		if (!item.getTagCompound().hasKey("Upgrades")) return 0;
+		NBTTagList upgradeList = item.getTagCompound().getTagList("Upgrades", NBT.TAG_COMPOUND);
+		for (int i = 0; i < upgradeList.tagCount(); i++)
+		{
+			NBTTagCompound tag = upgradeList.getCompoundTagAt(i);
+			if (tag.getString("Name").equals(name)) return tag.getInteger("Level");
+		}
+		return 0;
+	}
+
+	/**
+	 * Returns the level of the given upgrade found on the given item. If the upgrade does not exist on the item, a level of 0 will be returned.
+	 * 
+	 * @param item
+	 *            The item being checked for the upgrade.
+	 * @param upgrade
+	 *            The upgrade of which the level is being checked.
+	 * @return The level of the given upgrade. Returns 0 if the upgrade is not found.
+	 */
+	public static int getUpgradeLevel(ItemStack item, Upgrade upgrade)
+	{
+		if (upgrade == null || upgrade.name == null) return 0;
+		return getUpgradeLevel(item, upgrade.name);
 	}
 }

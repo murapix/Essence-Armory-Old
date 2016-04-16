@@ -1,5 +1,7 @@
 {
-    "variants":{
-        "normal": {"model": "essencearmory:infusedStarmetal"}
+    "variants": {
+        "normal": {
+            "model": "essencearmory:infusedStarmetal"
+        }
     }
 }

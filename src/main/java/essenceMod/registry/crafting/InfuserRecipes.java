@@ -13,7 +13,6 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
-import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
@@ -21,6 +20,7 @@ import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.registry.crafting.upgrades.UpgradeCraftingRecipe;
 import essenceMod.registry.crafting.upgrades.UpgradeRecipe;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
+import essenceMod.registry.crafting.upgrades.UpgradeSet;
 
 public class InfuserRecipes
 {
@@ -658,7 +658,6 @@ public class InfuserRecipes
 
 			ArrayList<ItemStack> requiredItems = (ArrayList<ItemStack>) recipe.getRecipeItems().clone();
 			ArrayList<ItemStack> currentItems = (ArrayList<ItemStack>) pylonItems.clone();
-			boolean removed = true;
 			for (int i = 0; i < currentItems.size(); i++)
 			{
 				for (int j = 0; j < requiredItems.size(); j++)
@@ -676,6 +675,8 @@ public class InfuserRecipes
 			if (currentItems.size() != 0) continue;
 			if (requiredItems.size() != 0) continue;
 
+			if (upgrade instanceof UpgradeSet && upgrade.level <= getSetLevel(item)) continue;
+			
 			return upgrade;
 		}
 		return null;
@@ -776,5 +777,14 @@ public class InfuserRecipes
 		compound.setTag("Upgrades", upgradeList);
 		item.setTagCompound(compound);
 		return item;
+	}
+
+	public static int getSetLevel(ItemStack item)
+	{
+		int level = 0;
+		ArrayList<Upgrade> upgrades = getCurrentUpgrades(item);
+		for (Upgrade upgrade : upgrades)
+			if (upgrade instanceof UpgradeSet && upgrade.level > level) level = upgrade.level;
+		return level;
 	}
 }

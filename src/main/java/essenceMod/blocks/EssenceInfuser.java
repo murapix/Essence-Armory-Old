@@ -1,13 +1,9 @@
 package essenceMod.blocks;
 
-import java.util.Arrays;
 import java.util.Random;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -22,11 +18,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.TRSRTransformation;
-import net.minecraftforge.client.model.obj.OBJModel;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
@@ -34,7 +26,6 @@ import essenceMod.items.IUpgradeable;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.tabs.ModTabs;
-import essenceMod.utility.Reference;
 
 public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITileEntityProvider
 {
@@ -53,10 +44,24 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITil
 		return new TileEntityEssenceInfuser();
 	}
 
+	@Override
+	public int getRenderType()
+	{
+		return 3;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(Reference.MODID + ":" + getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+	{
+		return false;
 	}
 
 	@Override
@@ -95,7 +100,6 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITil
 				}
 				else
 				{
-					Random rand = new Random();
 					EntityItem itemEntity = new EntityItem(world, player.posX, player.posY + player.getDefaultEyeHeight() / 2.0F, player.posZ, item.copy());
 					world.spawnEntityInWorld(itemEntity);
 					infuserEntity.setInventorySlotContents(0, null);

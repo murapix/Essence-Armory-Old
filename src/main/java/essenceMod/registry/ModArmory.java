@@ -59,6 +59,8 @@ public class ModArmory
 		RegisterHelper.registerItem(infusedAmulet);
 		RegisterHelper.registerItem(infusedBelt);
 		RegisterHelper.registerItem(infusedRing);
+		
+		
 
 //		if (Loader.isModLoaded("TravellersGear") && ConfigHandler.travellersgearIntegration)
 //		{

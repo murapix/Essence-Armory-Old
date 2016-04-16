@@ -1,5 +1,7 @@
 {
-    "variants":{
-        "normal": {"model": "essencearmory:infusedBlock"}
+    "variants": {
+        "normal": {
+            "model": "essencearmory:infusedBlock"
+        }
     }
 }

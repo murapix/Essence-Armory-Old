@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import baubles.api.IBauble;
 import essenceMod.items.ItemMod;
-import essenceMod.utility.Reference;
 
 public abstract class ItemBauble extends ItemMod implements IBauble
 {
@@ -25,7 +24,7 @@ public abstract class ItemBauble extends ItemMod implements IBauble
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(Reference.MODID + ":" + getRegistryName(), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override

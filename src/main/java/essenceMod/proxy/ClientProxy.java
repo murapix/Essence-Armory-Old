@@ -3,14 +3,12 @@ package essenceMod.proxy;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.b3d.B3DLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import essenceMod.blocks.models.InfuserRenderer;
@@ -26,26 +24,17 @@ public class ClientProxy extends CommonProxy
 {
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void preInit(FMLPreInitializationEvent event)
+	public void Init(FMLInitializationEvent event)
 	{
-		super.preInit(event);
+		super.Init(event);
 		
+		OBJLoader.instance.addDomain(Reference.MODID.toLowerCase());
 		InfuserRenderer infuser = new InfuserRenderer();
 		PylonRenderer pylon = new PylonRenderer();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceInfuser.class, infuser);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssencePylon.class, pylon);
-		OBJLoader.instance.addDomain(Reference.MODID.toLowerCase());
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.essenceInfuser), 0, new ModelResourceLocation(ModBlocks.essenceInfuser.getRegistryName()));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.essencePylon), 0, new ModelResourceLocation(ModBlocks.essencePylon.getRegistryName()));
-//		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essenceInfuser), new BlockItemRenderer());
-//		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.essencePylon), new BlockItemRenderer());
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void Init(FMLInitializationEvent event)
-	{
-		super.Init(event);
 		
 		ModItems.initItemRenderers();
 		ModBlocks.initItemRenderers();

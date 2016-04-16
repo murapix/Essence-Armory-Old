@@ -80,6 +80,77 @@ public class UpgradeRegistry
 	public static Upgrade ArmorManaDiscount; // Botania Required
 	public static Upgrade ArmorStepAssist; // Legs Only
 	public static Upgrade ArmorRunSpeed; // Boots Only
+	
+	/*
+	 * All upgrade sets. Effects at 4/6/8 given by:
+	 * 4: Effect
+	 * 6: Effect/None
+	 * 8: Effect/None
+	 */
+	
+	/*
+	 * Knight
+	 * 4: Damage reduced by 1/2/3, immediately after armor
+	 * 6: Maximum of 5/3 hearts recieved per attack
+	 * 8: Ignore 1 hit (10 sec)
+	 */
+	public static UpgradeSet SetKnight;
+	/*
+	 * Barbarian
+	 * 4: 5/10/15% bonus damage per attack, up to 200%. Decays after 10 sec
+	 * 6: 10/15% bonus movespeed per attack, up to 50/75%. Decays after 2 sec
+	 * 8: No damage taken for 3 sec (1 min, activate upon recieving fatal blow)
+	 */
+	public static UpgradeSet SetBarbarian;
+	/*
+	 * Assassin
+	 * 4: 20/30/40% Chance to deal 2x damage
+	 * 6: Chance increased to 60/100% on first attack (10 sec, reset on kill)
+	 * 8: None
+	 */
+	public static UpgradeSet SetAssassin;
+	/*
+	 * Juggernaut
+	 * 4: Knockback Resistance +0.5 then *2/4
+	 * 6: Return 1 hit (10 sec)
+	 * 8: None
+	 */
+	public static UpgradeSet SetJuggernaut;
+	/*
+	 * Looter
+	 * 4: 20/40/60% Chance to double vanilla mob drops
+	 * 6: 50/100% Increased xp drops
+	 * 8:
+	 */
+	public static UpgradeSet SetLooter;
+	/*
+	 * Witch
+	 * 4: 50/75/100% Bonus damage vs slow/blind/impaired enemies
+	 * 6: 25/50% Increased non-physical damage
+	 * 8: None
+	 */
+	public static UpgradeSet SetWitch;
+	/*
+	 * Warrior
+	 * 4:
+	 * 6:
+	 * 8:
+	 */
+	public static UpgradeSet SetWarrior;
+	/*
+	 * Pyromaniac
+	 * 4: 50/100/150% Increased damage to burning enemies
+	 * 6: None
+	 * 8: None
+	 */
+	public static UpgradeSet SetPyromaniac;
+	/*
+	 * Priest
+	 * 4: 50/100/150% Bonus damage vs undead
+	 * 6: None
+	 * 8: None
+	 */
+	public static UpgradeSet SetPriest;
 
 	public static void init()
 	{
@@ -166,5 +237,15 @@ public class UpgradeRegistry
 		upgradeRegister.put("ArmorManaDiscount", ArmorManaDiscount = new Upgrade("ArmorManaDiscount"));
 		upgradeRegister.put("ArmorStepAssist", ArmorStepAssist = new Upgrade("ArmorStepAssist"));
 		upgradeRegister.put("ArmorRunSpeed", ArmorRunSpeed = new Upgrade("ArmorRunSpeed"));
+		
+		upgradeRegister.put("SetKnight", SetKnight = new UpgradeSet("SetKnight"));
+		upgradeRegister.put("SetJuggernaut", SetJuggernaut = new UpgradeSet("SetJuggernaut"));
+		upgradeRegister.put("SetBarbarian", SetBarbarian = new UpgradeSet("SetBarbarian"));
+		upgradeRegister.put("SetAssassin", SetAssassin = new UpgradeSet("SetAssassin"));
+		upgradeRegister.put("SetWarrior", SetWarrior = new UpgradeSet("SetWarrior"));
+		upgradeRegister.put("SetPyromaniac", SetPyromaniac = new UpgradeSet("SetPyromaniac"));
+		upgradeRegister.put("SetLooter", SetLooter = new UpgradeSet("SetLooter"));
+		upgradeRegister.put("SetPriest", SetPriest = new UpgradeSet("SetPriest"));
+		upgradeRegister.put("SetWitch", SetWitch = new UpgradeSet("SetWitch"));
 	}
 }

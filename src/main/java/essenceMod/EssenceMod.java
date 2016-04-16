@@ -11,15 +11,10 @@ import essenceMod.proxy.CommonProxy;
 import essenceMod.utility.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
-dependencies = "required-after:Forge@[1.7.10-10.13.4.1448-1.7.10,);" +
+dependencies = "required-after:Forge@[1.8.9-11.15.1.1761,);" +
 		"required-after:Baubles;" +
-		"after:NotEnoughItems;" +
 		"after:TConstruct;" +
-		"after:Draconic-Evolution;" +
-		"after:TravellersGear;" +
-		"after:extrautilities;" +
 		"after:Thaumcraft;" +
-		"after:arsmagica2;" +
 		"after:Botania;")
 public class EssenceMod
 {

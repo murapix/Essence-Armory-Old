@@ -3,6 +3,7 @@ package essenceMod.handlers;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -18,11 +19,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,11 +29,10 @@ import baubles.common.lib.PlayerHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemAmulet;
-import essenceMod.items.baubles.ItemBelt;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.UpgradeRegistry;
-import essenceMod.utility.UtilityHelper;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 
 public class EssenceEventHandler
 {
@@ -46,11 +43,9 @@ public class EssenceEventHandler
 		MinecraftForge.EVENT_BUS.register(new EssenceEventHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new EssenceEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new EssenceEventHandler());
-		FMLCommonHandler.instance().bus().register(new EssenceEventHandler());
 
 //		if (ConfigHandler.ticoIntegration) MinecraftForge.EVENT_BUS.register(new TConstructHandler());
 		
-		Random rand = new Random();
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
@@ -80,7 +75,7 @@ public class EssenceEventHandler
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
 					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
-						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
+						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					if (rand.nextInt(30) < (5 * (1 + amuletLevel)))
 					{
@@ -108,7 +103,7 @@ public class EssenceEventHandler
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
 					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
-						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
+						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					shardCount *= (1 + amuletLevel);
 				}
@@ -136,7 +131,7 @@ public class EssenceEventHandler
 					ItemStack amulet = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0);
 					if (amulet != null && amulet.getItem() instanceof ItemAmulet)
 					{
-						amuletLevel = UtilityHelper.getUpgradeLevel(amulet, "AmuletLooting");
+						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
 					shardCount *= (1 + amuletLevel);
 				}
@@ -172,21 +167,21 @@ public class EssenceEventHandler
 					NBTTagCompound compound = armor.getTagCompound();
 					compound.setInteger("Absorption Delay", ConfigHandler.absorptionDelay);
 					armor.setTagCompound(compound);
-					protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorPhysicalProtection") * 2;
-					if (source.isFireDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorFireProtection") * 3;
-					if (source.isExplosion()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorBlastProtection") * 3;
-					if (source.isMagicDamage()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorMagicProtection") * 3;
-					if (source.isProjectile()) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorProjectileProtection") * 3;
-					if (source == source.wither) protValue += UtilityHelper.getUpgradeLevel(armor, "ArmorWitherProtection") * 3;
+					protValue += Upgrade.getUpgradeLevel(armor, "ArmorPhysicalProtection") * 2;
+					if (source.isFireDamage()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorFireProtection") * 3;
+					if (source.isExplosion()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorBlastProtection") * 3;
+					if (source.isMagicDamage()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorMagicProtection") * 3;
+					if (source.isProjectile()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorProjectileProtection") * 3;
+					if (source.getDamageType().equals(DamageSource.wither.damageType)) protValue += Upgrade.getUpgradeLevel(armor, "ArmorWitherProtection") * 3;
 //					if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration) protValue += DraconicEvolutionHandler.getChaosDamageProtection(armor, source);
-					resValue += UtilityHelper.getUpgradeLevel(armor, "ArmorResistance");
-					int poisonTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorMagicThorns");
+					resValue += Upgrade.getUpgradeLevel(armor, "ArmorResistance");
+					int poisonTemp = Upgrade.getUpgradeLevel(armor, "ArmorMagicThorns");
 					if (poisonTemp != 0)
 					{
 						poisonThorns += poisonTemp;
 						poisonCount++;
 					}
-					int blindTemp = UtilityHelper.getUpgradeLevel(armor, "ArmorBlindThorns");
+					int blindTemp = Upgrade.getUpgradeLevel(armor, "ArmorBlindThorns");
 					if (blindTemp != 0)
 					{
 						blindThorns += blindTemp;
@@ -227,16 +222,16 @@ public class EssenceEventHandler
 				{
 					iterator.previous();
 					float weaponDamage = event.itemStack.getTagCompound().getFloat("weaponDamage");
-					float fireDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFireDamage);
-					float witherDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWitherDamage);
-					float magicDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponMagicDamage);
-					float chaosDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponChaosDamage);
-					float divineDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponDivineDamage);
-					float taintDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponTaintDamage);
-					float frostDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFrostDamage);
-					float holyDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponHolyDamage);
-					float lightningDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponLightningDamage);
-					float windDamage = UtilityHelper.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWindDamage);
+					float fireDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFireDamage);
+					float witherDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWitherDamage);
+					float magicDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponMagicDamage);
+					float chaosDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponChaosDamage);
+					float divineDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponDivineDamage);
+					float taintDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponTaintDamage);
+					float frostDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponFrostDamage);
+					float holyDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponHolyDamage);
+					float lightningDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponLightningDamage);
+					float windDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWindDamage);
 					
 					fireDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.fireDamageMulti : ConfigHandler.fireDamageAmount;
 					witherDamage *= ConfigHandler.isWitherDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;

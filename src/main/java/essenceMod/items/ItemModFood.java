@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import essenceMod.tabs.ModTabs;
-import essenceMod.utility.Reference;
 
 public class ItemModFood extends ItemFood implements IUpgradeable
 {
@@ -34,7 +33,7 @@ public class ItemModFood extends ItemFood implements IUpgradeable
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(Reference.MODID + ":" + getRegistryName(), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override
