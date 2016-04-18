@@ -2,7 +2,6 @@ package essenceMod.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,8 +11,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import essenceMod.items.IUpgradeable;
 import essenceMod.registry.crafting.InfuserRecipes;
-import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.registry.crafting.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class CommandUpgrade implements ICommand
 {

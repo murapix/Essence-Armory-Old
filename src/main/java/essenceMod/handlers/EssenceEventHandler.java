@@ -3,7 +3,6 @@ package essenceMod.handlers;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -31,8 +30,8 @@ import essenceMod.items.ItemModSword;
 import essenceMod.items.baubles.ItemAmulet;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModItems;
-import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.registry.crafting.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class EssenceEventHandler
 {
@@ -77,6 +76,7 @@ public class EssenceEventHandler
 					{
 						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
+					amuletLevel = Math.max(amuletLevel, Upgrade.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					if (rand.nextInt(30) < (5 * (1 + amuletLevel)))
 					{
 						int amount;
@@ -105,6 +105,7 @@ public class EssenceEventHandler
 					{
 						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
+					amuletLevel = Math.max(amuletLevel, Upgrade.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					shardCount *= (1 + amuletLevel);
 				}
 			}
@@ -133,6 +134,7 @@ public class EssenceEventHandler
 					{
 						amuletLevel = Upgrade.getUpgradeLevel(amulet, "AmuletLooting");
 					}
+					amuletLevel = Math.max(amuletLevel, Upgrade.getUpgradeLevel(weapon, UpgradeRegistry.ShardSwordLooting));
 					shardCount *= (1 + amuletLevel);
 				}
 			}

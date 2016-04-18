@@ -26,8 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import essenceMod.handlers.ConfigHandler;
 import essenceMod.items.ItemModBow;
-import essenceMod.registry.crafting.UpgradeRegistry;
 import essenceMod.registry.crafting.upgrades.Upgrade;
+import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class EntityModArrow extends EntityArrow
 {
