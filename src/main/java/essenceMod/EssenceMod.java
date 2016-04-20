@@ -15,7 +15,8 @@ dependencies = "required-after:Forge@[1.8.9-11.15.1.1761,);" +
 		"required-after:Baubles;" +
 		"after:TConstruct;" +
 		"after:Thaumcraft;" +
-		"after:Botania;")
+		"after:Botania;" + 
+		"after:JEI")
 public class EssenceMod
 {
 	@Instance
