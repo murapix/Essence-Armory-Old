@@ -8,10 +8,9 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import essenceMod.items.IUpgradeable;
 import essenceMod.tabs.ModTabs;
 
-public class ModBlock extends Block implements IUpgradeable
+public class ModBlock extends Block
 {
 	public ModBlock()
 	{

@@ -1,4 +1,4 @@
-package essenceMod.handlers.compatibility.jei;
+package essenceMod.handlers.compatibility.jei.upgrade;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,14 +23,14 @@ public class InfuserUpgradeRecipeCategory implements IRecipeCategory
 	public InfuserUpgradeRecipeCategory(IGuiHelper guiHelper)
 	{
 		background = guiHelper.createBlankDrawable(150, 110);
-		localizedName = StatCollector.translateToLocal("EssenceArmory.nei.infuser");
+		localizedName = StatCollector.translateToLocal("EssenceArmory.nei.infuser.upgrade");
 		overlay = guiHelper.createDrawable(new ResourceLocation(Reference.MODID + ":textures/gui/infuserOverlay.png"), 0, 0, 156, 122);
 	}
 	
 	@Override
 	public String getUid()
 	{
-		return "essenceArmory.infuser";
+		return "essenceArmory.infuserUpgrade";
 	}
 	
 	@Override

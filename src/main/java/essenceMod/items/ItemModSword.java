@@ -19,11 +19,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import essenceMod.handlers.ConfigHandler;
+import essenceMod.handlers.compatibility.ThaumcraftHandler;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
@@ -176,16 +178,16 @@ public class ItemModSword extends ItemSword implements IUpgradeable
 //			{}
 //		}
 //
-//		if (Loader.isModLoaded("Thaumcraft") /* && ConfigHandler.thaumcraftIntegration */)
-//		{
-//			try
-//			{
-//				ThaumcraftHandler.doTaintDamage(item, (EntityPlayer) player, enemy, weaponDamage, false);
-//				ThaumcraftHandler.doTaintDoT(item, enemy);
-//			}
-//			catch (Exception e)
-//			{}
-//		}
+		if (Loader.isModLoaded("Thaumcraft") /* && ConfigHandler.thaumcraftIntegration */)
+		{
+			try
+			{
+				ThaumcraftHandler.doTaintDamage(item, (EntityPlayer) player, enemy, weaponDamage, false);
+				ThaumcraftHandler.doTaintDoT(item, enemy);
+			}
+			catch (Exception e)
+			{}
+		}
 //
 //		if (Loader.isModLoaded("arsmagica2") /* && ConfigHandler.arsMagicaIntegration */)
 //		{

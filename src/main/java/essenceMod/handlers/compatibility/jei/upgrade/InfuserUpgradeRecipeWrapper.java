@@ -1,4 +1,4 @@
-package essenceMod.handlers.compatibility.jei;
+package essenceMod.handlers.compatibility.jei.upgrade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,8 @@ public class InfuserUpgradeRecipeWrapper implements IRecipeWrapper
 			if (o instanceof ItemStack) input.add(o);
 			if (o instanceof String) input.add(OreDictionary.getOres((String) o));
 		}
-		item = output = recipe.getItem();
+		item = recipe.getItem().copy();
+		output = recipe.getItem().copy();
 		for (Upgrade upgrade : recipe.getRequirements())
 		{
 			InfuserRecipes.addUpgrade(item, upgrade);

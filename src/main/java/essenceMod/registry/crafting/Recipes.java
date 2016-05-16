@@ -9,7 +9,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import essenceMod.registry.ModArmory;
 import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
-import essenceMod.registry.crafting.upgrades.UpgradeCraftingRecipe;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 
 public class Recipes
@@ -65,15 +64,15 @@ public class Recipes
 //			GameRegistry.addShapedRecipe(new ItemStack(ModArmory.infusedVambraces), new Object[] { "ABA", "   ", "ABA", 'A', Items.leather, 'B', ModItems.crystalDiamond });
 //		}
 		
-		ItemStack lootSword1 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword), UpgradeRegistry.ShardSwordLooting.setLevel(1)).copy();
-		ItemStack lootSword2 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword), UpgradeRegistry.ShardSwordLooting.setLevel(2)).copy();
-		ItemStack lootSword3 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword), UpgradeRegistry.ShardSwordLooting.setLevel(3)).copy();
-		ItemStack lootSword4 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword), UpgradeRegistry.ShardSwordLooting.setLevel(4)).copy();
-		ItemStack lootSword5 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword), UpgradeRegistry.ShardSwordLooting.setLevel(5)).copy();
-		GameRegistry.addRecipe(new UpgradeCraftingRecipe(lootSword1, new Object[] {" A ", "ABA", "ACA", 'A', ModItems.infusedShard, 'B', Items.diamond_sword, 'C', "gemDiamond"}));
-		GameRegistry.addRecipe(new UpgradeCraftingRecipe(lootSword2, new Object[] {" A ", "ABA", "ACA", 'A', ModItems.infusedShard, 'B', lootSword1, 'C',  "gemDiamond"}));
-		GameRegistry.addRecipe(new UpgradeCraftingRecipe(lootSword3, new Object[] {" A ", "ABA", "ACA", 'A', ModItems.infusedShard, 'B', lootSword2, 'C',  "gemDiamond"}));
-		GameRegistry.addRecipe(new UpgradeCraftingRecipe(lootSword4, new Object[] {" A ", "ABA", "ACA", 'A', ModItems.infusedShard, 'B', lootSword3, 'C',  "gemDiamond"}));
-		GameRegistry.addRecipe(new UpgradeCraftingRecipe(lootSword5, new Object[] {" A ", "ABA", "ACA", 'A', ModItems.infusedShard, 'B', lootSword4, 'C',  "gemDiamond"}));
+		ItemStack lootSword1 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword, 1, 0), UpgradeRegistry.ShardSwordLooting.setLevel(1)).copy();
+		ItemStack lootSword2 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword, 1, 1), UpgradeRegistry.ShardSwordLooting.setLevel(2)).copy();
+		ItemStack lootSword3 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword, 1, 2), UpgradeRegistry.ShardSwordLooting.setLevel(3)).copy();
+		ItemStack lootSword4 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword, 1, 3), UpgradeRegistry.ShardSwordLooting.setLevel(4)).copy();
+		ItemStack lootSword5 = InfuserRecipes.addUpgrade(new ItemStack(ModArmory.lootSword, 1, 4), UpgradeRegistry.ShardSwordLooting.setLevel(5)).copy();
+		GameRegistry.addShapedRecipe(lootSword1, new Object[] {" A ", "ABA" , "ACA" , 'A', ModItems.infusedShard, 'B', Items.diamond_sword, 'C', Items.diamond});
+		GameRegistry.addShapedRecipe(lootSword2, new Object[] {" A ", "ABA" , "ACA" , 'A', ModItems.infusedShard, 'B', lootSword1, 'C', Items.diamond});
+		GameRegistry.addShapedRecipe(lootSword3, new Object[] {" A ", "ABA" , "ACA" , 'A', ModItems.infusedShard, 'B', lootSword2, 'C', Items.diamond});
+		GameRegistry.addShapedRecipe(lootSword4, new Object[] {" A ", "ABA" , "ACA" , 'A', ModItems.infusedShard, 'B', lootSword3, 'C', Items.diamond});
+		GameRegistry.addShapedRecipe(lootSword5, new Object[] {" A ", "ABA" , "ACA" , 'A', ModItems.infusedShard, 'B', lootSword4, 'C', Items.diamond});
 	}
 }

@@ -1,5 +1,6 @@
 package essenceMod.proxy;
 
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -53,4 +54,7 @@ public class CommonProxy
 	{
 		event.registerServerCommand(new CommandUpgrade());
 	}
+
+	public void spawnInfuserGlow(World world, double x, double y, double z, double red, double green, double blue)
+	{}
 }

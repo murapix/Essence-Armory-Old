@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -25,6 +26,7 @@ import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 import essenceMod.items.IUpgradeable;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.tabs.ModTabs;
 
 public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITileEntityProvider
@@ -83,19 +85,24 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITil
 		
 		if (infuserEntity.isActive())
 		{
-			int percent = infuserEntity.infuseTime / infuserEntity.TotalInfuseTime * 100;
+			int percent = infuserEntity.infuseTime * 100 / infuserEntity.TotalInfuseTime;
 			player.addChatComponentMessage(new ChatComponentText("Infuser Progress: " + percent + "%"));
 			return true;
 		}
 		else
 		{
-			ItemStack item = infuserEntity.getStackInSlot(0);
+			ItemStack item = infuserEntity.getStackInSlot(infuserEntity.InfuserSlot);
 			ItemStack playerItem = player.getCurrentEquippedItem();
 			if (item != null && item.stackSize > 0)
 			{
 				if (playerItem != null && playerItem.stackSize > 0 && new ItemStack(ModItems.infusedWand).isItemEqual(playerItem))
 				{
-					player.addChatComponentMessage(new ChatComponentText("Infuser Activeted. Upgrade: " + InfuserRecipes.checkRecipe(item, infuserEntity.getPylonItems())));
+					player.addChatComponentMessage(new ChatComponentText("Infuser Activated."));
+					Upgrade upgrade = InfuserRecipes.checkUpgradeRecipe(item, infuserEntity.getPylonItems());
+					ItemStack output = InfuserRecipes.checkItemRecipe(item, infuserEntity.getPylonItems());
+					if (upgrade != null) player.addChatComponentMessage(new ChatComponentText("Upgrade: " + StatCollector.translateToLocal(upgrade.name)));
+					else if (output != null) player.addChatComponentMessage(new ChatComponentText("Item: " + output.getDisplayName()));
+					else player.addChatComponentMessage(new ChatComponentText("No valid recipe, Infuser Deactivated."));
 					infuserEntity.activate();
 				}
 				else
@@ -145,8 +152,7 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable, ITil
 			float ry = rand.nextFloat() * 0.8F + 0.1F;
 			float rz = rand.nextFloat() * 0.8F + 0.1F;
 
-			EntityItem entityItem = new EntityItem(world, pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz, new ItemStack(item.getItem()));
-			if (item.hasTagCompound()) entityItem.getEntityItem().setTagCompound(item.getTagCompound());
+			EntityItem entityItem = new EntityItem(world, pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz, item.copy());
 
 			float factor = 0.05F;
 			entityItem.motionX = rand.nextGaussian() * factor;

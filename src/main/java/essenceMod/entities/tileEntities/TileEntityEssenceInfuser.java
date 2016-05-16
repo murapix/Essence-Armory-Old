@@ -2,7 +2,6 @@ package essenceMod.entities.tileEntities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,8 +15,11 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants.NBT;
-import essenceMod.items.IUpgradeable;
+import essenceMod.items.ItemShardContainer;
+import essenceMod.registry.ModBlocks;
+import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.InfuserRecipes;
+import essenceMod.registry.crafting.ItemRecipe;
 import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.utility.Reference;
 
@@ -48,14 +50,46 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 		worldObj.markBlockForUpdate(pos);
 		markDirty();
 
-		Upgrade upgrade = InfuserRecipes.checkRecipe(slots[InfuserSlot], getPylonItems());
-		if (upgrade != null && active)
+		Upgrade upgrade = InfuserRecipes.checkUpgradeRecipe(slots[InfuserSlot], getPylonItems());
+		ItemStack output = InfuserRecipes.checkItemRecipe(slots[InfuserSlot], getPylonItems());
+		if (active && (upgrade != null || output != null))
 		{
 			infuseTime++;
+			if (infuseTime % 30 == 0)
+			{
+				for (TileEntity pylon : pylons)
+				{
+					if (((TileEntityEssencePylon) pylon).getStackInSlot(0) == null) continue;
+					double pX = pylon.getPos().getX() + 0.5;
+					double pY = pylon.getPos().getY() + 1.5;
+					double pZ = pylon.getPos().getZ() + 0.5;
+					double iX = getPos().getX() + 0.5;
+					double iY = getPos().getY() + 1.5;
+					double iZ = getPos().getZ() + 0.5;
+					double dX = pX - iX;
+					double dY = pY - iY;
+					double dZ = pZ - iZ;
+					double dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2) + Math.pow(dZ, 2));
+					double cX = dX / (dist * 16);
+					double cY = dY / (dist * 16);
+					double cZ = dZ / (dist * 16);
+					for (int i = 0; i < dist * 16; i++)
+						essenceMod.EssenceMod.proxy.spawnInfuserGlow(getWorld(), iX + i * cX, iY + i * cY, iZ + i * cZ, 179, 117, 255);
+				}
+			}
 			if (infuseTime >= TotalInfuseTime)
 			{
-				updatePylons();
-				InfuserRecipes.addUpgrade(slots[InfuserSlot], upgrade);
+				if (upgrade != null)
+				{
+					updatePylons();
+					InfuserRecipes.addUpgrade(slots[InfuserSlot], upgrade);
+				}
+				else if (output != null)
+				{
+					ItemRecipe recipe = InfuserRecipes.getItemRecipe(slots[InfuserSlot], getPylonItems());
+					updatePylons(recipe);
+					slots[InfuserSlot] = output;
+				}
 				infuseTime = 0;
 				active = false;
 			}
@@ -89,14 +123,6 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 				if (entity != null && entity instanceof TileEntityEssencePylon) pylons.add(entity);
 			}
 		}
-		for (int i = 0; i < pylons.size(); i++)
-		{
-			if (((TileEntityEssencePylon) pylons.get(i)).slots[0] == null)
-			{
-				pylons.remove(i);
-				i--;
-			}
-		}
 		return pylons.size() >= 1;
 	}
 
@@ -111,6 +137,8 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 			}
 			else slots[i + 1] = ((TileEntityEssencePylon) pylons.get(i)).getStackInSlot(0);
 		}
+		for (int i = pylons.size() + 1; i < slots.length; i++)
+			slots[i] = null;
 	}
 
 	private void updatePylons()
@@ -124,6 +152,40 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 			}
 			else ((TileEntityEssencePylon) pylons.get(i)).infuse();
 		}
+	}
+
+	private void updatePylons(ItemRecipe recipe)
+	{
+		int numShards = recipe.getShardCount();
+		TileEntityEssencePylon shardPylon = null;
+		for (int i = 0; i < pylons.size(); i++)
+		{
+			if (pylons.get(i) == null || !(pylons.get(i) instanceof TileEntityEssencePylon))
+			{
+				pylons.remove(i);
+				i--;
+			}
+			else
+			{
+				TileEntityEssencePylon pylon = (TileEntityEssencePylon) pylons.get(i);
+				ItemStack item = pylon.getStackInSlot(0);
+				if (item.isItemEqual(new ItemStack(ModItems.infusedShard)))
+				{
+					pylon.infuse();
+					numShards--;
+				}
+				else if (item.isItemEqual(new ItemStack(ModBlocks.shardBlock)))
+				{
+					pylon.infuse();
+					numShards--;
+				}
+				if (item.isItemEqual(new ItemStack(ModItems.infusedWand)))
+				{
+					shardPylon = pylon;
+				}
+			}
+		}
+		if (shardPylon != null) ItemShardContainer.removeShards(shardPylon.getStackInSlot(0), numShards);
 	}
 
 	public ArrayList<ItemStack> getPylonItems()
@@ -251,8 +313,7 @@ public class TileEntityEssenceInfuser extends TileEntity implements IInventory, 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack item)
 	{
-		if (slot == InfuserSlot) return item != null && item.getItem() instanceof IUpgradeable;
-		return false;
+		return item != null;
 	}
 
 	@Override

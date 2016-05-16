@@ -4,12 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.tileentity.TileEntity;
-
 import org.lwjgl.opengl.GL11;
-
 import essenceMod.entities.tileEntities.TileEntityEssenceInfuser;
 
-@SuppressWarnings("rawtypes")
 public class InfuserRenderer extends TileEntitySpecialRenderer
 {
 	@Override

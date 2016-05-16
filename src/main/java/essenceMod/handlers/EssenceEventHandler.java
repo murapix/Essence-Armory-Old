@@ -16,9 +16,12 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,11 +30,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import baubles.common.lib.PlayerHandler;
 import essenceMod.items.ItemModArmor;
 import essenceMod.items.ItemModSword;
+import essenceMod.items.ItemShardContainer;
 import essenceMod.items.baubles.ItemAmulet;
 import essenceMod.registry.ModArmory;
+import essenceMod.registry.ModBlocks;
 import essenceMod.registry.ModItems;
 import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
+import essenceMod.utility.Reference;
 
 public class EssenceEventHandler
 {
@@ -43,8 +49,8 @@ public class EssenceEventHandler
 		MinecraftForge.TERRAIN_GEN_BUS.register(new EssenceEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new EssenceEventHandler());
 
-//		if (ConfigHandler.ticoIntegration) MinecraftForge.EVENT_BUS.register(new TConstructHandler());
-		
+		// if (ConfigHandler.ticoIntegration) MinecraftForge.EVENT_BUS.register(new TConstructHandler());
+
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
@@ -57,13 +63,15 @@ public class EssenceEventHandler
 				if (ConfigHandler.useWhiteList)
 				{
 					ArrayList<String> whiteListedMobs = new ArrayList<String>();
-					for (String string : ConfigHandler.whiteList) whiteListedMobs.add(string);
+					for (String string : ConfigHandler.whiteList)
+						whiteListedMobs.add(string);
 					if (!(whiteListedMobs.contains(event.entityLiving.toString()))) return;
 				}
 				if (ConfigHandler.useBlackList)
 				{
 					ArrayList<String> blackListedMobs = new ArrayList<String>();
-					for (String string : ConfigHandler.blackList) blackListedMobs.add(string);
+					for (String string : ConfigHandler.blackList)
+						blackListedMobs.add(string);
 					if (blackListedMobs.contains(event.entityLiving.toString())) return;
 				}
 				EntityPlayer player = (EntityPlayer) event.source.getEntity();
@@ -88,11 +96,11 @@ public class EssenceEventHandler
 				}
 			}
 		}
-		
+
 		if (event.entityLiving instanceof EntityDragon && rand.nextInt(100) < ConfigHandler.dragonShardChance * 100)
 		{
 			int shardCount = ConfigHandler.dragonShardCount;
-			
+
 			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
 			{
 				EntityPlayer player = (EntityPlayer) event.source.getEntity();
@@ -109,7 +117,7 @@ public class EssenceEventHandler
 					shardCount *= (1 + amuletLevel);
 				}
 			}
-			
+
 			while (shardCount > 64)
 			{
 				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, 64)));
@@ -117,11 +125,11 @@ public class EssenceEventHandler
 			}
 			if (shardCount != 0) event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, shardCount)));
 		}
-		
+
 		if (event.entityLiving instanceof EntityWither && rand.nextInt(100) < ConfigHandler.witherShardChance * 100)
 		{
 			int shardCount = ConfigHandler.witherShardCount;
-			
+
 			if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer)
 			{
 				EntityPlayer player = (EntityPlayer) event.source.getEntity();
@@ -138,7 +146,7 @@ public class EssenceEventHandler
 					shardCount *= (1 + amuletLevel);
 				}
 			}
-			
+
 			while (shardCount > 64)
 			{
 				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.infusedShard, 64)));
@@ -175,7 +183,7 @@ public class EssenceEventHandler
 					if (source.isMagicDamage()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorMagicProtection") * 3;
 					if (source.isProjectile()) protValue += Upgrade.getUpgradeLevel(armor, "ArmorProjectileProtection") * 3;
 					if (source.getDamageType().equals(DamageSource.wither.damageType)) protValue += Upgrade.getUpgradeLevel(armor, "ArmorWitherProtection") * 3;
-//					if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration) protValue += DraconicEvolutionHandler.getChaosDamageProtection(armor, source);
+					// if (Loader.isModLoaded("DraconicEvolution") && ConfigHandler.draconicevolutionIntegration) protValue += DraconicEvolutionHandler.getChaosDamageProtection(armor, source);
 					resValue += Upgrade.getUpgradeLevel(armor, "ArmorResistance");
 					int poisonTemp = Upgrade.getUpgradeLevel(armor, "ArmorMagicThorns");
 					if (poisonTemp != 0)
@@ -234,7 +242,7 @@ public class EssenceEventHandler
 					float holyDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponHolyDamage);
 					float lightningDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponLightningDamage);
 					float windDamage = Upgrade.getUpgradeLevel(event.itemStack, UpgradeRegistry.WeaponWindDamage);
-					
+
 					fireDamage *= ConfigHandler.isFireDamagePercent ? weaponDamage * ConfigHandler.fireDamageMulti : ConfigHandler.fireDamageAmount;
 					witherDamage *= ConfigHandler.isWitherDamagePercent ? weaponDamage * ConfigHandler.witherDamageMulti : ConfigHandler.witherDamageAmount;
 					magicDamage *= ConfigHandler.isMagicDamagePercent ? weaponDamage * ConfigHandler.magicDamageMulti : ConfigHandler.magicDamageAmount;
@@ -245,7 +253,7 @@ public class EssenceEventHandler
 					holyDamage *= ConfigHandler.isHolyDamagePercent ? weaponDamage * ConfigHandler.holyDamageMulti : ConfigHandler.holyDamageAmount;
 					lightningDamage *= ConfigHandler.isLightningDamagePercent ? weaponDamage * ConfigHandler.lightningDamageMulti : ConfigHandler.lightningDamageAmount;
 					windDamage *= ConfigHandler.isWindDamagePercent ? weaponDamage * ConfigHandler.windDamageMulti : ConfigHandler.windDamageAmount;
-					
+
 					double fireText = Math.round(fireDamage * 4) / 4D;
 					double witherText = Math.round(witherDamage * 4) / 4D;
 					double magicText = Math.round(magicDamage * 4) / 4D;
@@ -259,52 +267,52 @@ public class EssenceEventHandler
 
 					if (fireText != 0)
 					{
-						if (fireText == (int) fireText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) fireText) + " Fire Damage"); 
+						if (fireText == (int) fireText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) fireText) + " Fire Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + fireText + " Fire Damage");
 					}
 					if (witherText != 0)
 					{
-						if (witherText == (int) witherText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) witherText) + " Wither Damage"); 
+						if (witherText == (int) witherText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) witherText) + " Wither Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + witherText + " Wither Damage");
 					}
 					if (magicText != 0)
 					{
-						if (magicText == (int) magicText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) magicText) + " Magic Damage"); 
+						if (magicText == (int) magicText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) magicText) + " Magic Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + magicText + " Magic Damage");
 					}
 					if (chaosText != 0)
 					{
-						if (chaosText == (int) chaosText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) chaosText) + " Chaos Damage"); 
+						if (chaosText == (int) chaosText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) chaosText) + " Chaos Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + chaosText + " Chaos Damage");
 					}
 					if (divineText != 0)
 					{
-						if (divineText == (int) divineText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) divineText) + " Divine Damage"); 
+						if (divineText == (int) divineText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) divineText) + " Divine Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + divineText + " Divine Damage");
 					}
 					if (taintText != 0)
 					{
-						if (taintText == (int) taintText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) taintText) + " Flux Damage"); 
+						if (taintText == (int) taintText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) taintText) + " Flux Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + taintText + " Flux Damage");
 					}
 					if (frostText != 0)
 					{
-						if (frostText == (int) frostText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) frostText) + " Frost Damage"); 
+						if (frostText == (int) frostText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) frostText) + " Frost Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + frostText + " Frost Damage");
 					}
 					if (holyText != 0)
 					{
-						if (holyText == (int) holyText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) holyText) + " Holy Damage"); 
+						if (holyText == (int) holyText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) holyText) + " Holy Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + holyText + " Holy Damage");
 					}
 					if (lightningText != 0)
 					{
-						if (lightningText == (int) lightningText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) lightningText) + " Lightning Damage"); 
+						if (lightningText == (int) lightningText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) lightningText) + " Lightning Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + lightningText + " Lightning Damage");
 					}
 					if (windText != 0)
 					{
-						if (windText == (int) windText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) windText) + " Wind Damage"); 
+						if (windText == (int) windText) iterator.add(EnumChatFormatting.BLUE + "+" + ((int) windText) + " Wind Damage");
 						else iterator.add(EnumChatFormatting.BLUE + "+" + windText + " Wind Damage");
 					}
 					break;
@@ -312,10 +320,54 @@ public class EssenceEventHandler
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public void onShardPickup(EntityItemPickupEvent event)
+	{
+		ItemStack item = event.item.getEntityItem();
+		ArrayList<ItemStack> shardContainers = new ArrayList<ItemStack>();
+		if (event.entityPlayer.inventory.hasItem(ModItems.shardContainer))
+		{
+			for (ItemStack stack : event.entityPlayer.inventory.mainInventory)
+			{
+				if (stack == null || stack.stackSize == 0) continue;
+				if (stack.getItem().getUnlocalizedName().equals(ModItems.shardContainer.getUnlocalizedName())) shardContainers.add(stack);
+			}
+		}
+		if (item.isItemEqual(new ItemStack(ModItems.infusedShard)))
+		{
+			while (item.stackSize > 0 && shardContainers.size() > 0)
+			{
+				item.stackSize = ItemShardContainer.addShards(shardContainers.get(0), item.stackSize);
+				if (item.stackSize > 0) shardContainers.remove(0);
+			}
+		}
+		if (item.isItemEqual(new ItemStack(ModBlocks.shardBlock)))
+		{
+			int shards = item.stackSize * 9;
+			while (shards > 0 && shardContainers.size() > 0)
+			{
+				shards = ItemShardContainer.addShards(shardContainers.get(0), shards);
+				if (shards > 0) shardContainers.remove(0);
+			}
+			item.stackSize = shards / 9;
+			event.item.worldObj.spawnEntityInWorld(new EntityItem(event.item.worldObj, event.item.posX, event.item.posY, event.item.posZ, new ItemStack(ModItems.infusedShard, shards % 9)));
+		}
+	}
+
+	@SubscribeEvent
+	public void onTextureStitch(TextureStitchEvent event)
+	{
+		for (String str : Reference.SPRITES)
+		{
+			ResourceLocation sprite = new ResourceLocation(Reference.MODID + ":" + str);
+			event.map.registerSprite(sprite);
+		}
+	}
 	
-//	@SubscribeEvent
-//	public void spawnOPZombie()
-//	{
-//		
-//	}
+	// @SubscribeEvent
+	// public void spawnOPZombie()
+	// {
+	//
+	// }
 }

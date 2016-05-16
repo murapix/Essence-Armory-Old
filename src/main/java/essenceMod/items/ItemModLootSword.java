@@ -3,11 +3,13 @@ package essenceMod.items;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,6 +34,14 @@ public class ItemModLootSword extends ItemSword
 		toolMaterial = material;
 		setCreativeTab(ModTabs.tabEssence);
 		setMaxDamage(0);
+		setHasSubtypes(true);
+	}
+	
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list)
+	{
+		for (int i = 0; i < 5; i++)
+			list.add(new ItemStack(item, 1, i));
 	}
 	
 	@Override
@@ -60,7 +70,8 @@ public class ItemModLootSword extends ItemSword
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		for (int i = 0; i < 5; i++)
+			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(this, i, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@Override

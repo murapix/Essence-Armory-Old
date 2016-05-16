@@ -25,6 +25,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import essenceMod.handlers.ConfigHandler;
+import essenceMod.handlers.compatibility.ThaumcraftHandler;
 import essenceMod.items.ItemModBow;
 import essenceMod.registry.crafting.upgrades.Upgrade;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
@@ -297,8 +298,8 @@ public class EntityModArrow extends EntityArrow
 								{
 									try
 									{
-										// ThaumcraftHandler.doTaintDamage(bow, (EntityPlayer) player, enemy, weaponDamage, true);
-										// ThaumcraftHandler.doTaintDoT(bow, enemy);
+										ThaumcraftHandler.doTaintDamage(bow, (EntityPlayer) player, enemy, weaponDamage, true);
+										ThaumcraftHandler.doTaintDoT(bow, enemy);
 									}
 									catch (Exception e)
 									{}

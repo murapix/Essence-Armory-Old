@@ -26,4 +26,9 @@ public class UtilityHelper
 		int mult = (int) Math.pow(10, places);
 		return ((int) (number * mult)) / (float) mult;
 	}
+	
+	public static int rgbToHex(int red, int green, int blue)
+	{
+		return Integer.parseInt(Integer.toHexString(red) + Integer.toHexString(green) + Integer.toHexString(blue), 16);
+	}
 }

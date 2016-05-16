@@ -6,6 +6,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import essenceMod.items.ItemMod;
 import essenceMod.items.ItemModFood;
+import essenceMod.items.ItemShardContainer;
 import essenceMod.utility.RegisterHelper;
 
 public class ModItems
@@ -29,6 +30,8 @@ public class ModItems
 	
 	public static Item infusedWand = new ItemMod().setUnlocalizedName("wandInfused");
 	
+	public static Item shardContainer = new ItemShardContainer().setUnlocalizedName("shardContainer");
+	
 	public static void init()
 	{
 		RegisterHelper.registerItem(infusedShard);
@@ -49,6 +52,8 @@ public class ModItems
 		RegisterHelper.registerItem(platedApple);
 		
 		RegisterHelper.registerItem(infusedWand);
+		
+		RegisterHelper.registerItem(shardContainer);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -72,5 +77,7 @@ public class ModItems
 		((ItemModFood) platedApple).initModel();
 		
 		((ItemMod) infusedWand).initModel();
+		
+		((ItemShardContainer) shardContainer).initModel();
 	}
 }

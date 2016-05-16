@@ -3,13 +3,16 @@ package essenceMod.registry;
 import net.minecraft.entity.EntityList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import essenceMod.EssenceMod;
+import essenceMod.entities.boss.EntityBoss;
 
 public class ModEntities
 {
 	private static int startEntityID, i;
 
 	public static void init()
-	{}
+	{
+		EntityRegistry.registerModEntity(EntityBoss.class, "essenceBoss", 0, EssenceMod.instance, 128, 20, false);
+	}
 
 	public static void registerModProjectile(Class entityClass, String name)
 	{

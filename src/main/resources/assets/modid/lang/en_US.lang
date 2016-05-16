@@ -1,53 +1,55 @@
-item.shardInfused.name=ยง6Shard of Essence
-item.gemInfused.name=ยง6Essence Infused Diamond
-item.nuggetInfused.name=ยง6Essence Infused Nugget
-item.starInfused.name=ยง6Essence Infused Star
-item.gemCrystallized.name=ยง6Crystallized Essence Diamond
-item.starCrystallized.name=ยง6Crystallized Essence Star
-item.ingotInfused.name=ยง6Essence Infused Ingot
-item.gemPlated.name=ยง6Essence Plated Diamond
-item.starPlated.name=ยง6Essence Plated Star
+item.shardInfused.name=ง6Shard of Essence
+item.gemInfused.name=ง6Essence Infused Diamond
+item.nuggetInfused.name=ง6Essence Infused Nugget
+item.starInfused.name=ง6Essence Infused Star
+item.gemCrystallized.name=ง6Crystallized Essence Diamond
+item.starCrystallized.name=ง6Crystallized Essence Star
+item.ingotInfused.name=ง6Essence Infused Ingot
+item.gemPlated.name=ง6Essence Plated Diamond
+item.starPlated.name=ง6Essence Plated Star
 
-item.stickInfused.name=ยง6Essence Infused Stick
-item.stringInfused.name=ยง6Essence Infused String
+item.stickInfused.name=ง6Essence Infused Stick
+item.stringInfused.name=ง6Essence Infused String
 
-item.infusedSword.name=ยง6Essence Infused Sword
+item.infusedSword.name=ง6Essence Infused Sword
 
-item.lootSword.name=ยง6Essence Blade
+item.lootSword.name=ง6Essence Blade
 
-item.infusedBow.name=ยง6Essence Infused Bow
+item.infusedBow.name=ง6Essence Infused Bow
 
-item.infusedHelm.name=ยง6Essence Infused Helm
-item.infusedPlate.name=ยง6Essence Infused Chestplate
-item.infusedPants.name=ยง6Essence Infused Leggings
-item.infusedBoots.name=ยง6Essence Infused Boots
+item.infusedHelm.name=ง6Essence Infused Helm
+item.infusedPlate.name=ง6Essence Infused Chestplate
+item.infusedPants.name=ง6Essence Infused Leggings
+item.infusedBoots.name=ง6Essence Infused Boots
 
-item.infusedRing.name=ยง6Infused Ring
-item.infusedBelt.name=ยง6Infused Belt
-item.infusedAmulet.name=ยง6Infused Amulet
+item.infusedRing.name=ง6Infused Ring
+item.infusedBelt.name=ง6Infused Belt
+item.infusedAmulet.name=ง6Infused Amulet
 
-item.infusedPauldrons.name=ยง6Infused Pauldrons
-item.infusedVambraces.name=ยง6Infused Vambraces
+item.infusedPauldrons.name=ง6Infused Pauldrons
+item.infusedVambraces.name=ง6Infused Vambraces
 
-item.wandInfused.name=ยง6Infuser Activation Stick
+item.wandInfused.name=ง6Infuser Activation Stick
 
-item.appleInfused.name=ยง6Essence Infused Apple
-item.appleCrystallized.name=ยง6Crystallized Essence Apple
-item.applePlated.name=ยง6Essence Plated Apple
+item.appleInfused.name=ง6Essence Infused Apple
+item.appleCrystallized.name=ง6Crystallized Essence Apple
+item.applePlated.name=ง6Essence Plated Apple
 
-tile.infusedBlock.name=ยง6Block of Infused Metal
-tile.essenceInfuser.name=ยง6Essence Infuser
-tile.essencePylon.name=ยง6Essence Pylon
-tile.infusedStarmetal.name=ยง6Infused Starmetal
-tile.shardBlock.name=ยง6Block of Essence Shards
+tile.infusedBlock.name=ง6Block of Infused Metal
+tile.essenceInfuser.name=ง6Essence Infuser
+tile.essencePylon.name=ง6Essence Pylon
+tile.infusedStarmetal.name=ง6Infused Starmetal
+tile.shardBlock.name=ง6Block of Essence Shards
+tile.bossSpawner.name=ง6Essence Disruptor
 
-itemGroup.tabEssence=ยง6Essence Armory
+itemGroup.tabEssence=ง6Essence Armory
 
-material.infusedstarmetal=ยง6Infused Starmetal
+material.infusedstarmetal=ง6Infused Starmetal
 
 enchantment.shardLoot=Essence Ripper
 
-EssenceArmory.nei.infuser=Essence Infuser
+EssenceArmory.nei.infuser.upgrade=Upgrade Infusions
+EssenceArmory.nei.infuser.item=Item Infusions
 
 WeaponFireDoT=Burn
 WeaponMagicDoT=Poison

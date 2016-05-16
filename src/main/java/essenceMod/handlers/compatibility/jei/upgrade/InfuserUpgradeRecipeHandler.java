@@ -1,4 +1,4 @@
-package essenceMod.handlers.compatibility.jei;
+package essenceMod.handlers.compatibility.jei.upgrade;
 
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -15,7 +15,7 @@ public class InfuserUpgradeRecipeHandler implements IRecipeHandler<UpgradeRecipe
 	@Override
 	public String getRecipeCategoryUid()
 	{
-		return "essenceArmory.infuser";
+		return "essenceArmory.infuserUpgrade";
 	}
 	
 	@Override
