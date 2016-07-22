@@ -16,6 +16,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -43,7 +44,7 @@ public class ItemAmulet extends ItemBauble
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 		this.level = level;
-		icons = ConfigHandler.thaumcraftIntegration ? new IIcon[27] : new IIcon[22];
+		icons = Loader.isModLoaded("Thaumcraft") && ConfigHandler.thaumcraftIntegration ? new IIcon[27] : new IIcon[22];
 	}
 
 	@Override
@@ -66,7 +67,8 @@ public class ItemAmulet extends ItemBauble
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
 		for (int i = 0; i < icons.length; i++)
-			list.add(new ItemStack(item, 1, i));
+			if (i > 15 || !Loader.isModLoaded("TravellersGear") || !ConfigHandler.travellersgearIntegration)
+				list.add(new ItemStack(item, 1, i));
 	}
 
 //	@Override

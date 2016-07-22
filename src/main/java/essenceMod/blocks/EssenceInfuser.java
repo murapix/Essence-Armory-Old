@@ -137,7 +137,7 @@ public class EssenceInfuser extends BlockContainer implements IUpgradeable
 			float ry = rand.nextFloat() * 0.8F + 0.1F;
 			float rz = rand.nextFloat() * 0.8F + 0.1F;
 
-			EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem()));
+			EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 			if (item.hasTagCompound()) entityItem.getEntityItem().setTagCompound(item.getTagCompound());
 
 			float factor = 0.05F;

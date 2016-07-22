@@ -39,8 +39,8 @@ import essenceMod.tabs.ModTabs;
 import essenceMod.utility.Reference;
 import essenceMod.utility.UtilityHelper;
 
-@Optional.InterfaceList(value = { @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRevealer"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRunicArmor")/*, @Interface(modid = "Botania", iface = "vaskii.botania.api.mana.IManaDiscountArmor")*/ })
-public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor//, IManaDiscountArmor
+//@Optional.InterfaceList(value = { @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRevealer"), @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IRunicArmor")/*, @Interface(modid = "Botania", iface = "vaskii.botania.api.mana.IManaDiscountArmor")*/ })
+public class ItemModArmor extends ItemArmor implements IUpgradeable//, IVisDiscountGear, IGoggles, IRevealer, IRunicArmor//, IManaDiscountArmor
 {
 	private static AttributeModifier health = new AttributeModifier(UUID.fromString("EE15F16D-AA48-45CE-8B72-BF5A1A1D5CFD"), "EssenceArmoryArmorHealth", ConfigHandler.healthBoostCount, 0);
 
@@ -117,6 +117,7 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 				if (item == null) continue;
 				if (item.getItem() instanceof ItemModArmor)
 				{
+					if (!item.hasTagCompound()) onCreated(item, player.worldObj, player);
 					if (item.stackTagCompound.getInteger("Absorption Delay") != 0) regenAbsorption = false;
 					absorption += UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorAbsorption);
 					healthBoost += UtilityHelper.getUpgradeLevel(item, UpgradeRegistry.ArmorHealthBoost);
@@ -281,35 +282,35 @@ public class ItemModArmor extends ItemArmor implements IUpgradeable, IVisDiscoun
 		return item.stackTagCompound.getInteger("Level");
 	}
 
-	@Override
-	@Optional.Method(modid = "Thaumcraft")
-	public int getVisDiscount(ItemStack item, EntityPlayer player, Aspect aspect)
-	{
-		return UtilityHelper.getUpgradeLevel(item, "ArmorVisDiscount");
-	}
-
-	@Override
-	@Optional.Method(modid = "Thaumcraft")
-	public boolean showNodes(ItemStack item, EntityLivingBase player)
-	{
-		if (item.getItem() instanceof ItemModArmor && ((ItemModArmor) item.getItem()).armorType == 0) return UtilityHelper.getUpgradeLevel(item, "ArmorRevealing") > 0;
-		return false;
-	}
-
-	@Override
-	@Optional.Method(modid = "Thaumcraft")
-	public boolean showIngamePopups(ItemStack item, EntityLivingBase player)
-	{
-		if (item.getItem() instanceof ItemModArmor && ((ItemModArmor) item.getItem()).armorType == 0) return UtilityHelper.getUpgradeLevel(item, "ArmorRevealing") > 0;
-		return false;
-	}
-
-	@Override
-	@Optional.Method(modid = "Thaumcraft")
-	public int getRunicCharge(ItemStack item)
-	{
-		return UtilityHelper.getUpgradeLevel(item, "ArmorRunicShielding");
-	}
+//	@Override
+//	@Optional.Method(modid = "Thaumcraft")
+//	public int getVisDiscount(ItemStack item, EntityPlayer player, Aspect aspect)
+//	{
+//		return UtilityHelper.getUpgradeLevel(item, "ArmorVisDiscount");
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "Thaumcraft")
+//	public boolean showNodes(ItemStack item, EntityLivingBase player)
+//	{
+//		if (item.getItem() instanceof ItemModArmor && ((ItemModArmor) item.getItem()).armorType == 0) return UtilityHelper.getUpgradeLevel(item, "ArmorRevealing") > 0;
+//		return false;
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "Thaumcraft")
+//	public boolean showIngamePopups(ItemStack item, EntityLivingBase player)
+//	{
+//		if (item.getItem() instanceof ItemModArmor && ((ItemModArmor) item.getItem()).armorType == 0) return UtilityHelper.getUpgradeLevel(item, "ArmorRevealing") > 0;
+//		return false;
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "Thaumcraft")
+//	public int getRunicCharge(ItemStack item)
+//	{
+//		return UtilityHelper.getUpgradeLevel(item, "ArmorRunicShielding");
+//	}
 
 //	@Override
 //	@Optional.Method(modid = "Botania")

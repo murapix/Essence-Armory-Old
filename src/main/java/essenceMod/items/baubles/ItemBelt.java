@@ -28,10 +28,12 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import baubles.api.BaubleType;
 import baubles.common.lib.PlayerHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import essenceMod.handlers.ConfigHandler;
 import essenceMod.registry.crafting.InfuserRecipes;
 import essenceMod.registry.crafting.upgrades.UpgradeRegistry;
 import essenceMod.utility.Reference;
@@ -79,7 +81,8 @@ public class ItemBelt extends ItemBauble
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
 		for (int i = 0; i < icons.length; i++)
-			list.add(new ItemStack(item, 1, i));
+			if (i <= 10 || i > 16 || !Loader.isModLoaded("TravellersGear") || !ConfigHandler.travellersgearIntegration)
+				list.add(new ItemStack(item, 1, i));
 	}
 
 	// @Override

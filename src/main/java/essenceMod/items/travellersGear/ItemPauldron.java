@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
 import travellersgear.api.TravellersGearAPI;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -41,7 +42,7 @@ public class ItemPauldron extends ItemTravellersGear
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 		this.level = level;
-		icons = ConfigHandler.thaumcraftIntegration ? new IIcon[16] : new IIcon[21];
+		icons = Loader.isModLoaded("Thaumcraft") && ConfigHandler.thaumcraftIntegration ? new IIcon[16] : new IIcon[21];
 	}
 	
 	@Override
